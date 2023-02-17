@@ -1,1 +1,1 @@
-# A collection of JavaFX example
+# A collection of JavaFX examples
