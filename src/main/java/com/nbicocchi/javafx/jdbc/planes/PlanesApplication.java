@@ -18,8 +18,9 @@ public class PlanesApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         FXMLLoader fxml = new FXMLLoader();
         fxml.setController(new PlanesDBForwardController());
-        Parent root = fxml.load(new FileInputStream("java-code/src/main/resources/com/nbicocchi/javafx/jdbc/planes" +
-                "/planes" + "-view" + ".fxml"));
+        System.out.println(System.getProperty("user.dir"));
+        Parent root = fxml.load(new FileInputStream(
+                "src/main/resources/com/nbicocchi/javafx/jdbc/planes/planes-view.fxml"));
         Scene scene = new Scene(root);
         primaryStage.setTitle("Plane Manager");
         primaryStage.setScene(scene);
