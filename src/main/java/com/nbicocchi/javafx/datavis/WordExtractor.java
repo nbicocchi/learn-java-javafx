@@ -10,27 +10,23 @@ import java.util.stream.Collectors;
 /**
  * @author Almas Baimagambetov (almaslvl@gmail.com)
  */
-public class WordExtractor implements DataExtractor {
-    private final Path file;
+public class WordExtractor {
 
-    public WordExtractor(Path file) {
-        this.file = file;
-    }
-
-    @Override
-    public List<Entry> extract() {
+    public static List<Map.Entry<String, Long>> extract(String filename) {
         try {
-            Map<String, Long> map = Files.readAllLines(file).stream().flatMap(line -> Arrays.stream(line.split(" +"))).map(word -> word.toLowerCase()).filter(word -> isWord(word)).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
-            List<Entry> entries = new ArrayList<>();
-            map.forEach((word, freq) -> entries.add(new Entry(word, freq.intValue())));
-            return entries;
+            Map<String, Long> frequencies =
+                    Files.readAllLines(Path.of(filename)).stream()
+                            .flatMap(line -> Arrays.stream(line.split(" +")))
+                            .map(word -> word.toLowerCase())
+                            .filter(word -> isWord(word))
+                            .collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+            return new ArrayList<>(frequencies.entrySet());
         } catch (IOException e) {
-            e.printStackTrace();
             return Collections.emptyList();
         }
     }
 
-    private boolean isWord(String word) {
+    private static boolean isWord(String word) {
         if (word.length() < 4)
             return false;
         if (word.isEmpty())

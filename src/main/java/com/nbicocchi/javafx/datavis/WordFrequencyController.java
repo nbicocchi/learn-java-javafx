@@ -8,21 +8,22 @@ import javafx.scene.chart.XYChart;
 import javafx.stage.FileChooser;
 
 import java.io.File;
+import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 public class WordFrequencyController {
     @FXML
     private BarChart<String, Number> barChart;
 
     @FXML
-    void onOpen(ActionEvent event) {
+    void onOpen(ActionEvent event) throws IOException {
         FileChooser fileChooser = new FileChooser();
         File file = fileChooser.showOpenDialog(null);
         if (file != null) {
-            DataExtractor extractor = new WordExtractor(file.toPath());
             XYChart.Series<String, Number> series = new XYChart.Series<>();
-            extractor.extract().stream().sorted((e1, e2) -> e2.getFrequency() - e1.getFrequency()).limit(10).forEach(entry -> {
-                series.getData().add(new XYChart.Data<>(entry.getWord(), entry.getFrequency()));
-            });
+            List<Map.Entry<String, Long>> frequencies = WordExtractor.extract(file.getAbsolutePath());
+            frequencies.stream().sorted((e1, e2) -> (int) (e2.getValue() - e1.getValue())).limit(50).forEach(entry -> series.getData().add(new XYChart.Data<>(entry.getKey(), entry.getValue())));
             barChart.getData().clear();
             barChart.getData().add(series);
         }
