@@ -7,69 +7,51 @@ import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 
 public class CollectionsController {
-    private final XYChart.Series<Number, Number> arraylist = new XYChart.Series<>();
-    private final XYChart.Series<Number, Number> linkedList = new XYChart.Series<>();
-    private final XYChart.Series<Number, Number> hashset = new XYChart.Series<>();
-    @FXML
-    private ScatterChart<Number, Number> chart;
-    @FXML
-    private NumberAxis xAxis;
-    @FXML
-    private NumberAxis yAxis;
-    @FXML
-    private ChoiceBox<String> chCollection;
+    public static String[] supportedPlugins = {
+            "com.nbicocchi.javafx.collections.FILLALH",
+            "com.nbicocchi.javafx.collections.FILLALT",
+            "com.nbicocchi.javafx.collections.FILLLLH",
+            "com.nbicocchi.javafx.collections.FILLLLT",
+            "com.nbicocchi.javafx.collections.FILLTS",
+            "com.nbicocchi.javafx.collections.FILLHS",
+            "com.nbicocchi.javafx.collections.RETRAL",
+            "com.nbicocchi.javafx.collections.RETRALSORTED",
+            "com.nbicocchi.javafx.collections.RETRLL",
+            "com.nbicocchi.javafx.collections.RETRLLSORTED",
+            "com.nbicocchi.javafx.collections.RETRTS",
+            "com.nbicocchi.javafx.collections.RETRHS",
+            "com.nbicocchi.javafx.collections.SORTAL",
+            "com.nbicocchi.javafx.collections.SORTLL",
+    };
+
+    @FXML private ScatterChart<Number, Number> chart;
+    @FXML private NumberAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private ChoiceBox<String> chCollection;
+
+    public void initialize() {
+        chCollection.getItems().addAll(supportedPlugins);
+        chCollection.getSelectionModel().select(0);
+        xAxis.setLabel("Items");
+        yAxis.setLabel("Microseconds");
+        xAxis.setLowerBound(0);
+        yAxis.setLowerBound(0);
+    }
 
     @FXML
-    void onStart() {
-        switch (chCollection.getValue()) {
-            case "ArrayList(tail)" -> {
-                XYChart.Series<Number, Number> fill = getSeriesByName("ArrayList(tail)-fill");
-                XYChart.Series<Number, Number> retrieve = getSeriesByName("ArrayList(tail)-retrieve");
-                ExperimentTask experimentTask = new ALFT();
-                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    fill.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime()));
-                    retrieve.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getRetrieveTime()));
-                });
-                Thread th = new Thread(experimentTask);
-                th.start();
-            }
-            case "LinkedList(tail)" -> {
-                XYChart.Series<Number, Number> fill = getSeriesByName("LinkedList(tail)-fill");
-                XYChart.Series<Number, Number> retrieve = getSeriesByName("LinkedList(tail)-retrieve");
-                ExperimentTask experimentTask = new LLFT();
-                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    fill.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime()));
-                    retrieve.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getRetrieveTime()));
-                });
-                Thread th = new Thread(experimentTask);
-                th.start();
-            }
-            case "ArrayList(head)" -> {
-                XYChart.Series<Number, Number> fill = getSeriesByName("ArrayList(head)-fill");
-                XYChart.Series<Number, Number> retrieve = getSeriesByName("ArrayList(head)-retrieve");
-                ExperimentTask experimentTask = new ALFH();
-                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
-                    fill.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime()));
-                    retrieve.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getRetrieveTime()));
-                });
-                Thread th = new Thread(experimentTask);
-                th.start();
-            }
-            case "LinkedList(head)" -> {
-                XYChart.Series<Number, Number> series = getSeriesByName("LinkedList(head)");
-                ExperimentTask experimentTask = new LLFH();
-                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> series.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime())));
-                Thread th = new Thread(experimentTask);
-                th.start();
-            }
-            case "TreeSet" -> {
-                XYChart.Series<Number, Number> series = getSeriesByName("TreeSet");
-            }
-            case "HashSet" -> {
-                XYChart.Series<Number, Number> series = getSeriesByName("HashSet");
+    void onStart() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
+        XYChart.Series<Number, Number> data = getSeriesByName(chCollection.getValue());
+        ExperimentTask experimentTask = (ExperimentTask) Class.forName(chCollection.getValue()).newInstance();
+        experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+            data.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getTime()));
+        });
+        Thread t = new Thread(experimentTask);
+        t.start();
+    }
 
-            }
-        }
+    @FXML
+    void onClear() {
+        chart.getData().clear();
     }
 
     XYChart.Series getSeriesByName(String name) {
@@ -82,17 +64,5 @@ public class CollectionsController {
         series.setName(name);
         chart.getData().add(series);
         return series;
-    }
-
-    public void initialize() {
-        chCollection.getItems().addAll(
-                "ArrayList(tail)", "LinkedList(tail)",
-                "ArrayList(head)", "LinkedList(head)",
-                "TreeSet", "HashSet");
-        chCollection.getSelectionModel().select(0);
-        xAxis.setLabel("Items");
-        yAxis.setLabel("Microseconds");
-        xAxis.setLowerBound(0);
-        yAxis.setLowerBound(0);
     }
 }

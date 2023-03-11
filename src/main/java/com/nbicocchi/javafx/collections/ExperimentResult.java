@@ -1,42 +1,19 @@
 package com.nbicocchi.javafx.collections;
 
 public class ExperimentResult {
-    int items;
-    int fillTime;
-    int retrieveTime;
+    final int items;
+    final int time;
 
-    public ExperimentResult(int items, int fillTime) {
+    public ExperimentResult(int items, int time) {
         this.items = items;
-        this.fillTime = fillTime;
-    }
-
-    public ExperimentResult(int items, int fillTime, int retrieveTime) {
-        this.items = items;
-        this.fillTime = fillTime;
-        this.retrieveTime = retrieveTime;
+        this.time = time;
     }
 
     public int getItems() {
         return items;
     }
 
-    public void setItems(int items) {
-        this.items = items;
-    }
-
-    public int getFillTime() {
-        return fillTime;
-    }
-
-    public void setFillTime(int fillTime) {
-        this.fillTime = fillTime;
-    }
-
-    public int getRetrieveTime() {
-        return retrieveTime;
-    }
-
-    public void setRetrieveTime(int retrieveTime) {
-        this.retrieveTime = retrieveTime;
+    public int getTime() {
+        return time;
     }
 }

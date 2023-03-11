@@ -8,38 +8,55 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 
 public abstract class ExperimentTask extends Task<ExperimentResult> {
+    public static final int MICROSECONDS_IN_ONE_SECOND = 1000000;
+    public static final int MAX_RUNS = 100;
+    public static final int MAX_FILL_ITEMS = 200000;
+    public static final int MAX_RETRIEVE_ITEMS = 512;
+    public static final int MAX_TIME_PER_EXPERIMENT =  MICROSECONDS_IN_ONE_SECOND / MAX_RUNS;
     RandomGenerator randomGenerator = RandomGenerator.getDefault();
-    int runs = 100;
-    int maxItems = 1024;
-    int timeThreshold = 0;
+    int fillItems;
+    int timeThreshold;
 
     @Override
     protected ExperimentResult call() {
         setup();
-        for (int i = 0; i < runs; i++) {
-            ExperimentResult result = experiment(randomGenerator.nextInt(maxItems));
-            if (result.getFillTime() < timeThreshold) {
+        for (int i = 0; i < MAX_RUNS; i++) {
+            ExperimentResult result = experiment(randomGenerator.nextInt(fillItems));
+            if (result.getTime() < timeThreshold) {
                 updateValue(result);
             }
         }
         return new ExperimentResult(0,0);
     }
 
+    /**
+     * Defines automagically fillItems and timeThreshold for the experiment
+     */
     protected void setup() {
-        for (maxItems = 512; timeThreshold < 10000; maxItems *= 1.5) {
-            ExperimentResult result = medianRun(maxItems, 5);
-            timeThreshold = result.getFillTime() + result.getRetrieveTime();
+        for (fillItems = 1024; timeThreshold < MAX_TIME_PER_EXPERIMENT && fillItems < MAX_FILL_ITEMS; fillItems *= 2) {
+            timeThreshold = medianRun(fillItems, 3).getTime();
         }
     }
 
+    /**
+     * Returns the median result of a set of experiments
+     * @param items the size of the collection to be tested
+     * @param runs the number of runs
+     * @return the median run
+     */
     protected ExperimentResult medianRun(int items, int runs) {
         List<ExperimentResult> results = new ArrayList<>();
         for (int i = 0; i < runs; i++) {
             results.add(experiment(items));
         }
-        results.sort(Comparator.comparingInt(ExperimentResult::getFillTime));
+        results.sort(Comparator.comparingInt(ExperimentResult::getTime));
         return results.get(results.size() / 2);
     }
 
+    /**
+     * The experiment
+     * @param items the size of the collection to be tested
+     * @return experimental results
+     */
     protected abstract ExperimentResult experiment(int items);
 }

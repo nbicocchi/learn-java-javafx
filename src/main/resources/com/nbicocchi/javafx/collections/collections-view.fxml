@@ -4,19 +4,19 @@
 <?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
-<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.collections.CollectionsController">
+<BorderPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.collections.CollectionsController">
    <bottom>
       <VBox prefHeight="57.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
             <HBox alignment="CENTER" prefHeight="50.0" prefWidth="500.0" spacing="10.0">
                <children>
-                  <ChoiceBox fx:id="chCollection" prefWidth="150.0" />
+                  <ChoiceBox fx:id="chCollection" prefWidth="350.0" />
                   <Button mnemonicParsing="false" onAction="#onStart" prefWidth="100.0" text="Start" />
+                  <Button mnemonicParsing="false" onAction="#onClear" prefWidth="100.0" text="Clear" />
                </children>
             </HBox>
          </children>
@@ -32,7 +32,4 @@
         </yAxis>
       </ScatterChart>
    </center>
-   <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
-   </top>
 </BorderPane>

@@ -5,23 +5,19 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-public class LLFH extends ExperimentTask {
+public class RETRLL extends  ExperimentTask {
 
     @Override
     protected ExperimentResult experiment(int items) {
         List<Integer> list = new LinkedList<>();
-        long startFill = System.nanoTime();
         for (int i = 0; i < items; i++) {
             list.add(randomGenerator.nextInt(items));
         }
-        long endFill = System.nanoTime();
-
-        long startRetrieve = System.nanoTime();
-        for (int i = 0; i < items; i++) {
+        long start = System.nanoTime();
+        for (int i = 0; i < MAX_RETRIEVE_ITEMS; i++) {
             list.contains(randomGenerator.nextInt(items));
         }
-        long endRetrieve = System.nanoTime();
-        return new ExperimentResult(items, (int)NANOSECONDS.toMicros(endFill - startFill),
-                (int)NANOSECONDS.toMicros(endRetrieve - startRetrieve));
+        long end = System.nanoTime();
+        return new ExperimentResult(items, (int)NANOSECONDS.toMicros(end - start));
     }
 }
