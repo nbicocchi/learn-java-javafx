@@ -29,7 +29,7 @@
                </opaqueInsets>
             </ProgressIndicator>
             <ChoiceBox fx:id="chCollection" prefWidth="350.0" />
-            <Button mnemonicParsing="false" onAction="#onStart" prefWidth="100.0" text="Start" />
+            <Button mnemonicParsing="false" onAction="#onStart" prefWidth="100.0" text="Run" />
             <Button mnemonicParsing="false" onAction="#onClear" prefWidth="100.0" text="Clear" />
          </items>
       </ToolBar>
