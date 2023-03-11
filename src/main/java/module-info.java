@@ -1,4 +1,4 @@
-open module it.oopcourse {
+open module com.nbicocchi.javafx {
     requires java.desktop;
     requires java.sql;
     requires javafx.controls;
