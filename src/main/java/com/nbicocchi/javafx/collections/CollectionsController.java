@@ -1,84 +1,98 @@
 package com.nbicocchi.javafx.collections;
 
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
-
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.random.RandomGenerator;
 
 public class CollectionsController {
-    private final XYChart.Series<String, Number> seriesSYN = new XYChart.Series<>();
-    private final XYChart.Series<String, Number> seriesSYNWN = new XYChart.Series<>();
-    private final XYChart.Series<String, Number> seriesTSAFE = new XYChart.Series<>();
+    private final XYChart.Series<Number, Number> arraylist = new XYChart.Series<>();
+    private final XYChart.Series<Number, Number> linkedList = new XYChart.Series<>();
+    private final XYChart.Series<Number, Number> hashset = new XYChart.Series<>();
     @FXML
-    private ScatterChart<String, Number> chartScatter;
+    private ScatterChart<Number, Number> chart;
     @FXML
-    private CategoryAxis xAxis;
+    private NumberAxis xAxis;
     @FXML
     private NumberAxis yAxis;
     @FXML
-    private ChoiceBox<String> chArchitecture;
-    @FXML
-    private ChoiceBox<String> chQueueSize;
-    @FXML
-    private Label lbSpeed;
+    private ChoiceBox<String> chCollection;
 
     @FXML
     void onStart() {
-        RandomGenerator rnd = RandomGenerator.getDefault();
-        int queueSize = Integer.parseInt(chQueueSize.getSelectionModel().getSelectedItem());
-        int item = rnd.nextInt();
-        switch (chArchitecture.getValue()) {
-            case "Synchronized" -> {
-                int result = experimentSynchronized(queueSize, item);
-                lbSpeed.setText(String.format("%dK / s", result / 1000));
-                seriesSYN.getData().add(new XYChart.Data<>(Integer.toString(queueSize), result));
+        switch (chCollection.getValue()) {
+            case "ArrayList(tail)" -> {
+                XYChart.Series<Number, Number> fill = getSeriesByName("ArrayList(tail)-fill");
+                XYChart.Series<Number, Number> retrieve = getSeriesByName("ArrayList(tail)-retrieve");
+                ExperimentTask experimentTask = new ALFT();
+                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    fill.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime()));
+                    retrieve.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getRetrieveTime()));
+                });
+                Thread th = new Thread(experimentTask);
+                th.start();
             }
-            case "Synchronized + W/N" -> {
-                int result = experimentSynchronizedWN(queueSize, item);
-                lbSpeed.setText(String.format("%dK / s", result / 1000));
-                seriesSYNWN.getData().add(new XYChart.Data<>(Integer.toString(queueSize), result));
+            case "LinkedList(tail)" -> {
+                XYChart.Series<Number, Number> fill = getSeriesByName("LinkedList(tail)-fill");
+                XYChart.Series<Number, Number> retrieve = getSeriesByName("LinkedList(tail)-retrieve");
+                ExperimentTask experimentTask = new LLFT();
+                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    fill.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime()));
+                    retrieve.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getRetrieveTime()));
+                });
+                Thread th = new Thread(experimentTask);
+                th.start();
             }
-            case "Thread Safe Queue" -> {
-                int result = experimentThreadSafeQueue(queueSize, item);
-                lbSpeed.setText(String.format("%dK / s", result / 1000));
-                seriesTSAFE.getData().add(new XYChart.Data<>(Integer.toString(queueSize), result));
+            case "ArrayList(head)" -> {
+                XYChart.Series<Number, Number> fill = getSeriesByName("ArrayList(head)-fill");
+                XYChart.Series<Number, Number> retrieve = getSeriesByName("ArrayList(head)-retrieve");
+                ExperimentTask experimentTask = new ALFH();
+                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
+                    fill.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime()));
+                    retrieve.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getRetrieveTime()));
+                });
+                Thread th = new Thread(experimentTask);
+                th.start();
+            }
+            case "LinkedList(head)" -> {
+                XYChart.Series<Number, Number> series = getSeriesByName("LinkedList(head)");
+                ExperimentTask experimentTask = new LLFH();
+                experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> series.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getFillTime())));
+                Thread th = new Thread(experimentTask);
+                th.start();
+            }
+            case "TreeSet" -> {
+                XYChart.Series<Number, Number> series = getSeriesByName("TreeSet");
+            }
+            case "HashSet" -> {
+                XYChart.Series<Number, Number> series = getSeriesByName("HashSet");
+
             }
         }
     }
 
-    int experimentSynchronized(int queueSize, int item) {
-        return 1000;
-    }
-
-    int experimentSynchronizedWN(int queueSize, int item) {
-        return 1000;
-    }
-
-    int experimentThreadSafeQueue(int queueSize, int item) {
-        return 1000;
+    XYChart.Series getSeriesByName(String name) {
+        for (XYChart.Series<Number, Number> series : chart.getData()) {
+            if (series.getName().equals(name)) {
+                return series;
+            }
+        }
+        XYChart.Series<Number, Number> series = new XYChart.Series<>();
+        series.setName(name);
+        chart.getData().add(series);
+        return series;
     }
 
     public void initialize() {
-        chArchitecture.getItems().addAll("Synchronized", "Synchronized + W/N", "Thread Safe Queue");
-        chArchitecture.getSelectionModel().select(0);
-        chQueueSize.getItems().addAll("1", "4", "16", "64", "256", "1024");
-        chQueueSize.getSelectionModel().select(1);
-        xAxis.setCategories(FXCollections.observableArrayList(chQueueSize.getItems()));
-        seriesSYN.setName("Synchronized");
-        seriesSYNWN.setName("Synchronized + W/N");
-        seriesTSAFE.setName("Thread Safe Queue");
-        chartScatter.getData().add(seriesSYN);
-        chartScatter.getData().add(seriesSYNWN);
-        chartScatter.getData().add(seriesTSAFE);
+        chCollection.getItems().addAll(
+                "ArrayList(tail)", "LinkedList(tail)",
+                "ArrayList(head)", "LinkedList(head)",
+                "TreeSet", "HashSet");
+        chCollection.getSelectionModel().select(0);
+        xAxis.setLabel("Items");
+        yAxis.setLabel("Microseconds");
+        xAxis.setLowerBound(0);
         yAxis.setLowerBound(0);
     }
 }
