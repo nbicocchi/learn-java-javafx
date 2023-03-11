@@ -1,14 +1,16 @@
 package com.nbicocchi.javafx.collections;
 
+import javafx.util.Pair;
+
 import java.util.Set;
 import java.util.TreeSet;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
-public class RETRTS extends  ExperimentTask {
+public class RETRTS extends ExperimentTask {
 
     @Override
-    protected ExperimentResult experiment(int items) {
+    protected Pair<Integer, Integer> experiment(int items) {
         Set<Integer> set = new TreeSet<>();
         for (int i = 0; i < items; i++) {
             set.add(randomGenerator.nextInt(items));
@@ -18,6 +20,6 @@ public class RETRTS extends  ExperimentTask {
             set.contains(randomGenerator.nextInt(items));
         }
         long end = System.nanoTime();
-        return new ExperimentResult(items, (int)NANOSECONDS.toMicros(end - start));
+        return new Pair<>(items, (int) NANOSECONDS.toMicros(end - start));
     }
 }

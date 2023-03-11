@@ -5,9 +5,13 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ProgressIndicator;
+import javafx.util.Pair;
+
+import java.util.List;
 
 public class CollectionsController {
-    public static String[] supportedPlugins = {
+    public static String[] plugins = {
             "com.nbicocchi.javafx.collections.FILLALH",
             "com.nbicocchi.javafx.collections.FILLALT",
             "com.nbicocchi.javafx.collections.FILLLLH",
@@ -27,31 +31,38 @@ public class CollectionsController {
     @FXML private ScatterChart<Number, Number> chart;
     @FXML private NumberAxis xAxis;
     @FXML private NumberAxis yAxis;
+    @FXML private ProgressIndicator progress;
     @FXML private ChoiceBox<String> chCollection;
-
-    public void initialize() {
-        chCollection.getItems().addAll(supportedPlugins);
-        chCollection.getSelectionModel().select(0);
-        xAxis.setLabel("Items");
-        yAxis.setLabel("Microseconds");
-        xAxis.setLowerBound(0);
-        yAxis.setLowerBound(0);
-    }
 
     @FXML
     void onStart() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         XYChart.Series<Number, Number> data = getSeriesByName(chCollection.getValue());
-        ExperimentTask experimentTask = (ExperimentTask) Class.forName(chCollection.getValue()).newInstance();
-        experimentTask.valueProperty().addListener((observable, oldValue, newValue) -> {
-            data.getData().add(new XYChart.Data<>(newValue.getItems(), newValue.getTime()));
+        ExperimentTask task = (ExperimentTask) Class.forName(chCollection.getValue()).newInstance();
+        progress.progressProperty().bind(task.progressProperty());
+        task.setOnSucceeded(event -> {
+            progress.progressProperty().unbind();
+            progress.progressProperty().setValue(0);
+            List<Pair<Integer, Integer>> results = task.getValue();
+            for (Pair<Integer, Integer> result : results) {
+                data.getData().add(new XYChart.Data<>(result.getKey(), result.getValue()));
+            }
         });
-        Thread t = new Thread(experimentTask);
+        Thread t = new Thread(task);
         t.start();
     }
 
     @FXML
     void onClear() {
         chart.getData().clear();
+    }
+
+    public void initialize() {
+        chCollection.getItems().addAll(plugins);
+        chCollection.getSelectionModel().select(0);
+        xAxis.setLabel("Items");
+        yAxis.setLabel("Microseconds");
+        xAxis.setLowerBound(0);
+        yAxis.setLowerBound(0);
     }
 
     XYChart.Series getSeriesByName(String name) {
