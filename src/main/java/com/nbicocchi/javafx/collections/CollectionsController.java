@@ -41,7 +41,7 @@ public class CollectionsController {
         progress.progressProperty().bind(task.progressProperty());
         task.setOnSucceeded(event -> {
             progress.progressProperty().unbind();
-            progress.progressProperty().setValue(0);
+            progress.progressProperty().setValue(100);
             List<Pair<Integer, Integer>> results = task.getValue();
             for (Pair<Integer, Integer> result : results) {
                 data.getData().add(new XYChart.Data<>(result.getKey(), result.getValue()));
@@ -59,8 +59,8 @@ public class CollectionsController {
     public void initialize() {
         chCollection.getItems().addAll(plugins);
         chCollection.getSelectionModel().select(0);
-        xAxis.setLabel("Items");
-        yAxis.setLabel("Microseconds");
+        xAxis.setLabel("Collection Size (items)");
+        yAxis.setLabel("Time (microseconds)");
         xAxis.setLowerBound(0);
         yAxis.setLowerBound(0);
     }
