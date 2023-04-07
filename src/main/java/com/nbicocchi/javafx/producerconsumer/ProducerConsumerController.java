@@ -18,18 +18,12 @@ public class ProducerConsumerController {
     private final XYChart.Series<String, Number> seriesSYN = new XYChart.Series<>();
     private final XYChart.Series<String, Number> seriesSYNWN = new XYChart.Series<>();
     private final XYChart.Series<String, Number> seriesTSAFE = new XYChart.Series<>();
-    @FXML
-    private ScatterChart<String, Number> chartScatter;
-    @FXML
-    private CategoryAxis xAxis;
-    @FXML
-    private NumberAxis yAxis;
-    @FXML
-    private ChoiceBox<String> chArchitecture;
-    @FXML
-    private ChoiceBox<String> chQueueSize;
-    @FXML
-    private Label lbSpeed;
+    @FXML private ScatterChart<String, Number> chartScatter;
+    @FXML private CategoryAxis xAxis;
+    @FXML private NumberAxis yAxis;
+    @FXML private ChoiceBox<String> chArchitecture;
+    @FXML private ChoiceBox<String> chQueueSize;
+    @FXML private Label lbSpeed;
 
     @FXML
     void onStart() {

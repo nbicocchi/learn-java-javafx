@@ -7,8 +7,7 @@ public class PrimeSearcherFast implements PrimeSearcher {
             return false;
         }
         int i = 2;
-        for (; i * i <= number && number % i != 0; i++)
-            ;
+        for (; i * i <= number && number % i != 0; i++);
         return i * i > number;
     }
 }

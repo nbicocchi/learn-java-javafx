@@ -23,26 +23,16 @@ public class PrimesController {
     int currentBlock = 0;
     int endBlock = 25;
     int blockSize = 500000;
-    @FXML
-    private Label lbCurrent;
-    @FXML
-    private Label lbPrimes;
-    @FXML
-    private Label lbSpeed;
-    @FXML
-    private ProgressBar pbThread0;
-    @FXML
-    private ProgressBar pbThread1;
-    @FXML
-    private ProgressBar pbThread2;
-    @FXML
-    private ProgressBar pbThread3;
-    @FXML
-    private TextField tfBlockSize;
-    @FXML
-    private TextField tfBlocks;
-    @FXML
-    private TextField tfStart;
+    @FXML private Label lbCurrent;
+    @FXML private Label lbPrimes;
+    @FXML private Label lbSpeed;
+    @FXML private ProgressBar pbThread0;
+    @FXML private ProgressBar pbThread1;
+    @FXML private ProgressBar pbThread2;
+    @FXML private ProgressBar pbThread3;
+    @FXML private TextField tfBlockSize;
+    @FXML private TextField tfBlocks;
+    @FXML private TextField tfStart;
 
     public void initialize() {
         tfStart.textProperty().set(Integer.toString(start));
