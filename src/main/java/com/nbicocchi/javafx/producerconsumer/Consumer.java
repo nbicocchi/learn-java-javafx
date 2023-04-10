@@ -7,7 +7,7 @@ import java.util.Deque;
 public abstract class Consumer extends Task<Long> {
     final Deque<Integer> deque;
     int maxItems;
-    int count;
+    long count;
 
     public Consumer(Deque<Integer> deque, int maxItems) {
         this.deque = deque;

@@ -9,7 +9,7 @@ public class ProducerSafeWaitNotify extends Producer {
     }
 
     @Override
-    public Integer call() throws Exception {
+    public Long call() throws Exception {
         RandomGenerator rnd = RandomGenerator.getDefault();
         while (count < maxItems) {
             synchronized (deque) {

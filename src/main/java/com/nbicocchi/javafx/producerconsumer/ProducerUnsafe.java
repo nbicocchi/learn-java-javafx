@@ -9,7 +9,7 @@ public class ProducerUnsafe extends Producer {
     }
 
     @Override
-    protected Integer call() throws Exception {
+    protected Long call() throws Exception {
         RandomGenerator rnd = RandomGenerator.getDefault();
         while (count < maxItems) {
             if (deque.size() < dequeMaxItems) {

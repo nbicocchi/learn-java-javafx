@@ -11,7 +11,7 @@ public class ConsumerUnSafe extends Consumer {
     @Override
     public Long call() throws Exception {
         long start = System.nanoTime();
-        while (count < maxItems - 10) {
+        while (count < maxItems) {
             if (!deque.isEmpty()) {
                 deque.removeLast();
                 //System.out.printf("Consumer %s received %d items\n", Thread.currentThread().getName(), count);
