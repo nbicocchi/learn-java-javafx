@@ -1,16 +1,17 @@
 package com.nbicocchi.javafx.producerconsumer;
 
-import java.util.Queue;
+import javafx.concurrent.Task;
 
-public abstract class Consumer<T> implements Runnable {
-    final Queue<T> q;
-    public boolean running;
+import java.util.Deque;
+
+public abstract class Consumer extends Task<Long> {
+    final Deque<Integer> deque;
+    int maxItems;
     int count;
 
-    public Consumer(Queue<T> q) {
-        super();
-        this.running = true;
+    public Consumer(Deque<Integer> deque, int maxItems) {
+        this.deque = deque;
+        this.maxItems = maxItems;
         this.count = 0;
-        this.q = q;
     }
 }
