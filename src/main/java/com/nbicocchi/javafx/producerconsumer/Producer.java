@@ -2,16 +2,16 @@ package com.nbicocchi.javafx.producerconsumer;
 
 import javafx.concurrent.Task;
 
-import java.util.Deque;
+import java.util.Queue;
 
 public abstract class Producer extends Task<Long> {
-    final Deque<Integer> deque;
+    final Queue<Integer> queue;
     final int dequeMaxItems;
     int maxItems;
     long count;
 
-    public Producer(Deque<Integer> deque, int dequeMaxItems, int maxItems) {
-        this.deque = deque;
+    public Producer(Queue<Integer> queue, int dequeMaxItems, int maxItems) {
+        this.queue = queue;
         this.dequeMaxItems = dequeMaxItems;
         this.maxItems = maxItems;
         this.count = 0;

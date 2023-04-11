@@ -1,20 +1,20 @@
 package com.nbicocchi.javafx.producerconsumer;
 
-import java.util.Deque;
+import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
 public class ConsumerSafe extends Consumer {
-    public ConsumerSafe(Deque<Integer> deque, int maxItems) {
-        super(deque, maxItems);
+    public ConsumerSafe(Queue<Integer> queue, int maxItems) {
+        super(queue, maxItems);
     }
 
     @Override
     public Long call() throws Exception {
         long start = System.nanoTime();
         while (count < maxItems) {
-            synchronized (deque) {
-                if (!deque.isEmpty()) {
-                    deque.removeLast();
+            synchronized (queue) {
+                if (!queue.isEmpty()) {
+                    queue.remove();
                     //System.out.printf("Consumer %s received %d items\n", Thread.currentThread().getName(), count);
                     count += 1;
                 }
