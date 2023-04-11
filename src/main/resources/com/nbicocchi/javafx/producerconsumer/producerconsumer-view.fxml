@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.chart.ScatterChart?>
 <?import javafx.scene.control.Button?>
@@ -12,12 +13,24 @@
    <bottom>
       <VBox prefHeight="59.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>
-            <HBox alignment="CENTER" prefHeight="50.0" prefWidth="500.0" spacing="10.0">
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
-                  <ChoiceBox fx:id="chArchitecture" prefWidth="250.0" />
+                  <ChoiceBox fx:id="chProducer" prefWidth="230.0" />
+                  <ChoiceBox fx:id="chConsumer" prefWidth="230.0" />
+                  <ChoiceBox fx:id="chSharedObject" prefWidth="230.0" />
+               </children>
+               <padding>
+                  <Insets bottom="10.0" top="10.0" />
+               </padding>
+            </HBox>
+            <HBox alignment="CENTER" spacing="10.0">
+               <children>
                   <Button mnemonicParsing="false" onAction="#onStart" prefWidth="100.0" text="Start" />
                   <Button mnemonicParsing="false" onAction="#onClear" prefWidth="100.0" text="Clear" />
                </children>
+               <padding>
+                  <Insets bottom="10.0" />
+               </padding>
             </HBox>
          </children>
       </VBox>
@@ -25,10 +38,10 @@
    <center>
       <ScatterChart fx:id="chart" BorderPane.alignment="CENTER">
         <xAxis>
-          <NumberAxis side="BOTTOM" fx:id="xAxis" />
+          <NumberAxis label="Shared Deque Size (items)" side="BOTTOM" fx:id="xAxis" />
         </xAxis>
         <yAxis>
-          <NumberAxis fx:id="yAxis" side="LEFT" />
+          <NumberAxis fx:id="yAxis" label="Time (milliseconds)" side="LEFT" />
         </yAxis>
       </ScatterChart>
    </center>

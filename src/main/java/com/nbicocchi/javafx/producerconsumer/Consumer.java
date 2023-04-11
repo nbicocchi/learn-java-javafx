@@ -9,7 +9,7 @@ public abstract class Consumer extends Task<Long> {
     int maxItems;
     long count;
 
-    public Consumer(Queue<Integer> queue, int maxItems) {
+    public Consumer(Queue<Integer> queue, Integer maxItems) {
         this.queue = queue;
         this.maxItems = maxItems;
         this.count = 0;

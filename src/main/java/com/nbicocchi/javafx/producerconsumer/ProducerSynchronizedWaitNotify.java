@@ -3,13 +3,13 @@ package com.nbicocchi.javafx.producerconsumer;
 import java.util.Queue;
 import java.util.random.RandomGenerator;
 
-public class ProducerSafe extends Producer {
-    public ProducerSafe(Queue<Integer> queue, int dequeMaxItems, int maxItems) {
+public class ProducerSynchronizedWaitNotify extends Producer {
+    public ProducerSynchronizedWaitNotify(Queue<Integer> queue, Integer dequeMaxItems, Integer maxItems) {
         super(queue, dequeMaxItems, maxItems);
     }
 
     @Override
-    protected Long call() throws Exception {
+    public Long call() throws Exception {
         RandomGenerator rnd = RandomGenerator.getDefault();
         while (count < maxItems) {
             synchronized (queue) {
@@ -17,6 +17,9 @@ public class ProducerSafe extends Producer {
                     queue.add(rnd.nextInt());
                     //System.out.printf("Producer %s pushed %d items\n", Thread.currentThread().getName(), count);
                     count += 1;
+                    queue.notifyAll();
+                } else {
+                    queue.wait();
                 }
             }
         }

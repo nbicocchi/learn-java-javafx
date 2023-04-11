@@ -4,7 +4,7 @@ import java.util.Queue;
 import java.util.random.RandomGenerator;
 
 public class ProducerUnsafe extends Producer {
-    public ProducerUnsafe(Queue<Integer> queue, int dequeMaxItems, int maxItems) {
+    public ProducerUnsafe(Queue<Integer> queue, Integer dequeMaxItems, Integer maxItems) {
         super(queue, dequeMaxItems, maxItems);
     }
 

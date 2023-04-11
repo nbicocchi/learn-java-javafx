@@ -3,8 +3,8 @@ package com.nbicocchi.javafx.producerconsumer;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
-public class ConsumerSafe extends Consumer {
-    public ConsumerSafe(Queue<Integer> queue, int maxItems) {
+public class ConsumerSynchronizedWaitNotify extends Consumer {
+    public ConsumerSynchronizedWaitNotify(Queue<Integer> queue, Integer maxItems) {
         super(queue, maxItems);
     }
 
@@ -17,6 +17,9 @@ public class ConsumerSafe extends Consumer {
                     queue.remove();
                     //System.out.printf("Consumer %s received %d items\n", Thread.currentThread().getName(), count);
                     count += 1;
+                    queue.notifyAll();
+                } else {
+                    queue.wait();
                 }
             }
         }

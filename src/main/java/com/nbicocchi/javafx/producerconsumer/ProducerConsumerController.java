@@ -1,43 +1,48 @@
 package com.nbicocchi.javafx.producerconsumer;
 
 import javafx.fxml.FXML;
-import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 
-import java.util.LinkedList;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class ProducerConsumerController {
     public static final int MAX_ITEMS = 25000;
-    public static final int MIN_DEQUE = 1;
-    public static final int MAX_DEQUE = 128;
+    public static final int MIN_QUEUE = 1;
+    public static final int MAX_QUEUE = 128;
+    public static final String[] producers = {
+            "com.nbicocchi.javafx.producerconsumer.ProducerSynchronized",
+            "com.nbicocchi.javafx.producerconsumer.ProducerSynchronizedWaitNotify",
+            "com.nbicocchi.javafx.producerconsumer.ProducerUnsafe",
+    };
+    public static final String[] consumers = {
+            "com.nbicocchi.javafx.producerconsumer.ConsumerSynchronized",
+            "com.nbicocchi.javafx.producerconsumer.ConsumerSynchronizedWaitNotify",
+            "com.nbicocchi.javafx.producerconsumer.ConsumerUnsafe",
+    };
+    public static final String[] sharedObjects = {
+            "java.util.LinkedList",
+            "java.util.ArrayDeque",
+            "java.util.concurrent.ConcurrentLinkedDeque",
+            "java.util.concurrent.LinkedBlockingQueue",
+    };
+
     @FXML private ScatterChart<Number, Number> chart;
-    @FXML private NumberAxis xAxis;
-    @FXML private NumberAxis yAxis;
-    @FXML private ChoiceBox<String> chArchitecture;
+    @FXML private ChoiceBox<String> chProducer;
+    @FXML private ChoiceBox<String> chConsumer;
+    @FXML private ChoiceBox<String> chSharedObject;
+
+    int experimentID = 0;
 
     public void initialize() {
-        String[] experiments = {"LinkedList + Synchronized", "LinkedList + Synchronized + W/N",
-                "ConcurrentLinkedDeque"};
-        chArchitecture.getItems().addAll(experiments);
-        chArchitecture.getSelectionModel().select(0);
-        xAxis.setLowerBound(0);
-        xAxis.setUpperBound(64);
-        yAxis.setLowerBound(0);
-        xAxis.setLabel("Shared Deque Size (items)");
-        yAxis.setLabel("Time (milliseconds)");
-    }
-
-    @FXML
-    void onStart() throws InterruptedException {
-        switch (chArchitecture.getValue()) {
-            case "LinkedList + Synchronized" -> runExperimentsSafe();
-            case "LinkedList + Synchronized + W/N" -> runExperimentsSafeWaitNotify();
-            case "ConcurrentLinkedDeque" -> runExperimentsLinkedDeque();
-        }
+        chProducer.getItems().addAll(producers);
+        chProducer.getSelectionModel().select(0);
+        chConsumer.getItems().addAll(consumers);
+        chConsumer.getSelectionModel().select(0);
+        chSharedObject.getItems().addAll(sharedObjects);
+        chSharedObject.getSelectionModel().select(0);
     }
 
     @FXML
@@ -45,46 +50,26 @@ public class ProducerConsumerController {
         chart.getData().clear();
     }
 
-    void runExperimentsSafe() throws InterruptedException {
-        for (int i = MIN_DEQUE; i < MAX_DEQUE; i++) {
+    @FXML
+    void onStart() throws InterruptedException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
+        for (int i = MIN_QUEUE; i < MAX_QUEUE; i++) {
             final int items = i;
-            Queue<Integer> queue = new LinkedList<>();
-            Producer producer = new ProducerSafe(queue, items, MAX_ITEMS);
-            Consumer consumer = new ConsumerSafe(queue, MAX_ITEMS);
+            Queue<Integer> queue =
+                    (Queue) Class.forName(chSharedObject.getValue()).newInstance();
+            Producer producer =
+                    (Producer) Class.forName(chProducer.getValue()).getDeclaredConstructor(
+                            Queue.class, Integer.class, Integer.class).newInstance(queue, items, MAX_ITEMS);
+            Consumer consumer =
+                    (Consumer) Class.forName(chConsumer.getValue()).getDeclaredConstructor(
+                            Queue.class, Integer.class).newInstance(queue, MAX_ITEMS);
             consumer.setOnSucceeded(event -> {
-                XYChart.Series<Number, Number> data = getSeriesByName(chArchitecture.getValue());
+                String experimentName = String.format("Experiment-%d", experimentID);
+                XYChart.Series<Number, Number> data = getSeriesByName(experimentName);
                 data.getData().add(new XYChart.Data<>(items, consumer.getValue()));
             });
             runExperiment(producer, consumer);
         }
-    }
-
-    void runExperimentsSafeWaitNotify() throws InterruptedException {
-        for (int i = MIN_DEQUE; i < MAX_DEQUE; i++) {
-            final int items = i;
-            Queue<Integer> queue = new LinkedList<>();
-            Producer producer = new ProducerSafeWaitNotify(queue, items, MAX_ITEMS);
-            Consumer consumer = new ConsumerSafeWaitNotify(queue, MAX_ITEMS);
-            consumer.setOnSucceeded(event -> {
-                XYChart.Series<Number, Number> data = getSeriesByName(chArchitecture.getValue());
-                data.getData().add(new XYChart.Data<>(items, consumer.getValue()));
-            });
-            runExperiment(producer, consumer);
-        }
-    }
-
-    void runExperimentsLinkedDeque() throws InterruptedException {
-        for (int i = MIN_DEQUE; i < MAX_DEQUE; i++) {
-            final int items = i;
-            Queue<Integer> queue = new ConcurrentLinkedDeque<>();
-            Producer producer = new ProducerUnsafe(queue, items, MAX_ITEMS);
-            Consumer consumer = new ConsumerUnSafe(queue, MAX_ITEMS);
-            consumer.setOnSucceeded(event -> {
-                XYChart.Series<Number, Number> data = getSeriesByName(chArchitecture.getValue());
-                data.getData().add(new XYChart.Data<>(items, consumer.getValue()));
-            });
-            runExperiment(producer, consumer);
-        }
+        experimentID++;
     }
 
     void runExperiment(Producer producer, Consumer consumer) throws InterruptedException {

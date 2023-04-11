@@ -10,7 +10,7 @@ public abstract class Producer extends Task<Long> {
     int maxItems;
     long count;
 
-    public Producer(Queue<Integer> queue, int dequeMaxItems, int maxItems) {
+    public Producer(Queue<Integer> queue, Integer dequeMaxItems, Integer maxItems) {
         this.queue = queue;
         this.dequeMaxItems = dequeMaxItems;
         this.maxItems = maxItems;

@@ -3,8 +3,8 @@ package com.nbicocchi.javafx.producerconsumer;
 import java.util.Queue;
 import java.util.concurrent.TimeUnit;
 
-public class ConsumerUnSafe extends Consumer {
-    public ConsumerUnSafe(Queue<Integer> queue, int maxItems) {
+public class ConsumerUnsafe extends Consumer {
+    public ConsumerUnsafe(Queue<Integer> queue, Integer maxItems) {
         super(queue, maxItems);
     }
 
