@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.producerconsumer.ProducerConsumerController">
+<BorderPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.threads.producerconsumer.ProducerConsumerController">
    <bottom>
       <VBox prefHeight="59.0" prefWidth="500.0" BorderPane.alignment="CENTER">
          <children>

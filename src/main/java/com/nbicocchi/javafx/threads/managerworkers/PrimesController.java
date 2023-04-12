@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.primes;
+package com.nbicocchi.javafx.threads.managerworkers;
 
 import javafx.concurrent.Worker;
 import javafx.fxml.FXML;

@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.primes;
+package com.nbicocchi.javafx.threads.producerconsumer;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -8,16 +8,16 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class PrimesApplication extends Application {
+public class ProducerConsumerApplication extends Application {
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("workers-view.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("producerconsumer-view.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Prime numbers finder");
+        primaryStage.setTitle("Producer Consumer Benchmark");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

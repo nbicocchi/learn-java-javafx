@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.primes;
+package com.nbicocchi.javafx.threads.managerworkers;
 
 public class PrimeSearcherFast implements PrimeSearcher {
     @Override

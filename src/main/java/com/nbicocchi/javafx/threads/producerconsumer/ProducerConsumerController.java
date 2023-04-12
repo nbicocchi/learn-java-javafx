@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.producerconsumer;
+package com.nbicocchi.javafx.threads.producerconsumer;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.ScatterChart;
@@ -13,14 +13,14 @@ public class ProducerConsumerController {
     public static final int MIN_QUEUE = 1;
     public static final int MAX_QUEUE = 128;
     public static final String[] producers = {
-            "com.nbicocchi.javafx.producerconsumer.ProducerSynchronized",
-            "com.nbicocchi.javafx.producerconsumer.ProducerSynchronizedWaitNotify",
-            "com.nbicocchi.javafx.producerconsumer.ProducerUnsafe",
+            "com.nbicocchi.javafx.threads.producerconsumer.ProducerSynchronized",
+            "com.nbicocchi.javafx.threads.producerconsumer.ProducerSynchronizedWaitNotify",
+            "com.nbicocchi.javafx.threads.producerconsumer.ProducerUnsafe",
     };
     public static final String[] consumers = {
-            "com.nbicocchi.javafx.producerconsumer.ConsumerSynchronized",
-            "com.nbicocchi.javafx.producerconsumer.ConsumerSynchronizedWaitNotify",
-            "com.nbicocchi.javafx.producerconsumer.ConsumerUnsafe",
+            "com.nbicocchi.javafx.threads.producerconsumer.ConsumerSynchronized",
+            "com.nbicocchi.javafx.threads.producerconsumer.ConsumerSynchronizedWaitNotify",
+            "com.nbicocchi.javafx.threads.producerconsumer.ConsumerUnsafe",
     };
     public static final String[] sharedObjects = {
             "java.util.LinkedList",
@@ -55,7 +55,8 @@ public class ProducerConsumerController {
         for (int i = MIN_QUEUE; i < MAX_QUEUE; i++) {
             final int items = i;
             Queue<Integer> queue =
-                    (Queue) Class.forName(chSharedObject.getValue()).newInstance();
+                    (Queue) Class.forName(chSharedObject.getValue()).
+                            getDeclaredConstructor().newInstance();
             Producer producer =
                     (Producer) Class.forName(chProducer.getValue()).getDeclaredConstructor(
                             Queue.class, Integer.class, Integer.class).newInstance(queue, items, MAX_ITEMS);

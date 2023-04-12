@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.producerconsumer;
+package com.nbicocchi.javafx.threads.producerconsumer;
 
 import java.util.Queue;
 import java.util.random.RandomGenerator;

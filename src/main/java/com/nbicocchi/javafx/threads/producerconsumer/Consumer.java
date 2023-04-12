@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.producerconsumer;
+package com.nbicocchi.javafx.threads.producerconsumer;
 
 import javafx.concurrent.Task;
 
