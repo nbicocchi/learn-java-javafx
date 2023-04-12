@@ -1,6 +1,7 @@
 package com.nbicocchi.javafx.threads.managerworkers;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -19,6 +20,10 @@ public class PrimesApplication extends Application {
         Scene scene = new Scene(root);
         primaryStage.setTitle("Primes Explorer");
         primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
         primaryStage.show();
     }
 }

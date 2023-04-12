@@ -23,9 +23,10 @@ public class PrimesController {
             "com.nbicocchi.javafx.threads.managerworkers.PrimeSearcherFast",
             "com.nbicocchi.javafx.threads.managerworkers.PrimeSearcherSlow",
     };
-    int startBlock;
-    int endBlock;
     int blockSize;
+    int blockStart;
+    int blockEnd;
+    int blockProcessed;
     List<Integer> primes;
     List<Double> speeds;
     ExecutorService executorService;
@@ -36,29 +37,30 @@ public class PrimesController {
     @FXML private Label lbSpeedAvg;
     @FXML private ProgressBar pbProgress;
     @FXML private TextField tfBlockSize;
-    @FXML private TextField tfEndBlock;
-    @FXML private TextField tfStartBlock;
+    @FXML private TextField tfBlockStart;
+    @FXML private TextField tfBlockEnd;
     @FXML private ChoiceBox<Integer> chWorkers;
     @FXML private ChoiceBox<String> chEngines;
 
     public void initialize() {
         chWorkers.getItems().addAll(1,2,4,8,16,32,64);
-        chWorkers.getSelectionModel().select(2);
+        chWorkers.getSelectionModel().select(0);
         chEngines.getItems().addAll(engines);
         chEngines.getSelectionModel().select(0);
-        tfStartBlock.textProperty().set("0");
-        tfEndBlock.textProperty().set("100");
+        tfBlockStart.textProperty().set("0");
+        tfBlockEnd.textProperty().set("100");
         tfBlockSize.textProperty().set("250000");
     }
 
     void initSearch() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        startBlock = Integer.parseInt(tfStartBlock.getText());
-        endBlock = Integer.parseInt(tfEndBlock.getText());
+        blockStart = Integer.parseInt(tfBlockStart.getText());
+        blockEnd = Integer.parseInt(tfBlockEnd.getText());
         blockSize = Integer.parseInt(tfBlockSize.getText());
+        blockProcessed = 0;
         primes = new ArrayList<>();
         speeds = new ArrayList<>();
         executorService = Executors.newFixedThreadPool(chWorkers.getValue());
-        for (int blockID = startBlock; blockID <= endBlock; blockID++) {
+        for (int blockID = blockStart; blockID <= blockEnd; blockID++) {
             PrimeTask task = new PrimeTask(
                     (PrimeSearcher) Class.forName(chEngines.getValue()).getDeclaredConstructor().newInstance(),
                     blockID,
@@ -75,7 +77,7 @@ public class PrimesController {
         lbPrimes.textProperty().set(String.format("%d", primes.size()));
         lbSpeed.textProperty().set(String.format("%.1fK / s", speeds.get(speeds.size() - 1)));
         lbSpeedAvg.textProperty().set(String.format("%.1fK / s", speeds.stream().mapToDouble(a -> a).average().orElse(0.0)));
-        pbProgress.progressProperty().set((task.getBlockID() - startBlock) / (double)(endBlock - startBlock));
+        pbProgress.progressProperty().set((++blockProcessed) / (double)(blockEnd - blockStart));
     }
 
     @FXML
