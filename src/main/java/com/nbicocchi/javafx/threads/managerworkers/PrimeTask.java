@@ -4,6 +4,7 @@ import javafx.concurrent.Task;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class PrimeTask extends Task<List<Integer>> {
     PrimeSearcher engine;
@@ -47,8 +48,8 @@ public class PrimeTask extends Task<List<Integer>> {
         return end;
     }
 
-    public double getOverallSpeed() {
-        double interval = (endTimestamp - startTimestamp) / 1000000000.0;
-        return primes.size() / interval;
+    public double getProcessingSpeed() {
+        double seconds = ((endTimestamp - startTimestamp) / (double)TimeUnit.SECONDS.toNanos(1));
+        return (end - start) / seconds;
     }
 }
