@@ -14,70 +14,73 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="179.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.threads.managerworkers.PrimesController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="220.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.threads.managerworkers.PrimesController">
    <bottom>
-      <HBox alignment="CENTER" prefHeight="54.0" prefWidth="614.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <ChoiceBox fx:id="chWorkers" prefWidth="80.0" />
-            <Button mnemonicParsing="false" onAction="#onStart" prefWidth="80.0" text="Start" />
-            <Button mnemonicParsing="false" onAction="#onStop" prefWidth="80.0" text="Stop" />
-            <Button mnemonicParsing="false" onAction="#onSave" prefWidth="80.0" text="Save" />
-         </children>
-      </HBox>
+       <VBox BorderPane.alignment="CENTER">
+           <HBox alignment="CENTER" prefHeight="24.0" prefWidth="700.0" spacing="20.0">
+               <ChoiceBox fx:id="chWorkers" prefWidth="80.0"/>
+               <ChoiceBox fx:id="chEngines" prefWidth="400.0"/>
+           </HBox>
+           <HBox alignment="CENTER" prefHeight="54.0" prefWidth="614.0" spacing="20.0">
+               <Button mnemonicParsing="false" onAction="#onStart" prefWidth="80.0" text="Start"/>
+               <Button mnemonicParsing="false" onAction="#onStop" prefWidth="80.0" text="Stop"/>
+               <Button mnemonicParsing="false" onAction="#onSave" prefWidth="80.0" text="Save"/>
+           </HBox>
+       </VBox>
    </bottom>
    <center>
-      <VBox prefHeight="129.0" prefWidth="614.0" BorderPane.alignment="CENTER">
-         <children>
-            <GridPane>
-              <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="118.0" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="664.0" minWidth="10.0" prefWidth="582.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <ProgressBar fx:id="pbProgress" prefHeight="20.0" prefWidth="562.0" progress="0.0" GridPane.columnIndex="1" />
-                  <Label fx:id="lbCurrent" text="-/-" GridPane.halignment="CENTER" />
-               </children>
+       <VBox prefHeight="129.0" prefWidth="614.0" BorderPane.alignment="CENTER">
+           <GridPane>
+               <columnConstraints>
+                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="303.0" minWidth="10.0" prefWidth="118.0"/>
+                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="664.0" minWidth="10.0" prefWidth="582.0"/>
+               </columnConstraints>
+               <rowConstraints>
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
                <padding>
-                  <Insets bottom="10.0" top="10.0" />
+                   <Insets bottom="10.0" top="10.0"/>
                </padding>
-            </GridPane>
-            <Separator prefWidth="200.0" />
-            <GridPane>
-              <columnConstraints>
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-              </rowConstraints>
-               <children>
-                  <Label text="First Block" GridPane.halignment="CENTER" />
-                  <Label text="Last Block" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
-                  <Label text="Block size" GridPane.columnIndex="4" GridPane.halignment="CENTER" />
-                  <Label fx:id="lbTime" text="Primes found" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label text="Integers / s" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label text="Integers / s" GridPane.columnIndex="4" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <TextField fx:id="tfStartBlock" GridPane.columnIndex="1" />
-                  <TextField fx:id="tfEndBlock" GridPane.columnIndex="3" />
-                  <TextField fx:id="tfBlockSize" GridPane.columnIndex="5" />
-                  <Label fx:id="lbPrimes" text="N/A" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="lbSpeed" text="N/A" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-                  <Label fx:id="lbSpeedAvg" text="N/A" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
-               </children>
+               <ProgressBar fx:id="pbProgress" prefHeight="20.0" prefWidth="562.0" progress="0.0"
+                            GridPane.columnIndex="1"/>
+               <Label fx:id="lbCurrent" text="-/-" GridPane.halignment="CENTER"/>
+           </GridPane>
+           <Separator prefWidth="200.0"/>
+           <GridPane>
+               <columnConstraints>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
+               </columnConstraints>
+               <rowConstraints>
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+               </rowConstraints>
                <padding>
-                  <Insets bottom="5.0" left="5.0" right="20.0" top="5.0" />
+                   <Insets bottom="5.0" left="5.0" right="20.0" top="5.0"/>
                </padding>
-            </GridPane>
-            <Separator prefWidth="200.0" />
-         </children>
-      </VBox>
+               <Label text="First Block" GridPane.halignment="CENTER"/>
+               <Label text="Last Block" GridPane.columnIndex="2" GridPane.halignment="CENTER"/>
+               <Label text="Block size" GridPane.columnIndex="4" GridPane.halignment="CENTER"/>
+               <Label text="Primes found" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+               <Label text="Integers / s" GridPane.columnIndex="2" GridPane.halignment="CENTER"
+                      GridPane.rowIndex="1"/>
+               <Label text="Integers / s (Avg)" GridPane.columnIndex="4" GridPane.halignment="CENTER"
+                      GridPane.rowIndex="1"/>
+               <TextField fx:id="tfStartBlock" GridPane.columnIndex="1"/>
+               <TextField fx:id="tfEndBlock" GridPane.columnIndex="3"/>
+               <TextField fx:id="tfBlockSize" GridPane.columnIndex="5"/>
+               <Label fx:id="lbPrimes" text="N/A" GridPane.columnIndex="1" GridPane.halignment="CENTER"
+                      GridPane.rowIndex="1"/>
+               <Label fx:id="lbSpeed" text="N/A" GridPane.columnIndex="3" GridPane.halignment="CENTER"
+                      GridPane.rowIndex="1"/>
+               <Label fx:id="lbSpeedAvg" text="N/A" GridPane.columnIndex="5" GridPane.halignment="CENTER"
+                      GridPane.rowIndex="1"/>
+           </GridPane>
+           <Separator prefWidth="200.0"/>
+       </VBox>
    </center>
 </BorderPane>

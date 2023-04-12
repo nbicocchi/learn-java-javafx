@@ -17,7 +17,7 @@ public class PrimesApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("workers-view.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Prime numbers finder");
+        primaryStage.setTitle("Primes Explorer");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

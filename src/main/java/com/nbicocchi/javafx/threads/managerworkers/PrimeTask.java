@@ -7,28 +7,26 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class PrimeTask extends Task<List<Integer>> {
-    PrimeSearcher engine;
+    final PrimeSearcher engine;
+    final int blockID;
+    final int start;
+    final int end;
     List<Integer> primes;
-    int start;
-    int end;
     long startTimestamp;
     long endTimestamp;
 
-    public PrimeTask(PrimeSearcher engine, int start, int end) {
+    public PrimeTask(PrimeSearcher engine, int blockID, int blockSize) {
         this.engine = engine;
-        this.start = start;
-        this.end = end;
+        this.blockID = blockID;
+        this.start = blockID * blockSize;
+        this.end = (blockID + 1) * blockSize - 1;
+        this.primes = new ArrayList<>();
     }
 
     @Override
     protected List<Integer> call() {
         startTimestamp = System.nanoTime();
-        primes = new ArrayList<>();
-        int step = (end - start) / 100;
         for (int i = start; i < end; i++) {
-            if (i % step == 0) {
-                updateProgress(i - start, end - start);
-            }
             if (isCancelled()) {
                 break;
             }
@@ -38,6 +36,10 @@ public class PrimeTask extends Task<List<Integer>> {
         }
         endTimestamp = System.nanoTime();
         return primes;
+    }
+
+    public int getBlockID() {
+        return blockID;
     }
 
     public int getStart() {
