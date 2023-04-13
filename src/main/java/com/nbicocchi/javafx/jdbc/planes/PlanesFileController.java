@@ -19,20 +19,13 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class PlanesFileController {
-    @FXML
-    private ComboBox<String> cbCategory;
-    @FXML
-    private DatePicker dcFirstFlight;
-    @FXML
-    private TextField tfLength;
-    @FXML
-    private TextField tfName;
-    @FXML
-    private TextField tfWingSpan;
-    @FXML
-    private TableView<Plane> txView;
-    @FXML
-    private TextField tfSearch;
+    @FXML private ComboBox<String> cbCategory;
+    @FXML private DatePicker dcFirstFlight;
+    @FXML private TextField tfLength;
+    @FXML private TextField tfName;
+    @FXML private TextField tfWingSpan;
+    @FXML private TableView<Plane> txView;
+    @FXML private TextField tfSearch;
     private ObservableList<Plane> planes;
 
     public void initialize() {

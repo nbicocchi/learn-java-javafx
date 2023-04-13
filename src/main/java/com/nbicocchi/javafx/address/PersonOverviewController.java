@@ -78,6 +78,10 @@ public class PersonOverviewController {
         }
     }
 
+    /**
+     * Returns the index of the selected person in the TableView component
+     * @return the index of the selected person
+     */
     int selectedIndex() {
         int selectedIndex = personTable.getSelectionModel().getSelectedIndex();
         if (selectedIndex < 0) {
@@ -86,6 +90,9 @@ public class PersonOverviewController {
         return selectedIndex;
     }
 
+    /**
+     * Shows a simple warning dialog
+     */
     void showNoPersonSelectedAlert() {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setTitle("No Selection");
@@ -112,7 +119,7 @@ public class PersonOverviewController {
             DialogPane view = loader.load();
             PersonEditDialogController controller = loader.getController();
 
-            // Set the person into the controller.
+            // Set an empty person into the controller
             controller.setPerson(new Person());
 
             // Create the dialog
