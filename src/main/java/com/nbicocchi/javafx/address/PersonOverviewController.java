@@ -1,14 +1,21 @@
 package com.nbicocchi.javafx.address;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -28,7 +35,7 @@ public class PersonOverviewController {
      * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
      */
     @FXML
-    public void initialize() {
+    public void initialize() throws JsonProcessingException {
         // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
@@ -168,6 +175,7 @@ public class PersonOverviewController {
         }
     }
 
+    @FXML
     public void handleBirthdayStatistics() {
         try {
             FXMLLoader loader = new FXMLLoader();
@@ -189,5 +197,62 @@ public class PersonOverviewController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void handleNew() {
+        personTable.getItems().clear();
+    }
+
+    @FXML
+    private void handleOpen() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showOpenDialog(null);
+            if (file != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
+                List<Person> persons = mapper.readValue(file, new TypeReference<>() {
+                });
+                personTable.getItems().addAll(persons);
+            }
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Could not load data").showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleSaveAs() {
+        try {
+            FileChooser fileChooser = new FileChooser();
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
+            fileChooser.getExtensionFilters().add(extFilter);
+
+            File file = fileChooser.showSaveDialog(null);
+            if (file != null) {
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
+                mapper.writerWithDefaultPrettyPrinter().writeValue(file, personTable.getItems());
+            }
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Could not save data").showAndWait();
+        }
+    }
+
+    @FXML
+    private void handleAbout() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Address Application");
+        alert.setHeaderText("About");
+        alert.setContentText("Author: nbicocchi@unimore.it");
+        alert.showAndWait();
+    }
+
+    @FXML
+    private void handleExit() {
+        System.exit(0);
     }
 }

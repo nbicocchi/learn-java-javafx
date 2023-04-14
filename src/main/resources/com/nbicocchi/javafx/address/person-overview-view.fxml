@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane prefHeight="400.0" prefWidth="700.0" stylesheets="@styles/jmetro/dark_theme.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.address.PersonOverviewController">
+<BorderPane prefHeight="400.0" prefWidth="700.0" stylesheets="@styles/jmetro/light_theme.css" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.address.PersonOverviewController">
    <center>
        <AnchorPane prefHeight="300.0" prefWidth="600.0">
            <SplitPane dividerPositions="0.29797979797979796" layoutX="112.0" layoutY="90.0" prefHeight="300.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -72,13 +72,16 @@
    <top>
        <MenuBar BorderPane.alignment="CENTER">
            <Menu mnemonicParsing="false" text="File">
-               <MenuItem mnemonicParsing="false" text="Close" />
+               <MenuItem mnemonicParsing="false" onAction="#handleNew" text="New" />
+            <MenuItem mnemonicParsing="false" onAction="#handleOpen" text="Open..." />
+            <MenuItem mnemonicParsing="false" onAction="#handleSaveAs" text="Save as..." />
+            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
            </Menu>
            <Menu mnemonicParsing="false" text="Statistics">
                <MenuItem mnemonicParsing="false" onAction="#handleBirthdayStatistics" text="Show Statistics" />
            </Menu>
            <Menu mnemonicParsing="false" text="Help">
-               <MenuItem mnemonicParsing="false" text="About" />
+               <MenuItem mnemonicParsing="false" onAction="#handleAbout" text="About" />
            </Menu>
        </MenuBar>
    </top>

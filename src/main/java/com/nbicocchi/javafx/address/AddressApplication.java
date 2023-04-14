@@ -7,6 +7,8 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class AddressApplication extends Application {
     public static void main(String[] args) {
         launch(args);
@@ -14,10 +16,10 @@ public class AddressApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("person-overview-view.fxml"));
-        Scene scene = new Scene(root);
+        Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("person-overview-view.fxml")));
+        Scene scene = new Scene(view);
         stage.setTitle("Address Application");
-        stage.getIcons().add(new Image(getClass().getResourceAsStream("icons/address_book_512.png")));
+        stage.getIcons().add(new Image(Objects.requireNonNull(getClass().getResourceAsStream("icons/address_book_512.png"))));
         stage.setScene(scene);
         stage.show();
     }
