@@ -167,4 +167,27 @@ public class PersonOverviewController {
             e.printStackTrace();
         }
     }
+
+    public void handleBirthdayStatistics() {
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource("birthday-statistics-view.fxml"));
+            DialogPane view = loader.load();
+            BirthdayStatisticsController controller = loader.getController();
+
+            // Set the person into the controller.
+            controller.setPersonData(personTable.getItems());
+
+            // Create the dialog
+            Dialog<ButtonType> dialog = new Dialog<>();
+            dialog.setTitle("Birthday Statistics");
+            dialog.initModality(Modality.WINDOW_MODAL);
+            dialog.setDialogPane(view);
+
+            // Show the dialog and wait until the user closes it
+            dialog.showAndWait();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
