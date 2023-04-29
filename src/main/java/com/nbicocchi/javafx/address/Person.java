@@ -12,17 +12,6 @@ public class Person {
     private final StringProperty city;
     private final ObjectProperty<LocalDate> birthday;
 
-    /**
-     * Default constructor.
-     */
-    public Person() {
-        this(null, null);
-    }
-
-    public Person(String firstName, String lastName) {
-        this(firstName, lastName, "Random Street", 1234, "Nowhere", LocalDate.of(2000, 1, 1));
-    }
-
     public Person(String firstName, String lastName, String street, Integer postalCode, String city, LocalDate birthDay) {
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);

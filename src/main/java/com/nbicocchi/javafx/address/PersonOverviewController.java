@@ -15,6 +15,7 @@ import javafx.stage.Modality;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -47,17 +48,22 @@ public class PersonOverviewController {
         // Listen for selection changes and show the person details when changed.
         personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showPersonDetails(newValue));
     }
+
+    /**
+     * Returns an observable list of Person objects
+     * @return the observable list
+     */
     ObservableList<Person> getPersonData() {
         ObservableList<Person> persons = FXCollections.observableArrayList();
-        persons.add(new Person("Hans", "Muster"));
-        persons.add(new Person("Ruth", "Mueller"));
-        persons.add(new Person("Heinz", "Kurz"));
-        persons.add(new Person("Cornelia", "Meier"));
-        persons.add(new Person("Werner", "Meyer"));
-        persons.add(new Person("Lydia", "Kunz"));
-        persons.add(new Person("Anna", "Best"));
-        persons.add(new Person("Stefan", "Meier"));
-        persons.add(new Person("Martin", "Mueller"));
+        persons.add(new Person("Hans", "Muster", "Schillerstraße", 1123, "Munich", LocalDate.of(1955, 1, 3)));
+        persons.add(new Person("Ruth", "Mueller", "Goethestraße", 5437, "Berlin", LocalDate.of(1934, 2, 23)));
+        persons.add(new Person("Heinz", "Kurz", "Jahnstraße", 6778, "Leipzig", LocalDate.of(1929, 2, 13)));
+        persons.add(new Person("Cornelia", "Meier", "Mozartstraße", 2234, "Nuremberg", LocalDate.of(1977, 6, 5)));
+        persons.add(new Person("Werner", "Meyer", "Hauptstraße", 8879, "Frankfurt", LocalDate.of(1976, 6, 6)));
+        persons.add(new Person("Lydia", "Kunz", "Hauptstraße", 9823, "Frankfurt", LocalDate.of(1999, 6, 16)));
+        persons.add(new Person("Anna", "Best", "Schulstraße", 5872, "Erfurt", LocalDate.of(1984, 8, 2)));
+        persons.add(new Person("Stefan", "Meier", "Gartenstraße", 3386, "Bremen", LocalDate.of(1987, 10, 21)));
+        persons.add(new Person("Martin", "Mueller", "Bahnhofstraße", 3345, "Hamburg", LocalDate.of(1992, 10, 7)));
         return persons;
     }
 
@@ -127,7 +133,7 @@ public class PersonOverviewController {
             PersonEditDialogController controller = loader.getController();
 
             // Set an empty person into the controller
-            controller.setPerson(new Person());
+            controller.setPerson(new Person("First Name", "Last Name", "Street", 0, "City", LocalDate.now()));
 
             // Create the dialog
             Dialog<ButtonType> dialog = new Dialog<>();
