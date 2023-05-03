@@ -12,49 +12,41 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.stage.FileChooser;
 import javafx.util.converter.DoubleStringConverter;
 import javafx.util.converter.LocalDateStringConverter;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.List;
+import java.util.UUID;
 
-public class PlanesDBForwardController {
-    @FXML
-    private ComboBox<String> cbCategory;
-    @FXML
-    private DatePicker dcFirstFlight;
-    @FXML
-    private TextField tfLength;
-    @FXML
-    private TextField tfName;
-    @FXML
-    private TextField tfWingSpan;
-    @FXML
-    private TableView<Plane> txView;
-    @FXML
-    private TextField tfSearch;
+public class PlanesController {
+    @FXML private ComboBox<String> cbCategory;
+    @FXML private DatePicker dcFirstFlight;
+    @FXML private TextField tfLength;
+    @FXML private TextField tfName;
+    @FXML private TextField tfWingSpan;
+    @FXML private TableView<Plane> txView;
+    @FXML private TextField tfSearch;
     private ObservableList<Plane> planes;
     private HikariDataSource dataSource;
 
-    public void initialize() {
+    public void initialize() throws SQLException {
         planes = FXCollections.observableArrayList();
         FilteredList<Plane> filteredData = new FilteredList<>(planes, plane -> true);
+
         List<String> planeTypes = List.of("Airliner", "Bomber", "Ekranoplan", "Flying boat", "Outsize cargo", "Transport");
         cbCategory.getItems().removeAll();
         cbCategory.getItems().addAll(planeTypes);
         cbCategory.getSelectionModel().select("Airliner");
+
         TableColumn<Plane, String> name = new TableColumn<>("Name");
         TableColumn<Plane, Double> length = new TableColumn<>("Length (m)");
         TableColumn<Plane, Double> wingspan = new TableColumn<>("Wing Span (m)");
         TableColumn<Plane, LocalDate> firstFlight = new TableColumn<>("First Flight");
         TableColumn<Plane, String> category = new TableColumn<>("Category");
+
         name.setPrefWidth(150);
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         name.setCellFactory(TextFieldTableCell.forTableColumn());
@@ -68,6 +60,7 @@ public class PlanesDBForwardController {
                 new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
             }
         });
+
         length.setPrefWidth(150);
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         length.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
@@ -81,6 +74,7 @@ public class PlanesDBForwardController {
                 new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
             }
         });
+
         wingspan.setPrefWidth(150);
         wingspan.setCellValueFactory(new PropertyValueFactory<>("wingspan"));
         wingspan.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
@@ -94,6 +88,7 @@ public class PlanesDBForwardController {
                 new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
             }
         });
+
         firstFlight.setPrefWidth(150);
         firstFlight.setCellValueFactory(new PropertyValueFactory<>("firstFlight"));
         firstFlight.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
@@ -107,6 +102,7 @@ public class PlanesDBForwardController {
                 new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
             }
         });
+
         category.setPrefWidth(150);
         category.setCellValueFactory(new PropertyValueFactory<>("category"));
         category.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(planeTypes)));
@@ -120,6 +116,7 @@ public class PlanesDBForwardController {
                 new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
             }
         });
+
         txView.getColumns().add(name);
         txView.getColumns().add(length);
         txView.getColumns().add(wingspan);
@@ -136,8 +133,13 @@ public class PlanesDBForwardController {
                 filteredData.setPredicate(plane -> plane.getName().toLowerCase().contains(filter.toLowerCase()));
             }
         });
-        dbConnection();
-        loadData();
+
+        try {
+            dbConnection();
+            loadData();
+        } catch (SQLException e) {
+            new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
+        }
     }
 
     private void dbConnection() {
@@ -148,43 +150,36 @@ public class PlanesDBForwardController {
         dataSource = new HikariDataSource(config);
     }
 
-    private void loadData() {
-        try (Connection connection = dataSource.getConnection()) {
-            planes.clear();
-            planes.addAll(PlaneUtils.loadFromDB(connection));
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
+    public static LocalDate convertSQLDateToLocalDate(Date SQLDate) {
+        java.util.Date date = new java.util.Date(SQLDate.getTime());
+        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+    }
+
+    private void loadData() throws SQLException {
+        planes.clear();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement getPlanes = connection.prepareStatement("SELECT * FROM planes");
+             ResultSet rs = getPlanes.executeQuery()) {
+                    while (rs.next()) {
+                        planes.add(new Plane(
+                                UUID.fromString(rs.getString("uuid")),
+                                rs.getString("name"),
+                                rs.getDouble("length"),
+                                rs.getDouble("wingspan"),
+                                convertSQLDateToLocalDate(rs.getDate("firstFlight")),
+                                rs.getString("category")));
+                    }
         }
     }
 
     @FXML
     void onImportClicked() {
-        FileChooser fileChooser = new FileChooser();
-        File f = fileChooser.showOpenDialog(null);
-        if (f != null) {
-            try (Connection connection = dataSource.getConnection()) {
-                PlaneUtils.saveToDB(PlaneUtils.loadFromFile(f.toPath()), connection);
-                loadData();
-            } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR, "Read Error").showAndWait();
-            } catch (SQLException e) {
-                e.printStackTrace();
-                new Alert(Alert.AlertType.ERROR, "SQL Error").showAndWait();
-            }
-        }
+        // TODO: with Object Mapper and JSON
     }
 
     @FXML
     void onExportClicked() {
-        FileChooser fileChooser = new FileChooser();
-        File f = fileChooser.showSaveDialog(null);
-        if (f != null) {
-            try {
-                PlaneUtils.saveToFile(planes, f.toPath());
-            } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR, "Write Error").showAndWait();
-            }
-        }
+        // TODO: with Object Mapper and JSON
     }
 
     @FXML

@@ -22,7 +22,7 @@ public class BasicOperations {
         testScrollable();
         testUpdateable();
         testSelect();
-        testSensitive();
+        //testSensitive();
     }
 
     private void dbConnection() {
@@ -59,8 +59,9 @@ public class BasicOperations {
      */
     public void testSelect() throws SQLException {
         System.out.println("- testSelect()...");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100")) {
-            ResultSet rs = ps.executeQuery();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100");
+             ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 System.out.println(rowToString(rs));
             }
@@ -72,7 +73,8 @@ public class BasicOperations {
      */
     public void testUpdate() throws SQLException {
         System.out.println("- testUpdate()...");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")) {
             ps.setInt(1, 176);
             ps.setInt(2, 1);
             ps.executeUpdate();
@@ -84,7 +86,9 @@ public class BasicOperations {
      */
     public void testScrollable() throws SQLException {
         System.out.println("- testScrollable()...");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0",
+             ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             // Third record
             rs.absolute(2);
@@ -103,8 +107,9 @@ public class BasicOperations {
      */
     public void testUpdateable() throws SQLException {
         System.out.println("- testUpdateable()...");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
-            ResultSet rs = ps.executeQuery();
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
+            ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int pages = rs.getInt("pages");
                 rs.updateInt("pages", pages + 10);
@@ -118,7 +123,8 @@ public class BasicOperations {
      */
     public void testSensitive() throws SQLException {
         System.out.println("- testSensitive()...");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             for (int retry = 0; retry < 10; retry++) {
                 System.out.printf("[%d] awaiting for external changes 10s...\n", retry);
@@ -139,7 +145,11 @@ public class BasicOperations {
      * Prints the current ResultSet row
      */
     public String rowToString(ResultSet rs) throws SQLException {
-        return String.format("id=%d, title=%s, author=%s, pages=%d", rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getInt("pages"));
+        return String.format("id=%d, title=%s, author=%s, pages=%d",
+                rs.getInt("id"),
+                rs.getString("title"),
+                rs.getString("author"),
+                rs.getInt("pages"));
     }
 
     public static void main(String[] args) {
