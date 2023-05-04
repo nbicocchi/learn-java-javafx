@@ -17,7 +17,7 @@ public class PlanesApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("planes-view.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Application");
+        primaryStage.setTitle("Planes");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

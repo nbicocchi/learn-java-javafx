@@ -12,6 +12,7 @@ public class Plane {
     String category;
 
     public Plane() {
+
     }
 
     public Plane(String name, double length, double wingspan, LocalDate firstFlight, String category) {
