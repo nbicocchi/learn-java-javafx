@@ -11,12 +11,12 @@ public class ConsumerSynchronizedWaitNotify extends Consumer {
     @Override
     public Long call() throws Exception {
         long start = System.nanoTime();
-        while (count < maxItems) {
+        while (processedItems < maxItems) {
             synchronized (queue) {
                 if (!queue.isEmpty()) {
                     queue.remove();
                     //System.out.printf("Consumer %s received %d items\n", Thread.currentThread().getName(), count);
-                    count += 1;
+                    processedItems += 1;
                     queue.notifyAll();
                 } else {
                     queue.wait();
