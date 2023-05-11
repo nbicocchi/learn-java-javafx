@@ -47,7 +47,7 @@ public class ReciprocalsController {
             }
         };
         task.progressProperty().addListener((observable, oldValue, newValue) -> progressBar.setProgress(newValue.doubleValue()));
-        task.valueProperty().addListener((observable, oldValue, newValue) -> sumField.setText(newValue.toString()));
+        //task.valueProperty().addListener((observable, oldValue, newValue) -> sumField.setText(newValue.toString()));
         task.setOnSucceeded(event -> sumField.setText(task.getValue().toString()));
         executorService.submit(task);
     }

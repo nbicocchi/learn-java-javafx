@@ -1,6 +1,5 @@
 package com.nbicocchi.javafx.common;
 
-import com.nbicocchi.javafx.balls.BallsSettings;
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
@@ -9,7 +8,7 @@ public class Sprite extends Region {
     PVector location;
     PVector velocity;
     PVector acceleration;
-    double mass = BallsSettings.SPRITE_DEFAULT_MASS;
+    double mass = 1.0;
     Node view;
 
     public Sprite(Node view) {
@@ -99,7 +98,6 @@ public class Sprite extends Region {
 
     public void update() {
         velocity = velocity.add(acceleration);
-        velocity = velocity.limit(BallsSettings.SPRITE_MAX_SPEED);
         location = location.add(velocity);
     }
 

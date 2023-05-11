@@ -21,27 +21,30 @@ import java.util.List;
 import java.util.random.RandomGenerator;
 
 public class BallsController {
-    List<Sprite> allSprites = new ArrayList<>();
+    public static int SPRITE_COUNT = 5;
+    public static double SPRITE_DRAG_COEFFICIENT = -0.05;
+    public static double SPRITE_MAX_SPEED = 20;
+    public static double WIND_X = 0.0;
+    public static double WIND_Y = 0.0;
+    public static double GRAVITY_X = 0.0;
+    public static double GRAVITY_Y = 5.0;
+
+    @FXML private Pane root;
+    @FXML private CheckBox enableDrag;
+    @FXML private CheckBox enableGravity;
+    @FXML private CheckBox enableWind;
+    @FXML private TextField tfDrag;
+    @FXML private TextField tfGravityY;
+    @FXML private TextField tfWindX;
+
+    List<Sprite> bouncingSprites = new ArrayList<>();
     AnimationTimer timer;
     Line force;
     Text text;
-    PVector gravity = BallsSettings.FORCE_GRAVITY;
-    PVector wind = BallsSettings.FORCE_WIND;
-    double dragCoefficient = BallsSettings.SPRITE_DRAG_COEFFICIENT;
-    @FXML
-    private Pane root;
-    @FXML
-    private CheckBox enableDrag;
-    @FXML
-    private CheckBox enableGravity;
-    @FXML
-    private CheckBox enableWind;
-    @FXML
-    private TextField tfDrag;
-    @FXML
-    private TextField tfGravityY;
-    @FXML
-    private TextField tfWindX;
+
+    PVector gravity = new PVector(GRAVITY_X, GRAVITY_Y);
+    PVector wind = new PVector(WIND_X, WIND_Y);
+    double dragCoefficient = SPRITE_DRAG_COEFFICIENT;
 
     public void initialize() {
         tfDrag.textProperty().addListener((observable, oldValue, newValue) -> dragCoefficient = Double.parseDouble(newValue));
@@ -52,9 +55,9 @@ public class BallsController {
 
     @FXML
     void onReset() {
-        tfDrag.setText(Double.toString(BallsSettings.SPRITE_DRAG_COEFFICIENT));
-        tfGravityY.setText(Double.toString(BallsSettings.FORCE_GRAVITY.y));
-        tfWindX.setText(Double.toString(BallsSettings.FORCE_WIND.x));
+        tfDrag.setText(Double.toString(SPRITE_DRAG_COEFFICIENT));
+        tfGravityY.setText(Double.toString(GRAVITY_Y));
+        tfWindX.setText(Double.toString(WIND_X));
         enableDrag.selectedProperty().set(false);
         enableWind.selectedProperty().set(false);
         enableGravity.selectedProperty().set(false);
@@ -62,17 +65,10 @@ public class BallsController {
         initializeTimer();
     }
 
-    private void initializeObjects() {
-        allSprites.clear();
-        root.getChildren().clear();
-        for (int i = 0; i < BallsSettings.SPRITE_COUNT; i++) {
-            addSprite();
-        }
-    }
-
     private void initializeTimer() {
-        if (timer != null)
+        if (timer != null) {
             timer.stop();
+        }
         timer = new AnimationTimer() {
 
             @Override
@@ -83,58 +79,67 @@ public class BallsController {
         timer.start();
     }
 
-    private void addSprite() {
-        RandomGenerator rnd = RandomGenerator.of("Random");
-        Rectangle r = new Rectangle(100, 100);
-        r.setStroke(Color.ORANGE);
-        r.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.3));
-        PVector location = new PVector(rnd.nextDouble() * root.getWidth(), rnd.nextDouble() * root.getHeight());
-        PVector velocity = new PVector(rnd.nextDouble() * BallsSettings.SPRITE_MAX_SPEED, rnd.nextDouble() * BallsSettings.SPRITE_MAX_SPEED);
-        Sprite sprite = new Sprite(r, location, velocity);
-        allSprites.add(sprite);
-        root.getChildren().add(sprite);
+    private void initializeObjects() {
+        bouncingSprites.clear();
+        for (int i = 0; i < SPRITE_COUNT; i++) {
+            bouncingSprites.add(generateBoncingSprite());
+        }
+        root.getChildren().clear();
+        root.getChildren().addAll(bouncingSprites);
     }
+
+    private Sprite generateBoncingSprite() {
+        Rectangle view = new Rectangle(100, 100);
+        view.setStroke(Color.ORANGE);
+        view.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.3));
+
+        RandomGenerator rnd = RandomGenerator.getDefault();
+        PVector location = new PVector(rnd.nextDouble() * root.getWidth(), rnd.nextDouble() * root.getHeight());
+        PVector velocity = new PVector(rnd.nextDouble() * SPRITE_MAX_SPEED, rnd.nextDouble() * SPRITE_MAX_SPEED);
+        return new Sprite(view, location, velocity);
+    }
+
 
     private void mainLoop() {
         // physics: apply forces
         if (enableWind.selectedProperty().get()) {
-            allSprites.forEach(s -> s.applyImpulseForce(wind));
+            bouncingSprites.forEach(s -> s.applyImpulseForce(wind));
         }
         if (enableGravity.selectedProperty().get()) {
-            allSprites.forEach(s -> s.applyImpulseForce(gravity));
+            bouncingSprites.forEach(s -> s.applyImpulseForce(gravity));
         }
         if (enableDrag.selectedProperty().get()) {
-            allSprites.forEach(s -> s.applyImpulseForce(s.getVelocity().multiply(dragCoefficient)));
+            bouncingSprites.forEach(s -> s.applyImpulseForce(s.getVelocity().multiply(dragCoefficient)));
         }
         // update
-        allSprites.forEach(Sprite::update);
+        bouncingSprites.forEach(Sprite::update);
         // check boundaries (application specific!)
-        allSprites.forEach(this::checkBallBounds);
+        bouncingSprites.forEach(this::checkBallBounds);
         // update in fx scene
-        allSprites.forEach(Sprite::display);
+        bouncingSprites.forEach(Sprite::display);
     }
 
-    private void checkBallBounds(Sprite s) {
-        double radius = s.getWidth();
+    private void checkBallBounds(Sprite sprite) {
+        double radius = sprite.getWidth();
         // upper horizontal wall collision
-        if (s.getLocation().y < 0) {
-            s.getLocation().y = 0;
-            s.getVelocity().y *= -1;
+        if (sprite.getLocation().y < 0) {
+            sprite.getLocation().y = 0;
+            sprite.getVelocity().y *= -1;
         }
         // lower horizontal wall collision
-        if (s.getLocation().y + radius > root.getHeight()) {
-            s.getLocation().y = root.getHeight() - radius;
-            s.getVelocity().y *= -1;
+        if (sprite.getLocation().y + radius > root.getHeight()) {
+            sprite.getLocation().y = root.getHeight() - radius;
+            sprite.getVelocity().y *= -1;
         }
         // left vertical wall collision
-        if (s.getLocation().x < 0) {
-            s.getLocation().x = 0;
-            s.getVelocity().x *= -1;
+        if (sprite.getLocation().x < 0) {
+            sprite.getLocation().x = 0;
+            sprite.getVelocity().x *= -1;
         }
         // right vertical wall collision
-        if (s.getLocation().x + radius > root.getWidth()) {
-            s.getLocation().x = root.getWidth() - radius;
-            s.getVelocity().x *= -1;
+        if (sprite.getLocation().x + radius > root.getWidth()) {
+            sprite.getLocation().x = root.getWidth() - radius;
+            sprite.getVelocity().x *= -1;
         }
     }
 
@@ -164,7 +169,7 @@ public class BallsController {
 
     @FXML
     void onMouseReleased(MouseEvent event) {
-        for (Sprite ball : allSprites) {
+        for (Sprite ball : bouncingSprites) {
             if (ball.contains(new Point2D(force.getStartX(), force.getStartY()))) {
                 PVector f = new PVector(force.getStartX() - force.getEndX(), force.getStartY() - force.getEndY());
                 ball.applyImpulseForce(f);
