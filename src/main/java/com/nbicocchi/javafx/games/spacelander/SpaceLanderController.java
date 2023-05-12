@@ -2,12 +2,14 @@ package com.nbicocchi.javafx.games.spacelander;
 
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
+import com.nbicocchi.javafx.games.common.UtilsColor;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.HashMap;
@@ -20,7 +22,7 @@ public class SpaceLanderController {
     @FXML Text textWin;
     @FXML Text textSpeed;
     AnimationTimer timer;
-    Sprite ship, pad;
+    Sprite ship, pad, downThrust, leftThrust, rightThrust;
     HashMap<String, Image> resources;
     HashMap<String, PVector> forces;
     HashMap<String, Boolean> activeForces;
@@ -34,13 +36,6 @@ public class SpaceLanderController {
                 BackgroundPosition.DEFAULT,
                 BackgroundSize.DEFAULT);
         root.setBackground(new Background(backgroundImage));
-
-        forces = new HashMap<>(Map.of(
-                "gravity", new PVector(0, 0.01),
-                "down", new PVector(0, -0.02),
-                "left", new PVector(0.01, 0),
-                "right", new PVector(-0.01, 0)
-        ));
     }
 
     @FXML
@@ -59,17 +54,42 @@ public class SpaceLanderController {
     }
 
     private void initializeGameObjects() {
-        // ship and pad
+        // ship, thrusts, and pad
         ship = new Sprite(new ImageView(resources.get("ship")), new PVector(360, 0));
         pad = new Sprite(new ImageView(resources.get("pad")), new PVector(520, 360));
+        downThrust = new Sprite(new ImageView(resources.get("thrust")));
+        leftThrust = new Sprite(new ImageView(resources.get("thrust")));
+        rightThrust = new Sprite(new ImageView(resources.get("thrust")));
+        leftThrust.getView().rotateProperty().set(90);
+        rightThrust.getView().rotateProperty().set(-90);
 
-        // remove all sprites and add the ship
+        // remove all sprites and add what's needed
         root.getChildren().clear();
         root.getChildren().add(ship);
+        root.getChildren().add(downThrust);
+        root.getChildren().add(leftThrust);
+        root.getChildren().add(rightThrust);
         root.getChildren().add(pad);
         root.getChildren().add(textSpeed);
+        root.getChildren().add(textLose);
+        root.getChildren().add(textWin);
 
-        // the only force is gravity
+        // invisible stuff
+        downThrust.setVisible(false);
+        leftThrust.setVisible(false);
+        rightThrust.setVisible(false);
+        textLose.setVisible(false);
+        textWin.setVisible(false);
+
+        // set all possible forces
+        forces = new HashMap<>(Map.of(
+                "gravity", new PVector(0, 0.01),
+                "down", new PVector(0, -0.02),
+                "left", new PVector(0.01, 0),
+                "right", new PVector(-0.01, 0)
+        ));
+
+        // set active forces when the game begins
         activeForces = new HashMap<>(Map.of(
                 "gravity", true
         ));
@@ -97,14 +117,25 @@ public class SpaceLanderController {
             }
         }
 
-        // update sprites
+        // update ship
         ship.update();
         ship.display();
-        pad.update();
+
+        // update pad
         pad.display();
+
+        // updates thrusts
+        downThrust.setLocation(ship.getLocation().add(-25, 0, 0));
+        leftThrust.setLocation(ship.getLocation().add(-30, -10, 0));
+        rightThrust.setLocation(ship.getLocation().add(-20, -10, 0));
+        downThrust.display();
+        leftThrust.display();
+        rightThrust.display();
 
         // update speed text
         textSpeed.setText(String.format("speed = %.2f", ship.getVelocity().y));
+        textSpeed.setFill(UtilsColor.getColorScale(0.0, 0.4, Color.GREEN.getHue(), Color.RED.getHue(), ship.getVelocity().y)
+                .deriveColor(1, 1, 1, 1.0));
 
         // check explosion
         checkExplosion();
@@ -123,7 +154,7 @@ public class SpaceLanderController {
         // pad
         if (Math.abs(ship.getLocation().x - 560) < 30 &&
                 Math.abs(ship.getLocation().y - 315) < 10) {
-            if (ship.getVelocity().y < 0.30) {
+            if (ship.getVelocity().y < 0.40) {
                 win();
             } else {
                 explode();
@@ -133,30 +164,46 @@ public class SpaceLanderController {
 
     private void explode() {
         ship.setView(new ImageView(resources.get("explosion")));
-        root.getChildren().add(textLose);
         textLose.setVisible(true);
         timer.stop();
     }
 
     private void win() {
-        root.getChildren().add(textWin);
         textWin.setVisible(true);
         timer.stop();
     }
 
     void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
-            case LEFT -> activeForces.put("left", true);
-            case RIGHT -> activeForces.put("right", true);
-            case DOWN -> activeForces.put("down", true);
+            case LEFT -> {
+                activeForces.put("left", true);
+                leftThrust.setVisible(true);
+            }
+            case RIGHT -> {
+                activeForces.put("right", true);
+                rightThrust.setVisible(true);
+            }
+            case DOWN -> {
+                activeForces.put("down", true);
+                downThrust.setVisible(true);
+            }
         }
     }
 
     void keyReleased(KeyEvent event) {
         switch (event.getCode()) {
-            case LEFT -> activeForces.put("left", false);
-            case RIGHT -> activeForces.put("right", false);
-            case DOWN -> activeForces.put("down", false);
+            case LEFT -> {
+                activeForces.put("left", false);
+                leftThrust.setVisible(false);
+            }
+            case RIGHT -> {
+                activeForces.put("right", false);
+                rightThrust.setVisible(false);
+            }
+            case DOWN -> {
+                activeForces.put("down", false);
+                downThrust.setVisible(false);
+            }
         }
     }
 }
