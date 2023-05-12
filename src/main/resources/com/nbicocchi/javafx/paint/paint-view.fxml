@@ -14,7 +14,7 @@
         <VBox>
             <MenuBar>
                 <Menu text="File">
-                    <MenuItem text="Save" onAction="#onSave" />
+                    <MenuItem text="Save..." onAction="#onSave" />
                     <MenuItem text="Exit" onAction="#onExit" />
                 </Menu>
             </MenuBar>

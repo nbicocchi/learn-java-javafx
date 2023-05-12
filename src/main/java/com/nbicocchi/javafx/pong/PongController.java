@@ -3,10 +3,11 @@ package com.nbicocchi.javafx.pong;
 import com.nbicocchi.javafx.common.PVector;
 import com.nbicocchi.javafx.common.Sprite;
 import javafx.animation.AnimationTimer;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
@@ -17,13 +18,26 @@ public class PongController {
     Sprite leftPlayer;
     Sprite rightPlayer;
     Sprite ball;
-    @FXML private Pane root;
+
+    @FXML private AnchorPane root;
     @FXML private Text scoreLeft;
     @FXML private Text scoreRight;
+
+    @FXML
+    public void handlePlay() {
+        initializeGameObjects();
+        initializeTimer();
+    }
+
+    @FXML
+    public void handleClose() {
+        Platform.exit();
+    }
 
     void initializeGameObjects() {
         double h = root.getHeight();
         double w = root.getWidth();
+        System.out.println(h + " " + w);
         // ball
         ball = new Sprite(new Circle(7.0, Color.WHITE));
         ball.setLocation(new PVector(w / 2, h / 2));
@@ -56,11 +70,13 @@ public class PongController {
     }
 
     private void mainLoop() {
+        // check boundaries (application specific!)
+        checkBallBounds(ball);
+
         ball.update();
         leftPlayer.update();
         rightPlayer.update();
-        // check boundaries (application specific!)
-        checkBallBounds(ball);
+
         ball.display();
         leftPlayer.display();
         rightPlayer.display();

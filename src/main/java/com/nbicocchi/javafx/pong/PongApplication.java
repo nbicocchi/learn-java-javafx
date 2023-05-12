@@ -18,14 +18,12 @@ public class PongApplication extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("pong-view.fxml"));
         Parent root = loader.load();
         PongController controller = loader.getController();
-        Scene scene = new Scene(root, 800, 500);
-        scene.setOnKeyPressed(e -> controller.keyPressed(e));
-        scene.setOnKeyReleased(e -> controller.keyReleased(e));
+        Scene scene = new Scene(root);
+        scene.setOnKeyPressed(controller::keyPressed);
+        scene.setOnKeyReleased(controller::keyReleased);
         primaryStage.setTitle("Pong");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();
-        controller.initializeGameObjects();
-        controller.initializeTimer();
     }
 }

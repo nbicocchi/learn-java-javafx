@@ -51,6 +51,12 @@ public class BallsController {
 
     @FXML
     void onReset() {
+        initializeGUI();
+        initializeObjects();
+        initializeTimer();
+    }
+
+    private void initializeGUI() {
         enableDrag.selectedProperty().set(false);
         enableWind.selectedProperty().set(false);
         enableGravity.selectedProperty().set(false);
@@ -59,8 +65,6 @@ public class BallsController {
         tfGravityY.setText(Double.toString(GRAVITY_Y));
         tfWindX.setText(Double.toString(WIND_X));
         tfWindY.setText(Double.toString(WIND_Y));
-        initializeObjects();
-        initializeTimer();
     }
 
     private void initializeObjects() {
@@ -118,11 +122,11 @@ public class BallsController {
             bouncingSprites.forEach(s -> s.applyImpulseForce(s.getVelocity().multiply(drag)));
         }
 
-        // update
-        bouncingSprites.forEach(Sprite::update);
         // check boundaries (application specific!)
         bouncingSprites.forEach(this::checkBallBounds);
-        // update in fx scene
+        // update sprite model
+        bouncingSprites.forEach(Sprite::update);
+        // update sprite view
         bouncingSprites.forEach(Sprite::display);
     }
 
@@ -166,7 +170,7 @@ public class BallsController {
         text = new Text("");
         text.setTranslateX(event.getX());
         text.setTranslateY(event.getY());
-        text.setFont(new Font(14));
+        text.setFont(new Font(16));
         text.setFill(Color.BLACK);
         root.getChildren().add(force);
         root.getChildren().add(text);
