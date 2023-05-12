@@ -37,7 +37,6 @@ public class PongController {
     void initializeGameObjects() {
         double h = root.getHeight();
         double w = root.getWidth();
-        System.out.println(h + " " + w);
         // ball
         ball = new Sprite(new Circle(7.0, Color.WHITE));
         ball.setLocation(new PVector(w / 2, h / 2));

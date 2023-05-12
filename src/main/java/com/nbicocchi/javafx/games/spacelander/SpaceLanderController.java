@@ -3,17 +3,22 @@ package com.nbicocchi.javafx.games.spacelander;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
+import javafx.scene.text.Text;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class SpaceLanderController {
     @FXML AnchorPane root;
+    @FXML Text textLose;
+    @FXML Text textWin;
+    @FXML Text textSpeed;
     AnimationTimer timer;
     Sprite ship, pad;
     HashMap<String, Image> resources;
@@ -45,11 +50,6 @@ public class SpaceLanderController {
         initializeTimer();
     }
 
-    @FXML
-    public void handleClose() {
-        Platform.exit();
-    }
-
     private void loadResources() {
         resources = new HashMap<>();
         resources.put("explosion", new Image(Objects.requireNonNull(getClass().getResourceAsStream("explosion.png"))));
@@ -59,15 +59,15 @@ public class SpaceLanderController {
     }
 
     private void initializeGameObjects() {
-        // ship
+        // ship and pad
         ship = new Sprite(new ImageView(resources.get("ship")), new PVector(360, 0));
-        // pad
         pad = new Sprite(new ImageView(resources.get("pad")), new PVector(520, 360));
 
         // remove all sprites and add the ship
         root.getChildren().clear();
         root.getChildren().add(ship);
         root.getChildren().add(pad);
+        root.getChildren().add(textSpeed);
 
         // the only force is gravity
         activeForces = new HashMap<>(Map.of(
@@ -97,11 +97,14 @@ public class SpaceLanderController {
             }
         }
 
-        // updates sprites
+        // update sprites
         ship.update();
         ship.display();
         pad.update();
         pad.display();
+
+        // update speed text
+        textSpeed.setText(String.format("speed = %.2f", ship.getVelocity().y));
 
         // check explosion
         checkExplosion();
@@ -109,17 +112,36 @@ public class SpaceLanderController {
 
 
     private void checkExplosion() {
-        if (ship.getLocation().y > 400) {
+        // ground
+        if (ship.getLocation().y > 330) {
             explode();
         }
+        // left or right
         if (ship.getLocation().x < 0 || ship.getLocation().x > 800) {
             explode();
+        }
+        // pad
+        if (Math.abs(ship.getLocation().x - 560) < 30 &&
+                Math.abs(ship.getLocation().y - 315) < 10) {
+            if (ship.getVelocity().y < 0.30) {
+                win();
+            } else {
+                explode();
+            }
         }
     }
 
     private void explode() {
-        ship.setVelocity(new PVector(0,0));
         ship.setView(new ImageView(resources.get("explosion")));
+        root.getChildren().add(textLose);
+        textLose.setVisible(true);
+        timer.stop();
+    }
+
+    private void win() {
+        root.getChildren().add(textWin);
+        textWin.setVisible(true);
+        timer.stop();
     }
 
     void keyPressed(KeyEvent event) {
