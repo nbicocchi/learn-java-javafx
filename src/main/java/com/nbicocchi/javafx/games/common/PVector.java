@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.common;
+package com.nbicocchi.javafx.games.common;
 
 public class PVector {
     public static PVector ZERO = new PVector(0, 0);

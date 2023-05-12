@@ -1,8 +1,8 @@
-package com.nbicocchi.javafx.balls;
+package com.nbicocchi.javafx.games.balls;
 
-import com.nbicocchi.javafx.common.PVector;
-import com.nbicocchi.javafx.common.Sprite;
-import com.nbicocchi.javafx.common.UtilsColor;
+import com.nbicocchi.javafx.games.common.PVector;
+import com.nbicocchi.javafx.games.common.Sprite;
+import com.nbicocchi.javafx.games.common.UtilsColor;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.geometry.Point2D;

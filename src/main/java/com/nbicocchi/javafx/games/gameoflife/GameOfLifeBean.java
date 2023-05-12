@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.gameoflife;
+package com.nbicocchi.javafx.games.gameoflife;
 
 import java.util.random.RandomGenerator;
 

@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.gameoflife.LifeController">
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.games.gameoflife.LifeController">
    <center>
       <TilePane fx:id="tilePane" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </center>

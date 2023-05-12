@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.common;
+package com.nbicocchi.javafx.games.common;
 
 import javafx.geometry.Point2D;
 import javafx.scene.Node;
@@ -44,12 +44,11 @@ public class Sprite extends Region {
     }
 
     public Sprite(Node view, PVector location, PVector velocity, PVector acceleration, double mass) {
-        this.view = view;
+        setView(view);
         this.location = location;
         this.velocity = velocity;
         this.acceleration = acceleration;
         this.mass = mass;
-        getChildren().add(view);
     }
 
     public PVector getLocation() {
@@ -90,6 +89,8 @@ public class Sprite extends Region {
 
     public void setView(Node view) {
         this.view = view;
+        getChildren().clear();
+        getChildren().add(view);
     }
 
     public void applyImpulseForce(PVector force) {

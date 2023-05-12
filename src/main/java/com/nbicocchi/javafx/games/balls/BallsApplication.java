@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.balls;
+package com.nbicocchi.javafx.games.balls;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

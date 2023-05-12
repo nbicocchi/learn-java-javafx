@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.spaceinvaders;
+package com.nbicocchi.javafx.games.spaceinvaders;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,7 @@ public class SpaceInvadersApplication extends Application {
         Scene scene = new Scene(loader.getRoot());
         scene.setOnKeyPressed(controller::keyPressed);
         scene.setOnKeyReleased(controller::keyReleased);
-        primaryStage.setTitle("Pong");
+        primaryStage.setTitle("Space Invaders");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

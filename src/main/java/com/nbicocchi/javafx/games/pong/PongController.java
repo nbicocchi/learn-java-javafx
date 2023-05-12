@@ -1,7 +1,7 @@
-package com.nbicocchi.javafx.pong;
+package com.nbicocchi.javafx.games.pong;
 
-import com.nbicocchi.javafx.common.PVector;
-import com.nbicocchi.javafx.common.Sprite;
+import com.nbicocchi.javafx.games.common.PVector;
+import com.nbicocchi.javafx.games.common.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;

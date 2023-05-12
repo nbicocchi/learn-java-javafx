@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.common;
+package com.nbicocchi.javafx.games.common;
 
 import javafx.scene.paint.Color;
 
