@@ -18,65 +18,49 @@ import javafx.scene.text.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.random.RandomGenerator;
 
 public class BallsController {
     public static int SPRITE_COUNT = 5;
-    public static double SPRITE_DRAG_COEFFICIENT = -0.05;
+    public static double SPRITE_DRAG_COEFFICIENT = -0.02;
     public static double SPRITE_MAX_SPEED = 20;
-    public static double WIND_X = 0.0;
+    public static double WIND_X = 1.0;
     public static double WIND_Y = 0.0;
     public static double GRAVITY_X = 0.0;
-    public static double GRAVITY_Y = 5.0;
+    public static double GRAVITY_Y = 2.0;
 
     @FXML private Pane root;
     @FXML private CheckBox enableDrag;
     @FXML private CheckBox enableGravity;
     @FXML private CheckBox enableWind;
     @FXML private TextField tfDrag;
+    @FXML private TextField tfGravityX;
     @FXML private TextField tfGravityY;
     @FXML private TextField tfWindX;
+    @FXML private TextField tfWindY;
 
     List<Sprite> bouncingSprites = new ArrayList<>();
     AnimationTimer timer;
     Line force;
     Text text;
 
-    PVector gravity = new PVector(GRAVITY_X, GRAVITY_Y);
-    PVector wind = new PVector(WIND_X, WIND_Y);
-    double dragCoefficient = SPRITE_DRAG_COEFFICIENT;
-
     public void initialize() {
-        tfDrag.textProperty().addListener((observable, oldValue, newValue) -> dragCoefficient = Double.parseDouble(newValue));
-        tfGravityY.textProperty().addListener((observable, oldValue, newValue) -> gravity = new PVector(0, Double.parseDouble(newValue)));
-        tfWindX.textProperty().addListener((observable, oldValue, newValue) -> wind = new PVector(Double.parseDouble(newValue), 0));
         onReset();
     }
 
     @FXML
     void onReset() {
-        tfDrag.setText(Double.toString(SPRITE_DRAG_COEFFICIENT));
-        tfGravityY.setText(Double.toString(GRAVITY_Y));
-        tfWindX.setText(Double.toString(WIND_X));
         enableDrag.selectedProperty().set(false);
         enableWind.selectedProperty().set(false);
         enableGravity.selectedProperty().set(false);
+        tfDrag.setText(Double.toString(SPRITE_DRAG_COEFFICIENT));
+        tfGravityX.setText(Double.toString(GRAVITY_X));
+        tfGravityY.setText(Double.toString(GRAVITY_Y));
+        tfWindX.setText(Double.toString(WIND_X));
+        tfWindY.setText(Double.toString(WIND_Y));
         initializeObjects();
         initializeTimer();
-    }
-
-    private void initializeTimer() {
-        if (timer != null) {
-            timer.stop();
-        }
-        timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                mainLoop();
-            }
-        };
-        timer.start();
     }
 
     private void initializeObjects() {
@@ -99,18 +83,41 @@ public class BallsController {
         return new Sprite(view, location, velocity);
     }
 
+    private void initializeTimer() {
+        if (timer != null) {
+            timer.stop();
+        }
+        timer = new AnimationTimer() {
+
+            @Override
+            public void handle(long now) {
+                mainLoop();
+            }
+        };
+        timer.start();
+    }
 
     private void mainLoop() {
         // physics: apply forces
         if (enableWind.selectedProperty().get()) {
+            PVector wind = new PVector(
+                    Double.parseDouble(tfWindX.getText()),
+                    Double.parseDouble(tfWindY.getText()));
             bouncingSprites.forEach(s -> s.applyImpulseForce(wind));
         }
+
         if (enableGravity.selectedProperty().get()) {
+            PVector gravity = new PVector(
+                    Double.parseDouble(tfGravityX.getText()),
+                    Double.parseDouble(tfGravityY.getText()));
             bouncingSprites.forEach(s -> s.applyImpulseForce(gravity));
         }
+
         if (enableDrag.selectedProperty().get()) {
-            bouncingSprites.forEach(s -> s.applyImpulseForce(s.getVelocity().multiply(dragCoefficient)));
+            double drag = Double.parseDouble(tfDrag.getText());
+            bouncingSprites.forEach(s -> s.applyImpulseForce(s.getVelocity().multiply(drag)));
         }
+
         // update
         bouncingSprites.forEach(Sprite::update);
         // check boundaries (application specific!)
@@ -169,12 +176,16 @@ public class BallsController {
 
     @FXML
     void onMouseReleased(MouseEvent event) {
-        for (Sprite ball : bouncingSprites) {
-            if (ball.contains(new Point2D(force.getStartX(), force.getStartY()))) {
-                PVector f = new PVector(force.getStartX() - force.getEndX(), force.getStartY() - force.getEndY());
-                ball.applyImpulseForce(f);
-            }
+        Optional<Sprite> sprite = bouncingSprites.stream()
+                .filter(bs -> bs.contains(new Point2D(force.getStartX(), force.getStartY())))
+                .findFirst();
+        if (sprite.isPresent()) {
+            PVector impulse = new PVector(
+                    force.getStartX() - force.getEndX(),
+                    force.getStartY() - force.getEndY());
+            sprite.get().applyImpulseForce(impulse.multiply(0.2));
         }
+
         root.getChildren().removeAll(force, text);
         force = null;
         text = null;
