@@ -3,7 +3,6 @@ package com.nbicocchi.javafx.games.pong;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import javafx.animation.AnimationTimer;
-import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -27,11 +26,6 @@ public class PongController {
     public void handlePlay() {
         initializeGameObjects();
         initializeTimer();
-    }
-
-    @FXML
-    public void handleClose() {
-        Platform.exit();
     }
 
     void initializeGameObjects() {

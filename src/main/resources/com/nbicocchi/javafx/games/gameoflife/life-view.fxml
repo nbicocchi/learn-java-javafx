@@ -2,21 +2,23 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.TilePane?>
 
 <BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.games.gameoflife.LifeController">
    <center>
       <TilePane fx:id="tilePane" prefHeight="600.0" prefWidth="600.0" BorderPane.alignment="CENTER" />
    </center>
-   <bottom>
-      <HBox alignment="CENTER" prefHeight="50.0" prefWidth="200.0" spacing="20.0" BorderPane.alignment="CENTER">
-         <children>
-            <Button mnemonicParsing="false" onAction="#onInit" prefWidth="60.0" text="Init" />
-            <Button mnemonicParsing="false" onAction="#onStep" prefWidth="60.0" text="Step" />
-            <CheckBox fx:id="cbAnimation" mnemonicParsing="false" onAction="#onAnimation" text="Animation" />
-         </children>
-      </HBox>
-   </bottom>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <Button mnemonicParsing="false" onAction="#onInit" prefWidth="90.0" text="Initialize" />
+            <Button mnemonicParsing="false" onAction="#onStep" prefWidth="90.0" text="Step" />
+            <Separator orientation="VERTICAL" prefHeight="20.0" />
+            <CheckBox fx:id="cbAnimation" mnemonicParsing="false" onAction="#onAnimation" text="Continuous Animation" />
+         </items>
+      </ToolBar>
+   </top>
 </BorderPane>

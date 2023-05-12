@@ -84,9 +84,9 @@ public class SpaceLanderController {
         // set all possible forces
         forces = new HashMap<>(Map.of(
                 "gravity", new PVector(0, 0.01),
-                "down", new PVector(0, -0.02),
-                "left", new PVector(0.01, 0),
-                "right", new PVector(-0.01, 0)
+                "downThrust", new PVector(0, -0.02),
+                "leftThrust", new PVector(0.01, 0),
+                "rightThrust", new PVector(-0.01, 0)
         ));
 
         // set active forces when the game begins
@@ -143,19 +143,20 @@ public class SpaceLanderController {
 
 
     private void checkExplosion() {
-        // ground
-        if (ship.getLocation().y > 330) {
-            explode();
-        }
         // left or right
         if (ship.getLocation().x < 0 || ship.getLocation().x > 800) {
             explode();
         }
-        // pad
-        if (Math.abs(ship.getLocation().x - 560) < 30 &&
-                Math.abs(ship.getLocation().y - 315) < 10) {
-            if (ship.getVelocity().y < 0.40) {
-                win();
+
+        // ground
+        if (ship.getLocation().y > 315) {
+            // pad
+            if (Math.abs(ship.getLocation().x - 560) < 30) {
+                if (ship.getVelocity().y < 0.40) {
+                    win();
+                } else {
+                    explode();
+                }
             } else {
                 explode();
             }
@@ -176,15 +177,15 @@ public class SpaceLanderController {
     void keyPressed(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT -> {
-                activeForces.put("left", true);
+                activeForces.put("leftThrust", true);
                 leftThrust.setVisible(true);
             }
             case RIGHT -> {
-                activeForces.put("right", true);
+                activeForces.put("rightThrust", true);
                 rightThrust.setVisible(true);
             }
             case DOWN -> {
-                activeForces.put("down", true);
+                activeForces.put("downThrust", true);
                 downThrust.setVisible(true);
             }
         }
@@ -193,15 +194,15 @@ public class SpaceLanderController {
     void keyReleased(KeyEvent event) {
         switch (event.getCode()) {
             case LEFT -> {
-                activeForces.put("left", false);
+                activeForces.put("leftThrust", false);
                 leftThrust.setVisible(false);
             }
             case RIGHT -> {
-                activeForces.put("right", false);
+                activeForces.put("rightThrust", false);
                 rightThrust.setVisible(false);
             }
             case DOWN -> {
-                activeForces.put("down", false);
+                activeForces.put("downThrust", false);
                 downThrust.setVisible(false);
             }
         }

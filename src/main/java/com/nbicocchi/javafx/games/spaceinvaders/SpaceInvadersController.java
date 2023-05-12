@@ -31,11 +31,6 @@ public class SpaceInvadersController {
         initializeTimer();
     }
 
-    @FXML
-    public void handleClose() {
-        Platform.exit();
-    }
-
     private void loadResources() {
         resources = new HashMap<>();
         resources.put("ship_missile", new Image(Objects.requireNonNull(getClass().getResourceAsStream("missile.png")), 20, 30, false, true));
@@ -47,18 +42,22 @@ public class SpaceInvadersController {
         // remove all sprites
         root.getChildren().removeIf(x -> (x instanceof SpaceInvadersSprite));
         // ship
-        ship = new SpaceInvadersSprite(new ImageView(resources.get("ship")), new PVector(400, 680), "ship");
+        ship = new SpaceInvadersSprite(new ImageView(resources.get("ship")), new PVector(400, 520), "ship");
         root.getChildren().add(ship);
         // aliens
-        for (int row = 0; row < 5; row++) {
+        for (int row = 0; row < 4; row++) {
             for (int col = 0; col < 7; col++) {
-                SpaceInvadersSprite alien = new SpaceInvadersSprite(new ImageView(resources.get("alien")), new PVector(120 + 80 * col, 80 + 60 * row), new PVector(0.15, 0.05), "alien");
+                SpaceInvadersSprite alien = new SpaceInvadersSprite(new ImageView(resources.get("alien")),
+                        new PVector(80 + 60 * col, 20 + 60 * row), new PVector(0.15, 0.05), "alien");
                 root.getChildren().add(alien);
             }
         }
     }
 
     private void initializeTimer() {
+        if (timer != null) {
+            timer.stop();
+        }
         timer = new AnimationTimer() {
 
             @Override
