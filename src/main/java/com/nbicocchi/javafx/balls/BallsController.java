@@ -152,13 +152,11 @@ public class BallsController {
 
     @FXML
     void onMouseDragged(MouseEvent event) {
-        if (force != null) {
-            force.setEndX(event.getX());
-            force.setEndY(event.getY());
-            double magnitude = Math.hypot(force.getStartX() - force.getEndX(), force.getStartY() - force.getEndY());
-            force.setStroke(UtilsColor.getColorScale(0, 500, Color.GREEN.getHue(), Color.RED.getHue(), magnitude).deriveColor(1, 1, 1, 0.3));
-            text.setText(String.format("%.1f", magnitude));
-        }
+        force.setEndX(event.getX());
+        force.setEndY(event.getY());
+        double magnitude = Math.hypot(force.getStartX() - force.getEndX(), force.getStartY() - force.getEndY());
+        force.setStroke(UtilsColor.getColorScale(0, 300, Color.GREEN.getHue(), Color.RED.getHue(), magnitude).deriveColor(1, 1, 1, 0.3));
+        text.setText(String.format("%.1f", magnitude));
     }
 
     @FXML
@@ -185,9 +183,6 @@ public class BallsController {
                     force.getStartY() - force.getEndY());
             sprite.get().applyImpulseForce(impulse.multiply(0.2));
         }
-
         root.getChildren().removeAll(force, text);
-        force = null;
-        text = null;
     }
 }
