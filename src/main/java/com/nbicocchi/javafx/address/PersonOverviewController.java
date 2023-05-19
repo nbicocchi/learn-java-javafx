@@ -221,8 +221,7 @@ public class PersonOverviewController {
             if (file != null) {
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.registerModule(new JavaTimeModule());
-                List<Person> persons = mapper.readValue(file, new TypeReference<>() {
-                });
+                List<Person> persons = mapper.readValue(file, new TypeReference<>() {});
                 personTable.getItems().addAll(persons);
             }
         } catch (IOException e) {

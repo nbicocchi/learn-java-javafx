@@ -31,19 +31,18 @@ javafx {
 
 dependencies {
     implementation 'org.jetbrains:annotations:23.0.0'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.15.0'
-    implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.15.0'
-    implementation group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.15.0'
+
     // database
     implementation 'com.zaxxer:HikariCP:5.0.1'
     implementation 'mysql:mysql-connector-java:8.0.32'
-    implementation 'org.xerial:sqlite-jdbc:3.39.3.0'
+    //implementation 'org.xerial:sqlite-jdbc:3.39.3.0'
     //implementation 'com.h2database:h2:2.1.214'
     //implementation 'com.microsoft.sqlserver:mssql-jdbc:11.2.1.jre17'
 
     // rest
-    implementation(platform("com.squareup.okhttp3:okhttp-bom:4.10.0"))
-    implementation 'com.google.code.gson:gson:2.10.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.15.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.15.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.15.0'
 
     // logging
     implementation 'org.slf4j:slf4j-api:2.0.1'
