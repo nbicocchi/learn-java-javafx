@@ -18,6 +18,7 @@ public class DebugController {
     AnimationTimer timer;
 
     public void initialize() {
+        Sprite.DEBUG_ENABLED = true;
     }
 
     private void initializeTimer() {
@@ -89,7 +90,7 @@ public class DebugController {
         Circle circle = new Circle(50, Color.BLACK);
         circle.setTranslateX(50);
         circle.setTranslateY(50);
-        Sprite s = new Sprite(circle, new PVector(0, 0), new PVector(5, 10));
+        Sprite s = new Sprite("circle", circle, new PVector(0, 0), new PVector(5, 10));
         root.getChildren().add(s);
     }
 }

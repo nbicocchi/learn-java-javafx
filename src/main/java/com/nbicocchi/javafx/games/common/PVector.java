@@ -43,6 +43,30 @@ public class PVector {
     }
 
     /**
+     * Set x, y, and z coordinates.
+     *
+     * @param x the x coordinate.
+     * @param y the y coordinate.
+     * @param z the z coordinate.
+     */
+    public void set(double x, double y, double z) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    /**
+     * Set x, y, and z coordinates from another PVector object.
+     *
+     * @param v the PVector object to be copied
+     */
+    public void set(PVector v) {
+        x = v.x;
+        y = v.y;
+        z = v.z;
+    }
+
+    /**
      * Add two vectors
      *
      * @param v1 a vector
@@ -110,6 +134,13 @@ public class PVector {
         return Math.sqrt(dx * dx + dy * dy + dz * dz);
     }
 
+    /**
+     * Calculate the dot product of two vectors
+     *
+     * @param v1 a vector
+     * @param v2 another vector
+     * @return the dot product
+     */
     static public double dot(PVector v1, PVector v2) {
         return v1.dot(v2);
     }
@@ -117,18 +148,29 @@ public class PVector {
     /**
      * Calculate the dot product with another vector
      *
+     * @param v a vector
      * @return the dot product
      */
     public double dot(PVector v) {
         return x * v.x + y * v.y + z * v.z;
     }
 
+    /**
+     * Return a vector composed of the cross product between two vectors
+     *
+     * @param v1 a vector
+     * @param v2 another vector
+     * @return the cross product
+     */
     static public PVector cross(PVector v1, PVector v2) {
         return v1.cross(v2);
     }
 
     /**
      * Return a vector composed of the cross product between this and another.
+     *
+     * @param v a vector
+     * @return the cross product
      */
     public PVector cross(PVector v) {
         double crossX = y * v.z - v.y * z;
@@ -149,45 +191,35 @@ public class PVector {
         return v1.angleBetween(v2);
     }
 
-    public double angleBetween(PVector v2) {
-        double dot = x * v2.x + y * v2.y + z * v2.z;
+    /**
+     * Calculate the angle between this vector and another vector
+     *
+     * @param v another vector
+     * @return the angle between the vectors
+     */
+    public double angleBetween(PVector v) {
+        double dot = x * v.x + y * v.y + z * v.z;
         double v1mag = magnitude();
-        double v2mag = magnitude(v2);
+        double v2mag = magnitude(v);
         return Math.acos(dot / (v1mag * v2mag));
     }
 
     /**
-     * Set x, y, and z coordinates.
+     * Limit the magnitude of a vector
      *
-     * @param x the x coordinate.
-     * @param y the y coordinate.
-     * @param z the z coordinate.
+     * @param v a vector
+     * @param max the maximum length to limit this vector
+     * @return the limited vector
      */
-    public void set(double x, double y, double z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
-
-    /**
-     * Set x, y, and z coordinates from a Vector3D object.
-     *
-     * @param v the PVector object to be copied
-     */
-    public void set(PVector v) {
-        x = v.x;
-        y = v.y;
-        z = v.z;
-    }
-
-    public double dot(double x, double y, double z) {
-        return this.x * x + this.y * y + this.z * z;
+    public static PVector limit(PVector v, double max) {
+        return v.limit(max);
     }
 
     /**
      * Limit the magnitude of this vector
      *
      * @param max the maximum length to limit this vector
+     * @return the limited vector
      */
     public PVector limit(double max) {
         if (magnitude() < max) {
@@ -199,10 +231,11 @@ public class PVector {
     /**
      * Calculate the magnitude (length) of a vector
      *
+     * @param v a vector
      * @return the magnitude of the vector
      */
-    static public double magnitude(PVector v1) {
-        return Math.sqrt(v1.x * v1.x + v1.y * v1.y + v1.z * v1.z);
+    static public double magnitude(PVector v) {
+        return v.magnitude();
     }
 
     /**
@@ -215,7 +248,20 @@ public class PVector {
     }
 
     /**
-     * Normalize the vector to length 1 (make it a unit vector)
+     * Normalize a vector
+     *
+     * @param v a vector
+     * @return the normalized vector
+     */
+    public static PVector normalize(PVector v) {
+        return v.normalize();
+    }
+
+
+    /**
+     * Normalize a vector
+     *
+     * @return the normalized vector
      */
     public PVector normalize() {
         double magnitude = magnitude();
@@ -223,6 +269,16 @@ public class PVector {
             return new PVector(this);
         }
         return multiply(1 / magnitude);
+    }
+
+    /**
+     * Calculate the angle of rotation for this vector (only 2D vectors)
+     *
+     * @param v a vector
+     * @return the angle of rotation
+     */
+    public static double heading2D(PVector v) {
+        return v.heading2D();
     }
 
     /**

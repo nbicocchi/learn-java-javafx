@@ -5,7 +5,6 @@ import com.nbicocchi.javafx.games.common.Sprite;
 import com.nbicocchi.javafx.games.common.UtilsColor;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
@@ -22,7 +21,7 @@ import java.util.Optional;
 import java.util.random.RandomGenerator;
 
 public class BallsController {
-    public static int SPRITE_COUNT = 5;
+    public static int SPRITE_COUNT = 8;
     public static double SPRITE_DRAG_COEFFICIENT = -0.02;
     public static double SPRITE_MAX_SPEED = 20;
     public static double WIND_X = 1.0;
@@ -40,7 +39,7 @@ public class BallsController {
     @FXML private TextField tfWindX;
     @FXML private TextField tfWindY;
 
-    List<Sprite> bouncingSprites = new ArrayList<>();
+    List<SpriteRebound> bouncingSprites = new ArrayList<>();
     AnimationTimer timer;
     Line force;
     Text text;
@@ -76,7 +75,7 @@ public class BallsController {
         root.getChildren().addAll(bouncingSprites);
     }
 
-    private Sprite generateBoncingSprite() {
+    private SpriteRebound generateBoncingSprite() {
         Rectangle view = new Rectangle(100, 100);
         view.setStroke(Color.ORANGE);
         view.setFill(Color.ORANGE.deriveColor(1, 1, 1, 0.3));
@@ -84,7 +83,7 @@ public class BallsController {
         RandomGenerator rnd = RandomGenerator.getDefault();
         PVector location = new PVector(rnd.nextDouble() * root.getWidth(), rnd.nextDouble() * root.getHeight());
         PVector velocity = new PVector(rnd.nextDouble() * SPRITE_MAX_SPEED, rnd.nextDouble() * SPRITE_MAX_SPEED);
-        return new Sprite(view, location, velocity);
+        return new SpriteRebound("ball", view, location, velocity);
     }
 
     private void initializeTimer() {
@@ -122,34 +121,8 @@ public class BallsController {
             bouncingSprites.forEach(s -> s.applyImpulseForce(s.getVelocity().multiply(drag)));
         }
 
-        // check boundaries (application specific!)
-        bouncingSprites.forEach(this::checkBallBounds);
-        // update sprite model
+        // update bouncing sprites
         bouncingSprites.forEach(Sprite::update);
-    }
-
-    private void checkBallBounds(Sprite sprite) {
-        double radius = sprite.getWidth();
-        // upper horizontal wall collision
-        if (sprite.getLocation().y < 0) {
-            sprite.getLocation().y = 0;
-            sprite.getVelocity().y *= -1;
-        }
-        // lower horizontal wall collision
-        if (sprite.getLocation().y + radius > root.getHeight()) {
-            sprite.getLocation().y = root.getHeight() - radius;
-            sprite.getVelocity().y *= -1;
-        }
-        // left vertical wall collision
-        if (sprite.getLocation().x < 0) {
-            sprite.getLocation().x = 0;
-            sprite.getVelocity().x *= -1;
-        }
-        // right vertical wall collision
-        if (sprite.getLocation().x + radius > root.getWidth()) {
-            sprite.getLocation().x = root.getWidth() - radius;
-            sprite.getVelocity().x *= -1;
-        }
     }
 
     @FXML
@@ -176,8 +149,8 @@ public class BallsController {
 
     @FXML
     void onMouseReleased(MouseEvent event) {
-        Optional<Sprite> sprite = bouncingSprites.stream()
-                .filter(bs -> bs.contains(new Point2D(force.getStartX(), force.getStartY())))
+        Optional<SpriteRebound> sprite = bouncingSprites.stream()
+                .filter(bs -> bs.contains(force.getStartX(), force.getStartY()))
                 .findFirst();
         if (sprite.isPresent()) {
             PVector impulse = new PVector(

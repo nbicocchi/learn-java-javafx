@@ -31,26 +31,26 @@ public class PongController {
     void initializeGameObjects() {
         double h = root.getHeight();
         double w = root.getWidth();
+
         // ball
         Circle circle = new Circle(8, Color.WHITE);
         circle.setTranslateX(8);
         circle.setTranslateY(8);
-        ball = new Sprite(circle);
-        ball.setLocation(new PVector(w / 2, h / 2));
-        ball.setVelocity(new PVector(6, 6));
-        Rectangle r;
+        ball = new Sprite("ball", circle, new PVector(w / 2, h / 2), new PVector(4, 4));
+
         // left player
-        r = new Rectangle(10, 90, Color.WHITE);
-        r.setArcWidth(10);
-        r.setArcHeight(10);
-        leftPlayer = new Sprite(r);
-        leftPlayer.setLocation(new PVector(20, h / 2));
+        Rectangle lplayer = new Rectangle(20, 90, Color.WHITE);
+        lplayer.setArcWidth(10);
+        lplayer.setArcHeight(10);
+        leftPlayer = new Sprite("left_player", lplayer, new PVector(10, h / 2));
+
         // right player
-        r = new Rectangle(10, 90, Color.WHITE);
-        r.setArcWidth(10);
-        r.setArcHeight(10);
-        rightPlayer = new Sprite(r);
-        rightPlayer.setLocation(new PVector(w - 30, h / 2));
+        Rectangle rplayer = new Rectangle(20, 90, Color.WHITE);
+        rplayer.setArcWidth(10);
+        rplayer.setArcHeight(10);
+        rightPlayer = new Sprite("right_player", rplayer, new PVector(w - 30, h / 2));
+
+        // add sprites to panel
         root.getChildren().addAll(leftPlayer, rightPlayer, ball);
     }
 
@@ -66,57 +66,57 @@ public class PongController {
     }
 
     private void mainLoop() {
-        // check boundaries (application specific!)
-        checkBallBounds(ball);
-
+        rebounds();
         ball.update();
         leftPlayer.update();
         rightPlayer.update();
     }
 
-    private void checkBallBounds(Sprite s) {
-        double radius = ((Circle) (s.getView())).getRadius();
-        // upper horizontal wall collision
-        if (s.getLocation().y < radius) {
-            s.getLocation().y = radius;
-            s.getVelocity().y *= -1;
-        }
-        // lower horizontal wall collision
-        if (s.getLocation().y + radius > root.getHeight()) {
-            s.getLocation().y = root.getHeight() - radius;
-            s.getVelocity().y *= -1;
-        }
-        // left vertical wall collision
-        if (s.getLocation().x < radius) {
-            s.getLocation().x = radius;
-            s.getVelocity().x *= -1;
+    private void rebounds() {
+        double offset;
+
+        // right wall
+        offset = ball.getBoundsInParent().getMaxX() - root.getLayoutBounds().getMaxX();
+        if (offset > 0) {
+            ball.getLocation().x -= offset;
+            ball.getVelocity().x *= -1;
             scoreRight();
         }
-        // right vertical wall collision
-        if (s.getLocation().x + radius > root.getWidth()) {
-            s.getLocation().x = root.getWidth() - radius;
-            s.getVelocity().x *= -1;
+
+        // left wall
+        offset = ball.getBoundsInParent().getMinX() - root.getLayoutBounds().getMinX();
+        if (offset < 0) {
+            ball.getLocation().x -= offset;
+            ball.getVelocity().x *= -1;
             scoreLeft();
         }
-        // right player and ball collision
-        if (ball.intersects(rightPlayer) && ball.getVelocity().x > 0) {
-            ball.getVelocity().x *= -1;
-            ball.getLocation().x = rightPlayer.getLocation().x - radius;
-            if (ball.getVelocity().y * rightPlayer.getVelocity().y > 0) {
-                ball.getVelocity().y += 1;
-            } else {
-                ball.getVelocity().y -= 1;
-            }
+
+        // lower wall
+        offset = ball.getBoundsInParent().getMaxY() - root.getLayoutBounds().getMaxY();
+        if (offset > 0) {
+            ball.getLocation().y -= offset;
+            ball.getVelocity().y *= -1;
         }
-        // left player and ball collision
-        if (ball.intersects(leftPlayer) && ball.getVelocity().x < 0) {
+
+        // upper wall
+        offset = ball.getBoundsInParent().getMinY() - root.getLayoutBounds().getMinY();
+        if (offset < 0) {
+            ball.getLocation().y -= offset;
+            ball.getVelocity().y *= -1;
+        }
+
+        // right player collision
+        if (ball.intersects(rightPlayer)) {
+            offset = ball.getBoundsInParent().getMaxX() - rightPlayer.getBoundsInParent().getMinX();
             ball.getVelocity().x *= -1;
-            ball.getLocation().x += leftPlayer.getLocation().x + leftPlayer.getWidth();
-            if (ball.getVelocity().y * leftPlayer.getVelocity().y > 0) {
-                ball.getVelocity().y += 1;
-            } else {
-                ball.getVelocity().y -= 1;
-            }
+            ball.getLocation().x -= offset;
+        }
+
+        // left player collision
+        if (ball.intersects(leftPlayer)) {
+            offset = ball.getBoundsInParent().getMinX() - leftPlayer.getBoundsInParent().getMaxX();
+            ball.getVelocity().x *= -1;
+            ball.getLocation().x -= offset;
         }
     }
 
