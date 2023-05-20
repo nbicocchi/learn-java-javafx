@@ -93,7 +93,6 @@ public class SpaceInvadersController {
         }));
         // updates sprites
         sprites.forEach(Sprite::update);
-        sprites.forEach(Sprite::display);
         // remove all references of out-of-screen nodes and dead entities
         root.getChildren().removeIf(s -> (s.getTranslateY() > root.getHeight()) || (s.getTranslateY() < 0));
         root.getChildren().removeIf(x -> (x instanceof SpaceInvadersSprite) && (!((SpaceInvadersSprite) x).isAlive()));

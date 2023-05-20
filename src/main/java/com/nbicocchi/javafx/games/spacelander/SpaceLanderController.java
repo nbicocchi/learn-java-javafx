@@ -119,18 +119,17 @@ public class SpaceLanderController {
 
         // update ship
         ship.update();
-        ship.display();
 
         // update pad
-        pad.display();
+        pad.update();
 
         // updates thrusts
-        downThrust.setLocation(ship.getLocation().add(-25, 0, 0));
-        leftThrust.setLocation(ship.getLocation().add(-30, -10, 0));
-        rightThrust.setLocation(ship.getLocation().add(-20, -10, 0));
-        downThrust.display();
-        leftThrust.display();
-        rightThrust.display();
+        downThrust.setLocation(ship.getLocation().add(new PVector(-25, 0, 0)));
+        leftThrust.setLocation(ship.getLocation().add(new PVector(-30, -10, 0)));
+        rightThrust.setLocation(ship.getLocation().add(new PVector(-20, -10, 0)));
+        downThrust.update();
+        leftThrust.update();
+        rightThrust.update();
 
         // update speed text
         textSpeed.setText(String.format("speed = %.2f", ship.getVelocity().y));

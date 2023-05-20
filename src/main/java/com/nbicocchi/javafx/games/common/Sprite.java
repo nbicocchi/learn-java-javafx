@@ -1,8 +1,8 @@
 package com.nbicocchi.javafx.games.common;
 
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
-import javafx.scene.layout.Region;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 
 public class Sprite extends Region {
     PVector location;
@@ -100,18 +100,13 @@ public class Sprite extends Region {
     public void update() {
         velocity = velocity.add(acceleration);
         location = location.add(velocity);
+        setTranslateX(location.x );
+        setTranslateY(location.y);
+        // for debug purposes. uncomment to see the region's borders
+        setBorder(new Border(new BorderStroke(Color.BLUE, BorderStrokeStyle.DASHED, CornerRadii.EMPTY, BorderWidths.DEFAULT)));
     }
 
     public boolean intersects(Sprite other) {
         return getBoundsInParent().intersects(other.getBoundsInParent());
-    }
-
-    public boolean contains(Point2D point) {
-        return getBoundsInParent().contains(point);
-    }
-
-    public void display() {
-        setTranslateX(location.x);
-        setTranslateY(location.y);
     }
 }

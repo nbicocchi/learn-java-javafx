@@ -126,8 +126,6 @@ public class BallsController {
         bouncingSprites.forEach(this::checkBallBounds);
         // update sprite model
         bouncingSprites.forEach(Sprite::update);
-        // update sprite view
-        bouncingSprites.forEach(Sprite::display);
     }
 
     private void checkBallBounds(Sprite sprite) {

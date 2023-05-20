@@ -32,7 +32,10 @@ public class PongController {
         double h = root.getHeight();
         double w = root.getWidth();
         // ball
-        ball = new Sprite(new Circle(7.0, Color.WHITE));
+        Circle circle = new Circle(8, Color.WHITE);
+        circle.setTranslateX(8);
+        circle.setTranslateY(8);
+        ball = new Sprite(circle);
         ball.setLocation(new PVector(w / 2, h / 2));
         ball.setVelocity(new PVector(6, 6));
         Rectangle r;
@@ -69,10 +72,6 @@ public class PongController {
         ball.update();
         leftPlayer.update();
         rightPlayer.update();
-
-        ball.display();
-        leftPlayer.display();
-        rightPlayer.display();
     }
 
     private void checkBallBounds(Sprite s) {

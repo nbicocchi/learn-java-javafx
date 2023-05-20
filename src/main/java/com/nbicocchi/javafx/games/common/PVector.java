@@ -2,24 +2,9 @@ package com.nbicocchi.javafx.games.common;
 
 public class PVector {
     public static PVector ZERO = new PVector(0, 0);
-    /**
-     * The x component of the vector.
-     */
     public double x;
-    /**
-     * The y component of the vector.
-     */
     public double y;
-    /**
-     * The z component of the vector.
-     */
     public double z;
-
-    /**
-     * Constructor for an empty vector: x, y, and z are set to 0.
-     */
-    public PVector() {
-    }
 
     /**
      * Constructor for a 2D vector: z coordinate is set to 0.
@@ -44,6 +29,17 @@ public class PVector {
         this.x = x;
         this.y = y;
         this.z = z;
+    }
+
+    /**
+     * Constructor for a 3D vector.
+     *
+     * @param other the PVector to copy.
+     */
+    public PVector(PVector other) {
+        this.x = other.x;
+        this.y = other.y;
+        this.z = other.z;
     }
 
     /**
@@ -150,9 +146,13 @@ public class PVector {
      * @return the angle between the vectors
      */
     static public double angleBetween(PVector v1, PVector v2) {
-        double dot = v1.x * v2.x + v1.y * v2.y + v1.z * v2.z;
-        double v1mag = Math.sqrt(v1.x * v1.x + v1.y * v1.y + v1.z * v1.z);
-        double v2mag = Math.sqrt(v2.x * v2.x + v2.y * v2.y + v2.z * v2.z);
+        return v1.angleBetween(v2);
+    }
+
+    public double angleBetween(PVector v2) {
+        double dot = x * v2.x + y * v2.y + z * v2.z;
+        double v1mag = magnitude();
+        double v2mag = magnitude(v2);
         return Math.acos(dot / (v1mag * v2mag));
     }
 
@@ -180,10 +180,6 @@ public class PVector {
         z = v.z;
     }
 
-    public PVector add(double x, double y, double z) {
-        return new PVector(this.x + x, this.y + y, this.z + z);
-    }
-
     public double dot(double x, double y, double z) {
         return this.x * x + this.y * y + this.z * z;
     }
@@ -195,9 +191,18 @@ public class PVector {
      */
     public PVector limit(double max) {
         if (magnitude() < max) {
-            return copy();
+            return new PVector(this);
         }
         return normalize().multiply(max);
+    }
+
+    /**
+     * Calculate the magnitude (length) of a vector
+     *
+     * @return the magnitude of the vector
+     */
+    static public double magnitude(PVector v1) {
+        return Math.sqrt(v1.x * v1.x + v1.y * v1.y + v1.z * v1.z);
     }
 
     /**
@@ -210,19 +215,12 @@ public class PVector {
     }
 
     /**
-     * Get a copy of this vector.
-     */
-    public PVector copy() {
-        return new PVector(x, y, z);
-    }
-
-    /**
      * Normalize the vector to length 1 (make it a unit vector)
      */
     public PVector normalize() {
         double magnitude = magnitude();
         if (magnitude == 0 || magnitude == 1) {
-            return copy();
+            return new PVector(this);
         }
         return multiply(1 / magnitude);
     }
