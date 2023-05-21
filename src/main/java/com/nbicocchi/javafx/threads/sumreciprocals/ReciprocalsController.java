@@ -50,7 +50,7 @@ public class ReciprocalsController {
                     sum += 1.0 / (double) i;
                     updateProgress(i, n);
                     updateValue(new Pair<>(i, sum));
-                    Thread.sleep(10);
+                    Thread.sleep(5);
                 }
                 return new Pair<>(n, sum);
             }

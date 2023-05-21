@@ -18,7 +18,7 @@
          <items>
             <Button mnemonicParsing="false" onAction="#handleExecute" prefHeight="26.0" prefWidth="120.0" text="Execute" />
             <Button mnemonicParsing="false" onAction="#handleStop" prefHeight="26.0" prefWidth="120.0" text="Stop" />
-            <TextField fx:id="numberField" prefHeight="26.0" prefWidth="120.0" text="100" />
+            <TextField fx:id="numberField" prefHeight="26.0" prefWidth="120.0" text="500" />
             <Label fx:id="sumField" prefHeight="26.0" prefWidth="120.0" text="n/a" />
          </items>
       </ToolBar>
