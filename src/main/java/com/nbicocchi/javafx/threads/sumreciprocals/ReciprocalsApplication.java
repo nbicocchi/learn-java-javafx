@@ -18,7 +18,7 @@ public class ReciprocalsApplication extends Application {
     public void start(Stage primaryStage) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("reciprocals-view.fxml"));
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Reciprocals Summer");
+        primaryStage.setTitle("1/n summer");
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> {
             Platform.exit();

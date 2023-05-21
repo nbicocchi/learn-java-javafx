@@ -103,7 +103,7 @@ public class GeometryApplication extends Application {
             paint();
         });
         Scene scene = new Scene(bp);
-        primaryStage.setTitle("Paint");
+        primaryStage.setTitle("Geometry Application");
         primaryStage.setScene(scene);
         primaryStage.show();
         paint();

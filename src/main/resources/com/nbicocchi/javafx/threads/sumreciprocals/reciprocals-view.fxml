@@ -1,29 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ButtonBar?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="112.0" prefWidth="391.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.threads.sumreciprocals.ReciprocalsController">
-   <center>
-      <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="103.0" prefWidth="391.0">
-         <children>
-            <ButtonBar layoutX="66.0" layoutY="55.0" prefHeight="40.0" prefWidth="260.0">
-               <buttons>
-                  <Button mnemonicParsing="false" onAction="#handleExecute" prefHeight="26.0" prefWidth="120.0" text="Execute" />
-                  <Button mnemonicParsing="false" onAction="#handleStop" prefHeight="26.0" prefWidth="120.0" text="Stop" />
-               </buttons>
-            </ButtonBar>
-            <TextField fx:id="numberField" layoutX="85.0" layoutY="17.0" prefHeight="26.0" prefWidth="120.0" text="100" />
-            <Label fx:id="sumField" layoutX="213.0" layoutY="17.0" prefHeight="26.0" prefWidth="120.0" text="n/a" />
-         </children>
-      </AnchorPane>
-   </center>
+<BorderPane fx:id="borderPane" prefHeight="500.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.threads.sumreciprocals.ReciprocalsController">
    <bottom>
-      <ProgressBar fx:id="progressBar" prefHeight="20.0" prefWidth="400.0" progress="0.0" BorderPane.alignment="CENTER" />
+      <ProgressBar fx:id="progressBar" prefHeight="20.0" prefWidth="600.0" progress="0.0" BorderPane.alignment="CENTER" />
    </bottom>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <Button mnemonicParsing="false" onAction="#handleExecute" prefHeight="26.0" prefWidth="120.0" text="Execute" />
+            <Button mnemonicParsing="false" onAction="#handleStop" prefHeight="26.0" prefWidth="120.0" text="Stop" />
+            <TextField fx:id="numberField" prefHeight="26.0" prefWidth="120.0" text="100" />
+            <Label fx:id="sumField" prefHeight="26.0" prefWidth="120.0" text="n/a" />
+         </items>
+      </ToolBar>
+   </top>
+   <center>
+      <LineChart fx:id="lineChart" BorderPane.alignment="CENTER">
+        <xAxis>
+          <NumberAxis side="BOTTOM" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis side="LEFT" upperBound="10.0" />
+        </yAxis>
+      </LineChart>
+   </center>
 </BorderPane>
