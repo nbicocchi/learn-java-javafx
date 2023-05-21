@@ -25,36 +25,44 @@ public class PongController {
     @FXML
     public void handlePlay() {
         initializeGameObjects();
+        initializeScores();
         initializeTimer();
     }
 
     void initializeGameObjects() {
-        double h = root.getHeight();
-        double w = root.getWidth();
+        // remove sprites from eventual former match
+        root.getChildren().removeAll(ball, leftPlayer, rightPlayer);
 
         // ball
         Circle circle = new Circle(8, Color.WHITE);
         circle.setTranslateX(8);
         circle.setTranslateY(8);
-        ball = new Sprite("ball", circle, new PVector(w / 2, h / 2), new PVector(4, 4));
+        ball = new Sprite("ball", circle,
+                new PVector(root.getWidth() / 2, root.getHeight() / 2),
+                new PVector(5, 5));
 
         // left player
         Rectangle lplayer = new Rectangle(20, 90, Color.WHITE);
         lplayer.setArcWidth(10);
         lplayer.setArcHeight(10);
-        leftPlayer = new Sprite("left_player", lplayer, new PVector(10, h / 2));
+        leftPlayer = new Sprite("left_player", lplayer,
+                new PVector(10, root.getHeight() / 2));
 
         // right player
         Rectangle rplayer = new Rectangle(20, 90, Color.WHITE);
         rplayer.setArcWidth(10);
         rplayer.setArcHeight(10);
-        rightPlayer = new Sprite("right_player", rplayer, new PVector(w - 30, h / 2));
+        rightPlayer = new Sprite("right_player", rplayer,
+                new PVector(root.getWidth() - 30, root.getHeight() / 2));
 
         // add sprites to panel
         root.getChildren().addAll(leftPlayer, rightPlayer, ball);
     }
 
     void initializeTimer() {
+        if (timer != null) {
+            timer.stop();
+        }
         timer = new AnimationTimer() {
 
             @Override
@@ -118,6 +126,11 @@ public class PongController {
             ball.getVelocity().x *= -1;
             ball.getLocation().x -= offset;
         }
+    }
+
+    private void initializeScores() {
+        scoreRight.setText("0");
+        scoreLeft.setText("0");
     }
 
     private void scoreRight() {

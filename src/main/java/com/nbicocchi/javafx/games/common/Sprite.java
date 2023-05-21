@@ -53,6 +53,23 @@ public class Sprite extends Region {
         getChildren().add(view);
     }
 
+    public ObservableList<Node> getViews() {
+        return getChildren();
+    }
+
+    public void addView(String selector, Node view) {
+        view.setId(selector);
+        getChildren().add(view);
+    }
+
+    public void removeView(String selector) {
+        getChildren().remove(lookup(selector));
+    }
+
+    public Node getView(String selector) {
+        return lookup(selector);
+    }
+
     public PVector getLocation() {
         return location;
     }
@@ -83,27 +100,6 @@ public class Sprite extends Region {
 
     public void setMass(double mass) {
         this.mass = mass;
-    }
-
-    public ObservableList<Node> getViews() {
-        return getChildren();
-    }
-
-    public void addView(Node view) {
-        getChildren().add(view);
-    }
-
-    public void addView(String selector, Node view) {
-        view.setId(selector);
-        getChildren().add(view);
-    }
-
-    public void removeView(String selector) {
-        getChildren().remove(lookup(selector));
-    }
-
-    public Node getView(String selector) {
-        return lookup(selector);
     }
 
     public void applyImpulseForce(PVector force) {
