@@ -54,6 +54,7 @@ public class SpaceLanderController {
         Node leftThrust = new ImageView(new Image(getClass().getResourceAsStream("thrust.png")));
         Node rightThrust = new ImageView(new Image(getClass().getResourceAsStream("thrust.png")));
         Node explosion = new ImageView(new Image(getClass().getResourceAsStream("explosion.png")));
+
         downThrust.setTranslateX(-25);
         leftThrust.rotateProperty().set(90);
         leftThrust.setTranslateX(-30);

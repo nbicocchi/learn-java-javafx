@@ -111,7 +111,7 @@ public class Sprite extends Region {
         velocity = velocity.add(acceleration);
         location = location.add(velocity);
         // update position on parent component
-        setTranslateX(location.x );
+        setTranslateX(location.x);
         setTranslateY(location.y);
         // eventually draw borders
         if (DEBUG_ENABLED) {
