@@ -37,6 +37,7 @@ public class CanvasController {
     private void mainLoop() {
         drawBackground();
         drawBalls();
+        removeDeadBalls();
     }
 
     private void drawBackground() {
@@ -53,6 +54,10 @@ public class CanvasController {
         }
     }
 
+    private void removeDeadBalls() {
+        balls.removeIf(ball -> !canvas.getLayoutBounds().contains(ball.x, ball.y));
+    }
+
     @FXML
     public void handleStart() {
         initializeTimer();
@@ -66,12 +71,17 @@ public class CanvasController {
     @FXML
     public void handleMouseMoved() {
         RandomGenerator rnd = RandomGenerator.getDefault();
-        balls.add(new Ball(
+        Ball ball = new Ball(
                 canvas.getWidth() / 2,
                 canvas.getHeight() / 2,
                 rnd.nextInt(20) - 10,
                 rnd.nextInt(20) - 10,
-                rnd.nextInt(50),
-                Color.MEDIUMPURPLE.deriveColor(0, 1, 1, rnd.nextDouble())));
+                rnd.nextInt(10, 70),
+                Color.MEDIUMPURPLE.deriveColor(0, 1, 1, rnd.nextDouble()));
+        if (ball.vx == 0 || ball.vy == 0) {
+            ball.vx += 1;
+            ball.vy += 1;
+        }
+        balls.add(ball);
     }
 }
