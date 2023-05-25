@@ -6,9 +6,6 @@ import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ProgressIndicator;
-import javafx.util.Pair;
-
-import java.util.List;
 
 public class CollectionsController {
     public static String[] plugins = {
@@ -38,15 +35,12 @@ public class CollectionsController {
     void onStart() throws ClassNotFoundException, InstantiationException, IllegalAccessException {
         XYChart.Series<Number, Number> data = getSeriesByName(chCollection.getValue());
         ExperimentTask task = (ExperimentTask) Class.forName(chCollection.getValue()).newInstance();
-        progress.progressProperty().bind(task.progressProperty());
+        task.valueProperty().addListener((observable, oldValue, newValue) -> data.getData().add(new XYChart.Data<>(newValue.getKey(), newValue.getValue())));
         task.setOnSucceeded(event -> {
             progress.progressProperty().unbind();
             progress.progressProperty().setValue(100);
-            List<Pair<Integer, Integer>> results = task.getValue();
-            for (Pair<Integer, Integer> result : results) {
-                data.getData().add(new XYChart.Data<>(result.getKey(), result.getValue()));
-            }
         });
+        progress.progressProperty().bind(task.progressProperty());
         Thread t = new Thread(task);
         t.start();
     }

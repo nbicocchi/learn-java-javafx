@@ -62,7 +62,7 @@ public class ReciprocalsController {
     }
 
     void updatePartialData(Pair<Integer, Double> pair) {
-        sumField.setText(String.format("%d -> %f", pair.getKey(), pair.getValue()));
+        sumField.setText(String.format("n=%d sum=%.3f", pair.getKey(), pair.getValue()));
         data.getData().add(new XYChart.Data<>(pair.getKey(), pair.getValue()));
     }
 }

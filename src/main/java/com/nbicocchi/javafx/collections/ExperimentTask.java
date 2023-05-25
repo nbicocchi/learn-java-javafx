@@ -3,28 +3,27 @@ package com.nbicocchi.javafx.collections;
 import javafx.concurrent.Task;
 import javafx.util.Pair;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.random.RandomGenerator;
 
-public abstract class ExperimentTask extends Task<List<Pair<Integer, Integer>>> {
-    public static final int MICROSECONDS_IN_TWO_SECONDS = 2000000;
+public abstract class ExperimentTask extends Task<Pair<Integer, Integer>> {
+    public static final int MICROSECONDS_IN_TWO_SECONDS = 1000000;
     public static final int MAX_RUNS = 100;
-    public static final int MAX_FILL_ITEMS = 100000;
+    public static final int MAX_FILL_ITEMS = 200000;
     public static final int MAX_RETRIEVE_ITEMS = 1024;
     public static final int MAX_TIME_PER_EXPERIMENT = MICROSECONDS_IN_TWO_SECONDS / MAX_RUNS;
     RandomGenerator randomGenerator = RandomGenerator.getDefault();
     int fillItems;
 
     @Override
-    protected List<Pair<Integer, Integer>> call() {
+    protected Pair<Integer, Integer> call() {
         setup();
-        List<Pair<Integer, Integer>> results = new ArrayList<>();
+        Pair<Integer, Integer> result = null;
         for (int i = 0; i < MAX_RUNS; i++) {
-            results.add(experiment(randomGenerator.nextInt(fillItems)));
+            result = experiment(randomGenerator.nextInt(fillItems));
+            updateValue(result);
             updateProgress(i, MAX_RUNS);
         }
-        return results;
+        return result;
     }
 
     /**
