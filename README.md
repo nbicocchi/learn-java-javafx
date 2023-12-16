@@ -1,4 +1,4 @@
-# Introduction to JavaFX
+# JavaFX
 
 ### Modules
 
