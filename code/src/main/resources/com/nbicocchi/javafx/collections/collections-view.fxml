@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.ScatterChart?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane prefHeight="645.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.collections.CollectionsController">
+   <center>
+      <ScatterChart fx:id="chart" BorderPane.alignment="CENTER">
+        <xAxis>
+          <NumberAxis side="BOTTOM" fx:id="xAxis" />
+        </xAxis>
+        <yAxis>
+          <NumberAxis fx:id="yAxis" side="LEFT" />
+        </yAxis>
+      </ScatterChart>
+   </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <items>
+            <ProgressIndicator fx:id="progress" progress="0.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </ProgressIndicator>
+            <ChoiceBox fx:id="chCollection" prefWidth="350.0" />
+            <Button mnemonicParsing="false" onAction="#onStart" prefWidth="100.0" text="Run" />
+            <Button mnemonicParsing="false" onAction="#onClear" prefWidth="100.0" text="Clear" />
+         </items>
+      </ToolBar>
+   </top>
+</BorderPane>

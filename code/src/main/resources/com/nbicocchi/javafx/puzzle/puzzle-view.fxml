@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.TilePane?>
+
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.puzzle.PuzzleController">
+   <center>
+      <TilePane fx:id="tilePane" prefHeight="400.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
+   </center>
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button mnemonicParsing="false" onAction="#onLoad" prefWidth="60.0" text="Image..." />
+            <ChoiceBox fx:id="cbPuzzleFormat" prefWidth="60.0" />
+            <Button mnemonicParsing="false" onAction="#onShuffle" prefWidth="60.0" text="Shuffle" />
+            <Pane prefWidth="110.0" />
+            <Label fx:id="lbSolved" style="-fx-background-color: #3c3c3c; -fx-background-radius: 15;" text="Unsolved" textAlignment="CENTER" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="2.0" left="10.0" right="10.0" top="2.0" />
+               </padding>
+            </Label>
+        </items>
+      </ToolBar>
+   </top>
+</BorderPane>

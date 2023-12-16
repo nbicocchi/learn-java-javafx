@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.games.spacelander.SpaceLanderController">
+   <top>
+      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <Button focusTraversable="false" mnemonicParsing="false" onAction="#handlePlay" prefWidth="100.0" text="Play" />
+            <ChoiceBox focusTraversable="false" prefWidth="100.0" />
+        </items>
+      </ToolBar>
+   </top>
+   <center>
+      <AnchorPane fx:id="root" prefHeight="470.0" prefWidth="850.0" BorderPane.alignment="CENTER">
+         <children>
+            <Text fx:id="textLose" fill="RED" layoutX="70.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You Lose!" textAlignment="CENTER" visible="false">
+               <font>
+                  <Font size="170.0" />
+               </font>
+            </Text>
+            <Text fx:id="textWin" fill="#00ff71" layoutX="102.0" layoutY="299.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You Win!" textAlignment="CENTER" visible="false">
+               <font>
+                  <Font size="170.0" />
+               </font>
+            </Text>
+            <Text fx:id="textSpeed" fill="WHITE" layoutX="674.0" layoutY="43.0" strokeType="OUTSIDE" strokeWidth="0.0" text="speed = n/a" textAlignment="CENTER">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Text>
+         </children>
+      </AnchorPane>
+   </center>
+</BorderPane>
