@@ -4,7 +4,7 @@
 
 [P1] JavaFX Framework
 
-> Read: Introduction to Programming Using Java (Chapter 6-13),
+> Read: Introduction to Programming Using Java (Chapter 6-13)
 
 > Watch: [JavaFX GUI Full Course](https://www.youtube.com/watch?v=9XJicRt_FaI)
 
