@@ -36,13 +36,18 @@ public class ValidatorDatabase implements Validator {
     }
 
     public void resetDB() throws SQLException {
-        try (Connection connection = dataSource.getConnection(); PreparedStatement dropTable = connection.prepareStatement("DROP TABLE IF EXISTS users")) {
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement dropTable = connection.prepareStatement("DROP TABLE IF EXISTS users")) {
             dropTable.executeUpdate();
         }
-        try (Connection connection = dataSource.getConnection(); PreparedStatement createTable = connection.prepareStatement("CREATE TABLE users (username VARCHAR(50) " + "PRIMARY KEY, password BIGINT)")) {
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement createTable = connection.prepareStatement("CREATE TABLE users (username VARCHAR(50) " + "PRIMARY KEY, password BIGINT)")) {
             createTable.executeUpdate();
         }
-        try (Connection connection = dataSource.getConnection(); PreparedStatement insertPlane = connection.prepareStatement("INSERT INTO users (username, password) " + "VALUES (?, ?)")) {
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement insertPlane = connection.prepareStatement("INSERT INTO users (username, password) " + "VALUES (?, ?)")) {
             insertPlane.setString(1, "admin");
             insertPlane.setInt(2, "admin".hashCode());
             insertPlane.executeUpdate();
