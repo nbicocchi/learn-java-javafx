@@ -9,7 +9,7 @@
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane prefHeight="645.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.sss.CollectionsController">
+<BorderPane prefHeight="645.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.collections.controller.CollectionsController">
    <center>
       <ScatterChart fx:id="chart" BorderPane.alignment="CENTER">
         <xAxis>
