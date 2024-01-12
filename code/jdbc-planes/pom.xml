@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nbicocchi.javafx</groupId>
-    <artifactId>jdbc</artifactId>
+    <artifactId>jdbc-planes</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>jdbc</name>
+    <name>jdbc-planes</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -59,9 +59,9 @@
             <version>3.44.1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.mysql</groupId>
-            <artifactId>mysql-connector-j</artifactId>
-            <version>8.2.0</version>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.7.1</version>
         </dependency>
 
         <dependency>
@@ -112,7 +112,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.nbicocchi.javafx.jdbc/com.nbicocchi.javafx.jdbc.planes.App</mainClass>
+                            <mainClass>com.nbicocchi.javafx.planes/com.nbicocchi.javafx.planes.App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

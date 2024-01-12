@@ -1,9 +1,10 @@
-package com.nbicocchi.javafx.jdbc.planes;
+package com.nbicocchi.javafx.planes.controller;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nbicocchi.javafx.jdbc.UtilsDB;
+import com.nbicocchi.javafx.planes.persistence.model.Plane;
+import com.nbicocchi.javafx.planes.util.UtilsDB;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Platform;
@@ -27,7 +28,7 @@ import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
 
-public class PlanesController {
+public class OverviewController {
     @FXML private ComboBox<String> cbCategory;
     @FXML private DatePicker dcFirstFlight;
     @FXML private TextField tfLength;
@@ -155,9 +156,8 @@ public class PlanesController {
 
     private void dbConnection() {
         HikariConfig config = new HikariConfig();
-        System.out.println(UtilsDB.JDBC_URL_SQLite);
-        config.setDriverClassName(UtilsDB.JDBC_Driver_SQLite);
-        config.setJdbcUrl(UtilsDB.JDBC_URL_SQLite);
+        config.setDriverClassName(UtilsDB.JDBC_Driver_PostgreSQL);
+        config.setJdbcUrl(UtilsDB.JDBC_URL_PostgreSQL);
         config.setLeakDetectionThreshold(2000);
         dataSource = new HikariDataSource(config);
     }
