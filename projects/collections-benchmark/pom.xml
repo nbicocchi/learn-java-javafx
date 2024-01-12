@@ -61,7 +61,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.nbicocchi.javafx.collections/com.nbicocchi.javafx.collections.Application</mainClass>
+                            <mainClass>com.nbicocchi.javafx.collections/com.nbicocchi.javafx.collections.App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
