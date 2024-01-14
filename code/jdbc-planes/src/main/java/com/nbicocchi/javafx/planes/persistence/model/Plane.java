@@ -2,6 +2,7 @@ package com.nbicocchi.javafx.planes.persistence.model;
 
 import java.time.LocalDate;
 import java.util.Objects;
+import java.util.Random;
 import java.util.UUID;
 
 public class Plane {
@@ -17,6 +18,7 @@ public class Plane {
     }
 
     public Plane(String name, double length, double wingspan, LocalDate firstFlight, String category) {
+        this.Id = null;
         this.name = name;
         this.length = length;
         this.wingspan = wingspan;

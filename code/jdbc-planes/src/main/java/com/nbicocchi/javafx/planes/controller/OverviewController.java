@@ -3,9 +3,8 @@ package com.nbicocchi.javafx.planes.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.nbicocchi.javafx.planes.persistence.dao.PlaneRepository;
 import com.nbicocchi.javafx.planes.persistence.model.Plane;
-import com.nbicocchi.javafx.planes.util.UtilsDB;
-import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -27,6 +26,8 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class OverviewController {
     @FXML private ComboBox<String> cbCategory;
@@ -37,7 +38,15 @@ public class OverviewController {
     @FXML private TableView<Plane> txView;
     @FXML private TextField tfSearch;
     private ObservableList<Plane> planes;
-    private HikariDataSource dataSource;
+    HikariDataSource hikariDataSource;
+    private PlaneRepository planeRepository;
+
+    public void initDataSource(HikariDataSource hikariDataSource) {
+        this.hikariDataSource = hikariDataSource;
+        this.planeRepository = new PlaneRepository(hikariDataSource);
+        Iterable<Plane> savedPlanes = planeRepository.findAll();
+        planes.addAll(StreamSupport.stream(savedPlanes.spliterator(), false).collect(Collectors.toList()));
+    }
 
     public void initialize() throws SQLException {
         planes = FXCollections.observableArrayList();
@@ -57,76 +66,47 @@ public class OverviewController {
         name.setPrefWidth(150);
         name.setCellValueFactory(new PropertyValueFactory<>("name"));
         name.setCellFactory(TextFieldTableCell.forTableColumn());
-        name.setOnEditCommit(e -> {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement updatePlane = connection.prepareStatement("UPDATE planes SET name=? WHERE uuid=?")) {
-                updatePlane.setString(1, e.getNewValue());
-                updatePlane.setString(2, e.getRowValue().getUUID().toString());
-                updatePlane.executeUpdate();
-                e.getRowValue().setName(e.getNewValue());
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
-            }
+        name.setOnEditCommit(event -> {
+            Plane selectedPlane = event.getRowValue();
+            selectedPlane.setName(event.getNewValue());;
+            planeRepository.save(selectedPlane);
         });
+
 
         length.setPrefWidth(150);
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         length.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        length.setOnEditCommit(e -> {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement updatePlane = connection.prepareStatement("UPDATE planes SET length=? WHERE uuid=?")) {
-                updatePlane.setDouble(1, e.getNewValue());
-                updatePlane.setString(2, e.getRowValue().getUUID().toString());
-                updatePlane.executeUpdate();
-                e.getRowValue().setLength(e.getNewValue());
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
-            }
+        length.setOnEditCommit(event -> {
+            Plane selectedPlane = event.getRowValue();
+            selectedPlane.setLength(event.getNewValue());;
+            planeRepository.save(selectedPlane);
         });
 
         wingspan.setPrefWidth(150);
         wingspan.setCellValueFactory(new PropertyValueFactory<>("wingspan"));
         wingspan.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        wingspan.setOnEditCommit(e -> {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement updatePlane = connection.prepareStatement("UPDATE planes SET wingspan=? WHERE uuid=?")) {
-                updatePlane.setDouble(1, e.getNewValue());
-                updatePlane.setString(2, e.getRowValue().getUUID().toString());
-                updatePlane.executeUpdate();
-                e.getRowValue().setLength(e.getNewValue());
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
-            }
+        wingspan.setOnEditCommit(event -> {
+            Plane selectedPlane = event.getRowValue();
+            selectedPlane.setWingspan(event.getNewValue());;
+            planeRepository.save(selectedPlane);
         });
 
         firstFlight.setPrefWidth(150);
         firstFlight.setCellValueFactory(new PropertyValueFactory<>("firstFlight"));
         firstFlight.setCellFactory(TextFieldTableCell.forTableColumn(new LocalDateStringConverter()));
-        firstFlight.setOnEditCommit(e -> {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement updatePlane = connection.prepareStatement("UPDATE planes SET firstFlight=? WHERE uuid=?")) {
-                updatePlane.setDate(1, Date.valueOf(e.getNewValue()));
-                updatePlane.setString(2, e.getRowValue().getUUID().toString());
-                updatePlane.executeUpdate();
-                e.getRowValue().setFirstFlight(e.getNewValue());
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
-            }
+        firstFlight.setOnEditCommit(event -> {
+            Plane selectedPlane = event.getRowValue();
+            selectedPlane.setFirstFlight(event.getNewValue());
+            planeRepository.save(selectedPlane);
         });
 
         category.setPrefWidth(150);
         category.setCellValueFactory(new PropertyValueFactory<>("category"));
         category.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(planeTypes)));
-        category.setOnEditCommit(e -> {
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement updatePlane = connection.prepareStatement("UPDATE planes SET category=? WHERE uuid=?")) {
-                updatePlane.setString(1, e.getNewValue());
-                updatePlane.setString(2, e.getRowValue().getUUID().toString());
-                updatePlane.executeUpdate();
-                e.getRowValue().setCategory(e.getNewValue());
-            } catch (SQLException ex) {
-                new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
-            }
+        category.setOnEditCommit(event -> {
+            Plane selectedPlane = event.getRowValue();
+            selectedPlane.setCategory(event.getNewValue());;
+            planeRepository.save(selectedPlane);
         });
 
         txView.getColumns().add(name);
@@ -145,44 +125,9 @@ public class OverviewController {
                 filteredData.setPredicate(plane -> plane.getName().toLowerCase().contains(filter.toLowerCase()));
             }
         });
-
-        try {
-            dbConnection();
-            loadData();
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "Database Error").showAndWait();
-        }
     }
 
-    private void dbConnection() {
-        HikariConfig config = new HikariConfig();
-        config.setDriverClassName(UtilsDB.JDBC_Driver_PostgreSQL);
-        config.setJdbcUrl(UtilsDB.JDBC_URL_PostgreSQL);
-        config.setLeakDetectionThreshold(2000);
-        dataSource = new HikariDataSource(config);
-    }
 
-    private void loadData() throws SQLException {
-        planes.clear();
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement getPlanes = connection.prepareStatement("SELECT * FROM planes");
-             ResultSet rs = getPlanes.executeQuery()) {
-                    while (rs.next()) {
-                        planes.add(new Plane(
-                                UUID.fromString(rs.getString("uuid")),
-                                rs.getString("name"),
-                                rs.getDouble("length"),
-                                rs.getDouble("wingspan"),
-                                convertSQLDateToLocalDate(rs.getDate("firstFlight")),
-                                rs.getString("category")));
-                    }
-        }
-    }
-
-    public static LocalDate convertSQLDateToLocalDate(Date SQLDate) {
-        java.util.Date date = new java.util.Date(SQLDate.getTime());
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
 
     @FXML
     void onImportClicked() {
@@ -196,13 +141,10 @@ public class OverviewController {
             try {
                 List<Plane> tmp = mapper.readValue(file, new TypeReference<>() {});
                 for (Plane plane : tmp) {
-                    insertDBPlane(plane);
-                    planes.add(plane);
+                    planes.add(planeRepository.save(plane));
                 }
             } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR, "JSON import failed").showAndWait();
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, "Database failed").showAndWait();
+                new Alert(Alert.AlertType.ERROR).showAndWait();
             }
         }
     }
@@ -219,7 +161,7 @@ public class OverviewController {
                 mapper.registerModule(new JavaTimeModule());
                 mapper.writerWithDefaultPrettyPrinter().writeValue(file, planes);
             } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR, "Could not save data").showAndWait();
+                new Alert(Alert.AlertType.ERROR).showAndWait();
             }
         }
     }
@@ -233,23 +175,9 @@ public class OverviewController {
     void onAddClicked() {
         Plane plane = new Plane(tfName.getText(), Double.parseDouble(tfLength.getText()), Double.parseDouble(tfWingSpan.getText()), dcFirstFlight.getValue(), cbCategory.getValue());
         try {
-            insertDBPlane(plane);
-            planes.add(plane);
-        } catch (SQLException e) {
-            new Alert(Alert.AlertType.ERROR, "SQL Error").showAndWait();
-        }
-    }
-
-    void insertDBPlane(Plane plane) throws SQLException {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement insertPlane = connection.prepareStatement("INSERT INTO planes (uuid, name, length, wingspan, firstFlight, category) VALUES (?, ?, ?, ?, ?, ?)")) {
-            insertPlane.setString(1, plane.getUUID().toString());
-            insertPlane.setString(2, plane.getName());
-            insertPlane.setDouble(3, plane.getLength());
-            insertPlane.setDouble(4, plane.getWingspan());
-            insertPlane.setDate(5, Date.valueOf(plane.getFirstFlight()));
-            insertPlane.setString(6, plane.getCategory());
-            insertPlane.executeUpdate();
+            planes.add(planeRepository.save(plane));
+        } catch (RuntimeException e) {
+            new Alert(Alert.AlertType.ERROR).showAndWait();
         }
     }
 
@@ -258,19 +186,11 @@ public class OverviewController {
         Plane plane = txView.getSelectionModel().getSelectedItem();
         if (plane != null) {
             try {
-                removeDBPlane(plane);
+                planeRepository.deleteById(plane.getId());
                 planes.remove(plane);
-            } catch (SQLException e) {
-                new Alert(Alert.AlertType.ERROR, "SQL Error").showAndWait();
+            } catch (RuntimeException e) {
+                new Alert(Alert.AlertType.ERROR).showAndWait();
             }
-        }
-    }
-
-    void removeDBPlane(Plane plane) throws SQLException {
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement deletePlane = connection.prepareStatement("DELETE FROM planes WHERE uuid=?")) {
-            deletePlane.setString(1, plane.getUUID().toString());
-            deletePlane.executeUpdate();
         }
     }
 
