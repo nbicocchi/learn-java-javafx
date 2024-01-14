@@ -37,8 +37,7 @@ public class App {
 
     private void resetDB() {
         System.out.println("- testDB()...");
-        try (Connection connection = dataSource.getConnection();
-             Statement statement = connection.createStatement()) {
+        try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
             statement.addBatch("DROP TABLE IF EXISTS book");
             statement.addBatch("CREATE TABLE book (id INTEGER PRIMARY KEY, title VARCHAR(30), author VARCHAR(30), pages INTEGER)");
             statement.addBatch("INSERT INTO book (id, title, author, pages) VALUES(1, 'The Lord of the Rings', 'Tolkien', 241)");
@@ -57,9 +56,7 @@ public class App {
      */
     private void testSelect() {
         System.out.println("- testSelect()...");
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100");
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100"); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 System.out.println(rowToString(rs));
             }
@@ -73,8 +70,7 @@ public class App {
      */
     private void testUpdate() {
         System.out.println("- testUpdate()...");
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")) {
             ps.setInt(1, 333);
             ps.setInt(2, 1);
             ps.executeUpdate();
@@ -88,9 +84,7 @@ public class App {
      */
     private void testScrollable() {
         System.out.println("- testScrollable()...");
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0",
-             ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             // Third record
             rs.absolute(2);
@@ -107,13 +101,22 @@ public class App {
     }
 
     /**
+     * Prints the current ResultSet row
+     */
+    private String rowToString(ResultSet rs) throws SQLException {
+        return String.format("id=%d, title=%s, author=%s, pages=%d", rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getInt("pages"));
+    }
+
+    public static void main(String[] args) {
+        new App();
+    }
+
+    /**
      * Test Updateable ResultSet Increment pages of one element
      */
     private void testUpdateable() {
         System.out.println("- testUpdateable()...");
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-            ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int pages = rs.getInt("pages");
                 rs.updateInt("pages", pages + 10);
@@ -129,8 +132,7 @@ public class App {
      */
     private void testSensitive() {
         System.out.println("- testSensitive()...");
-        try (Connection connection = dataSource.getConnection();
-             PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             for (int retry = 0; retry < 10; retry++) {
                 System.out.printf("[%d] awaiting for external changes 10s...\n", retry);
@@ -147,20 +149,5 @@ public class App {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
-    }
-
-    /**
-     * Prints the current ResultSet row
-     */
-    private String rowToString(ResultSet rs) throws SQLException {
-        return String.format("id=%d, title=%s, author=%s, pages=%d",
-                rs.getInt("id"),
-                rs.getString("title"),
-                rs.getString("author"),
-                rs.getInt("pages"));
-    }
-
-    public static void main(String[] args) {
-        new App();
     }
 }
