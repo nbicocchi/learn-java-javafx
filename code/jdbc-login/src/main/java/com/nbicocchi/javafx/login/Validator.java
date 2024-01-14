@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.jdbc.login;
+package com.nbicocchi.javafx.login;
 
 public interface Validator {
     void connect();

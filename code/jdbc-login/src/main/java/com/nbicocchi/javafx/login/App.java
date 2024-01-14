@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.jdbc.login;
+package com.nbicocchi.javafx.login;
 
 import javafx.application.Application;
 import javafx.application.Platform;
@@ -12,7 +12,7 @@ import javafx.util.Pair;
 import java.io.IOException;
 import java.util.Optional;
 
-public class LoginApplication extends Application {
+public class App extends Application {
     public static void main(String[] args) {
         launch(args);
     }

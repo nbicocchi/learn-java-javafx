@@ -1,10 +1,9 @@
-package com.nbicocchi.javafx.jdbc.login;
+package com.nbicocchi.javafx.login;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
 import javafx.stage.Modality;
 import javafx.stage.Window;
@@ -23,10 +22,8 @@ public class LoginDialog extends Dialog<Pair<String, String>> {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource("login-view.fxml"));
         loader.setController(this);
-        DialogPane pane = loader.load();
-        setDialogPane(pane);
+        setDialogPane(loader.load());
         setTitle("Login");
-        //setHeaderText("Look, a Custom Login Dialog");
         setResizable(false);
         initModality(Modality.APPLICATION_MODAL);
         setResultConverter(buttonType -> {

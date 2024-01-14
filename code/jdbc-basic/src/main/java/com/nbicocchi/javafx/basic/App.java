@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.jdbc;
+package com.nbicocchi.javafx.basic;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -10,46 +10,44 @@ import java.sql.*;
  *
  * @author Nicola Bicocchi
  */
-public class BasicOperations {
+public class App {
     HikariDataSource dataSource;
 
-    public BasicOperations() throws SQLException {
+    private App() {
         dbConnection();
-        testDB();
+        resetDB();
         testSelect();
         testUpdate();
         testSelect();
         testScrollable();
-        testUpdateable();
         testSelect();
+        //testUpdateable();
+        //testSelect();
         //testSensitive();
     }
 
     private void dbConnection() {
         System.out.println("- dbConnection()...");
         HikariConfig config = new HikariConfig();
-        config.setDriverClassName(UtilsDB.JDBC_Driver_MySQL);
-        config.setJdbcUrl(UtilsDB.JDBC_URL_MySQL);
+        config.setDriverClassName(UtilsDB.JDBC_Driver_PostgreSQL);
+        config.setJdbcUrl(UtilsDB.JDBC_URL_PostgreSQL);
         config.setLeakDetectionThreshold(2000);
         dataSource = new HikariDataSource(config);
     }
 
-    public void testDB() throws SQLException {
+    private void resetDB() {
         System.out.println("- testDB()...");
-        try (Connection connection = dataSource.getConnection()) {
-            try (PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 1")) {
-                ps.executeQuery();
-            } catch (SQLException e) {
-                try (Statement s = connection.createStatement()) {
-                    s.addBatch("DROP TABLE IF EXISTS book");
-                    s.addBatch("CREATE TABLE book (id INTEGER PRIMARY KEY, title VARCHAR(30), author VARCHAR(30), pages INTEGER)");
-                    s.addBatch("INSERT INTO book (id, title, author, pages) VALUES(1, 'The Lord of the Rings', 'Tolkien', 241)");
-                    s.addBatch("INSERT INTO book (id, title, author, pages) VALUES(2, 'Fight Club', 'Palahniuk', 212)");
-                    s.addBatch("INSERT INTO book (id, title, author, pages) VALUES(3, 'Computer Networks', 'Tanenbaum', 313)");
-                    s.addBatch("INSERT INTO book (id, title, author, pages) VALUES(4, 'Affective Computing', 'Picard', 127)");
-                    s.executeBatch();
-                }
-            }
+        try (Connection connection = dataSource.getConnection();
+             Statement statement = connection.createStatement()) {
+            statement.addBatch("DROP TABLE IF EXISTS book");
+            statement.addBatch("CREATE TABLE book (id INTEGER PRIMARY KEY, title VARCHAR(30), author VARCHAR(30), pages INTEGER)");
+            statement.addBatch("INSERT INTO book (id, title, author, pages) VALUES(1, 'The Lord of the Rings', 'Tolkien', 241)");
+            statement.addBatch("INSERT INTO book (id, title, author, pages) VALUES(2, 'Fight Club', 'Palahniuk', 212)");
+            statement.addBatch("INSERT INTO book (id, title, author, pages) VALUES(3, 'Computer Networks', 'Tanenbaum', 313)");
+            statement.addBatch("INSERT INTO book (id, title, author, pages) VALUES(4, 'Affective Computing', 'Picard', 127)");
+            statement.executeBatch();
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 
@@ -57,7 +55,7 @@ public class BasicOperations {
      * Reads the content of the person table Results are limited using "LIMIT 100"
      * Useful for large tables
      */
-    public void testSelect() throws SQLException {
+    private void testSelect() {
         System.out.println("- testSelect()...");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100");
@@ -65,26 +63,30 @@ public class BasicOperations {
             while (rs.next()) {
                 System.out.println(rowToString(rs));
             }
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 
     /**
      * Update the content of the book table
      */
-    public void testUpdate() throws SQLException {
+    private void testUpdate() {
         System.out.println("- testUpdate()...");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")) {
-            ps.setInt(1, 176);
+            ps.setInt(1, 333);
             ps.setInt(2, 1);
             ps.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 
     /**
      * Test Scrollable ResultSet
      */
-    public void testScrollable() throws SQLException {
+    private void testScrollable() {
         System.out.println("- testScrollable()...");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0",
@@ -99,13 +101,15 @@ public class BasicOperations {
             // +2 records from current position
             rs.relative(2);
             System.out.println(rowToString(rs));
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 
     /**
      * Test Updateable ResultSet Increment pages of one element
      */
-    public void testUpdateable() throws SQLException {
+    private void testUpdateable() {
         System.out.println("- testUpdateable()...");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
@@ -115,13 +119,15 @@ public class BasicOperations {
                 rs.updateInt("pages", pages + 10);
                 rs.updateRow();
             }
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 
     /**
      * Test Sensitive ResultSet
      */
-    public void testSensitive() throws SQLException {
+    private void testSensitive() {
         System.out.println("- testSensitive()...");
         try (Connection connection = dataSource.getConnection();
              PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
@@ -138,13 +144,15 @@ public class BasicOperations {
                 } catch (InterruptedException ignored) {
                 }
             }
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
     }
 
     /**
      * Prints the current ResultSet row
      */
-    public String rowToString(ResultSet rs) throws SQLException {
+    private String rowToString(ResultSet rs) throws SQLException {
         return String.format("id=%d, title=%s, author=%s, pages=%d",
                 rs.getInt("id"),
                 rs.getString("title"),
@@ -153,10 +161,6 @@ public class BasicOperations {
     }
 
     public static void main(String[] args) {
-        try {
-            new BasicOperations();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        new App();
     }
 }
