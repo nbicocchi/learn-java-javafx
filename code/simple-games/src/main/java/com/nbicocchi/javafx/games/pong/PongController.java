@@ -59,6 +59,11 @@ public class PongController {
         root.getChildren().addAll(leftPlayer, rightPlayer, ball);
     }
 
+    private void initializeScores() {
+        scoreRight.setText("0");
+        scoreLeft.setText("0");
+    }
+
     void initializeTimer() {
         if (timer != null) {
             timer.stop();
@@ -126,11 +131,6 @@ public class PongController {
             ball.getVelocity().x *= -1;
             ball.getLocation().x -= offset;
         }
-    }
-
-    private void initializeScores() {
-        scoreRight.setText("0");
-        scoreLeft.setText("0");
     }
 
     private void scoreRight() {
