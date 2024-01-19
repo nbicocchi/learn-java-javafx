@@ -2,7 +2,6 @@ package com.nbicocchi.javafx.sumreciprocals;
 
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
-import javafx.scene.chart.LineChart;
 import javafx.scene.chart.ScatterChart;
 import javafx.scene.chart.XYChart;
 import javafx.scene.control.Label;
@@ -43,21 +42,21 @@ public class ReciprocalsController {
     @FXML
     void handleExecute() {
         int maxPointsOnTheChart = 100;
-        int max = Integer.parseInt(numberField.getText());
-        int step = Math.max(max / maxPointsOnTheChart, 1);
-        Task<Pair<Integer, Double>> task = getTask(max, step);
+        long max = Long.parseLong(numberField.getText());
+        long step = Math.max(max / maxPointsOnTheChart, 1);
+        Task<Pair<Long, Double>> task = getTask(max, step);
         task.progressProperty().addListener((observable, oldValue, newValue) -> progressBar.setProgress(newValue.doubleValue()));
         task.valueProperty().addListener((observable, oldValue, newValue) -> updatePartialData(task.getValue()));
         data.getData().clear();
         executorService.submit(task);
     }
 
-    private Task<Pair<Integer, Double>> getTask(int max, int step) {
-        Task<Pair<Integer, Double>> task = new Task<>() {
+    private Task<Pair<Long, Double>> getTask(long max, long step) {
+        return new Task<>() {
             @Override
-            protected Pair<Integer, Double> call() throws InterruptedException {
+            protected Pair<Long, Double> call() throws InterruptedException {
                 double sum = 0.0;
-                for (int i = 1; i <= max; i++) {
+                for (long i = 1; i <= max; i++) {
                     sum += 1.0 / (double) i;
 
                     if (i % step == 0) {
@@ -69,10 +68,9 @@ public class ReciprocalsController {
                 return new Pair<>(max, sum);
             }
         };
-        return task;
     }
 
-    void updatePartialData(Pair<Integer, Double> pair) {
+    void updatePartialData(Pair<Long, Double> pair) {
         sumField.setText(String.format("n=%d sum=%.6f", pair.getKey(), pair.getValue()));
         data.getData().add(new XYChart.Data<>(pair.getKey(), pair.getValue()));
     }

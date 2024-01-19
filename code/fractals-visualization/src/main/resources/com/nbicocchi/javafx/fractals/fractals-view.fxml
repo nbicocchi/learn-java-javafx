@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.Pane?>
 
-<BorderPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.fractals.controller.FractalsController">
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.fractals.controller.FractalsController">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -39,7 +39,7 @@
       </ToolBar>
    </top>
    <bottom>
-      <ProgressBar fx:id="progressBar" prefWidth="800.0" progress="0.0" BorderPane.alignment="CENTER" />
+      <ProgressBar fx:id="progressBar" prefHeight="20.0" prefWidth="997.0" progress="0.0" BorderPane.alignment="CENTER" />
    </bottom>
    <center>
       <ImageView fx:id="imageView" fitHeight="600.0" fitWidth="1000.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER" />
