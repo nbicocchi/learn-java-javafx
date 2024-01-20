@@ -13,7 +13,7 @@ public class BallsApplication extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("sierpinski.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("balls-view.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Balls");
         stage.setScene(scene);
