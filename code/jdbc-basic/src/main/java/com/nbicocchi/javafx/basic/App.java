@@ -4,6 +4,8 @@ import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class for testing basic operations with JDBC.
@@ -11,6 +13,7 @@ import java.sql.*;
  * @author Nicola Bicocchi
  */
 public class App {
+    private final static Logger LOG = LoggerFactory.getLogger(App.class);
     HikariDataSource dataSource;
 
     private App() {
@@ -27,7 +30,7 @@ public class App {
     }
 
     private void dbConnection() {
-        System.out.println("- dbConnection()...");
+        LOG.info("** dbConnection() **");
         HikariConfig config = new HikariConfig();
         config.setDriverClassName(UtilsDB.JDBC_Driver_PostgreSQL);
         config.setJdbcUrl(UtilsDB.JDBC_URL_PostgreSQL);
@@ -36,7 +39,7 @@ public class App {
     }
 
     private void resetDB() {
-        System.out.println("- testDB()...");
+        LOG.info("** resetDB() **");
         try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
             statement.addBatch("DROP TABLE IF EXISTS book");
             statement.addBatch("CREATE TABLE book (id INTEGER PRIMARY KEY, title VARCHAR(30), author VARCHAR(30), pages INTEGER)");
@@ -55,10 +58,10 @@ public class App {
      * Useful for large tables
      */
     private void testSelect() {
-        System.out.println("- testSelect()...");
+        LOG.info("** testSelect() **");
         try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100"); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
-                System.out.println(rowToString(rs));
+                LOG.info(rowToString(rs));
             }
         } catch (SQLException e) {
             throw new RuntimeException();
@@ -69,7 +72,7 @@ public class App {
      * Update the content of the book table
      */
     private void testUpdate() {
-        System.out.println("- testUpdate()...");
+        LOG.info("** testUpdate() **");
         try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")) {
             ps.setInt(1, 333);
             ps.setInt(2, 1);
@@ -83,18 +86,18 @@ public class App {
      * Test Scrollable ResultSet
      */
     private void testScrollable() {
-        System.out.println("- testScrollable()...");
+        LOG.info("** testScrollable() **");
         try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             // Third record
             rs.absolute(2);
-            System.out.println(rowToString(rs));
+            LOG.info(rowToString(rs));
             // Previous record
             rs.previous();
-            System.out.println(rowToString(rs));
+            LOG.info(rowToString(rs));
             // +2 records from current position
             rs.relative(2);
-            System.out.println(rowToString(rs));
+            LOG.info(rowToString(rs));
         } catch (SQLException e) {
             throw new RuntimeException();
         }
@@ -104,7 +107,7 @@ public class App {
      * Prints the current ResultSet row
      */
     private String rowToString(ResultSet rs) throws SQLException {
-        return String.format("id=%d, title=%s, author=%s, pages=%d", rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getInt("pages"));
+        return String.format("--> id=%d, title=%s, author=%s, pages=%d", rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getInt("pages"));
     }
 
     public static void main(String[] args) {
@@ -115,7 +118,7 @@ public class App {
      * Test Updateable ResultSet Increment pages of one element
      */
     private void testUpdateable() {
-        System.out.println("- testUpdateable()...");
+        LOG.info("** testUpdateable() **");
         try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int pages = rs.getInt("pages");
@@ -131,7 +134,7 @@ public class App {
      * Test Sensitive ResultSet
      */
     private void testSensitive() {
-        System.out.println("- testSensitive()...");
+        LOG.info("** testSensitive() **");
         try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             for (int retry = 0; retry < 10; retry++) {
@@ -139,7 +142,7 @@ public class App {
                 rs.beforeFirst();
                 while (rs.next()) {
                     rs.refreshRow();
-                    System.out.println(rowToString(rs));
+                    LOG.info(rowToString(rs));
                 }
                 try {
                     Thread.sleep(10000);

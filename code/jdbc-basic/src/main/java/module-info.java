@@ -4,4 +4,5 @@ open module com.nbicocchi.javafx.basic {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.zaxxer.hikari;
+    requires org.slf4j;
 }
