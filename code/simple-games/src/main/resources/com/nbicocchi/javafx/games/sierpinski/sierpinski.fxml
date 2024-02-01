@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.games.sierpinski.SierpinskiController">
+   <center>
+      <Canvas fx:id="canvas" height="600.0" width="800.0" />
+   </center>
+</BorderPane>

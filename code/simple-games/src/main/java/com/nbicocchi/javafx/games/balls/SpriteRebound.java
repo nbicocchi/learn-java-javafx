@@ -16,7 +16,6 @@ public class SpriteRebound extends Sprite {
     public SpriteRebound(String name, Node view, PVector location, PVector velocity) {
         super(name, view, location, velocity);
     }
-
     public SpriteRebound(String name, Node view, PVector location, PVector velocity, PVector acceleration) {
         super(name, view, location, velocity, acceleration);
     }
