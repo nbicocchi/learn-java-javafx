@@ -7,4 +7,5 @@ open module com.nbicocchi.javafx.planes {
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
     requires com.zaxxer.hikari;
+    requires org.slf4j;
 }

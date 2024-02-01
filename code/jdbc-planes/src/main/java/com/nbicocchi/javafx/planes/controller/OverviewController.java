@@ -127,8 +127,6 @@ public class OverviewController {
         });
     }
 
-
-
     @FXML
     void onImportClicked() {
         FileChooser fileChooser = new FileChooser();
@@ -141,7 +139,8 @@ public class OverviewController {
             try {
                 List<Plane> tmp = mapper.readValue(file, new TypeReference<>() {});
                 for (Plane plane : tmp) {
-                    planes.add(planeRepository.save(plane));
+                    Plane saved = planeRepository.save(plane);
+                    planes.add(saved);
                 }
             } catch (IOException e) {
                 new Alert(Alert.AlertType.ERROR).showAndWait();
