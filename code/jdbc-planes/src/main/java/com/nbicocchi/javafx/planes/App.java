@@ -9,11 +9,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
 
 public class App extends Application {
     private static final String JDBC_Driver = "org.postgresql.Driver";
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/jdbc_schema?user=user&password=secret&ssl=false";
+
+    private static final Logger logger = LoggerFactory.getLogger(Example.class);
 
     public static void main(String[] args) {
         launch(args);
