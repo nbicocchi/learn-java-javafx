@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.login;
+package com.nbicocchi.javafx.planes.login;
 
 import java.util.HashMap;
 import java.util.Map;

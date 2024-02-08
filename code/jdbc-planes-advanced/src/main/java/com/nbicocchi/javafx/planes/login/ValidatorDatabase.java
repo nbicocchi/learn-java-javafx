@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.login;
+package com.nbicocchi.javafx.planes.login;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;

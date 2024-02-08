@@ -4,4 +4,6 @@ open module com.nbicocchi.javafx.login {
     requires javafx.controls;
     requires javafx.fxml;
     requires com.zaxxer.hikari;
+    requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 }

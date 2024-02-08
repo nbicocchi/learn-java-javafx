@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.login;
+package com.nbicocchi.javafx.planes.login;
 
 public interface Validator {
     void connect();

@@ -1,0 +1,157 @@
+[ {
+  "name" : "Dornier Do X",
+  "length" : 40.0,
+  "wingspan" : 47.8,
+  "firstFlight" : [ 1929, 7, 12 ],
+  "category" : "Flying boat"
+}, {
+  "name" : "Kalinin K-7",
+  "length" : 28.0,
+  "wingspan" : 53.0,
+  "firstFlight" : [ 1933, 8, 11 ],
+  "category" : "Transport"
+}, {
+  "name" : "Tupolev ANT-20",
+  "length" : 32.9,
+  "wingspan" : 63.0,
+  "firstFlight" : [ 1934, 5, 19 ],
+  "category" : "Transport"
+}, {
+  "name" : "Douglas XB-19",
+  "length" : 40.3,
+  "wingspan" : 64.6,
+  "firstFlight" : [ 1941, 6, 27 ],
+  "category" : "Bomber"
+}, {
+  "name" : "Messerschmitte 323",
+  "length" : 28.2,
+  "wingspan" : 55.2,
+  "firstFlight" : [ 1942, 1, 20 ],
+  "category" : "Transport"
+}, {
+  "name" : "Martin JRMars",
+  "length" : 35.7,
+  "wingspan" : 61.0,
+  "firstFlight" : [ 1942, 6, 23 ],
+  "category" : "Flying boat"
+}, {
+  "name" : "Latécoère 631",
+  "length" : 43.5,
+  "wingspan" : 57.4,
+  "firstFlight" : [ 1942, 11, 4 ],
+  "category" : "Flying boat"
+}, {
+  "name" : "Junkers Ju 390",
+  "length" : 34.2,
+  "wingspan" : 50.3,
+  "firstFlight" : [ 1943, 10, 20 ],
+  "category" : "Bomber"
+}, {
+  "name" : "Convair B-36",
+  "length" : 49.4,
+  "wingspan" : 70.1,
+  "firstFlight" : [ 1946, 8, 8 ],
+  "category" : "Bomber"
+}, {
+  "name" : "Hughes H-4 Hercules",
+  "length" : 66.7,
+  "wingspan" : 97.8,
+  "firstFlight" : [ 1947, 11, 2 ],
+  "category" : "Flying boat"
+}, {
+  "name" : "Convair XC-99",
+  "length" : 55.6,
+  "wingspan" : 70.1,
+  "firstFlight" : [ 1947, 11, 23 ],
+  "category" : "Transport"
+}, {
+  "name" : "Boeing B-52",
+  "length" : 48.5,
+  "wingspan" : 56.4,
+  "firstFlight" : [ 1952, 4, 15 ],
+  "category" : "Bomber"
+}, {
+  "name" : "North American XB-70",
+  "length" : 56.4,
+  "wingspan" : 32.0,
+  "firstFlight" : [ 1964, 9, 21 ],
+  "category" : "Bomber"
+}, {
+  "name" : "Antonov An-22",
+  "length" : 57.9,
+  "wingspan" : 64.4,
+  "firstFlight" : [ 1965, 2, 27 ],
+  "category" : "Transport"
+}, {
+  "name" : "Caspian Seaonster",
+  "length" : 92.0,
+  "wingspan" : 37.6,
+  "firstFlight" : [ 1966, 10, 16 ],
+  "category" : "Ekranoplan"
+}, {
+  "name" : "Lockheed C-5 Galaxy",
+  "length" : 75.3,
+  "wingspan" : 67.9,
+  "firstFlight" : [ 1968, 6, 30 ],
+  "category" : "Transport"
+}, {
+  "name" : "Boeing 747",
+  "length" : 70.7,
+  "wingspan" : 59.6,
+  "firstFlight" : [ 1969, 2, 9 ],
+  "category" : "Airliner"
+}, {
+  "name" : "Antonov An-124",
+  "length" : 69.1,
+  "wingspan" : 73.3,
+  "firstFlight" : [ 1982, 12, 26 ],
+  "category" : "Transport"
+}, {
+  "name" : "Antonov An-225riya",
+  "length" : 84.0,
+  "wingspan" : 88.4,
+  "firstFlight" : [ 1988, 12, 21 ],
+  "category" : "Transport"
+}, {
+  "name" : "Airbus Beluga",
+  "length" : 56.2,
+  "wingspan" : 44.8,
+  "firstFlight" : [ 1994, 9, 13 ],
+  "category" : "Outsize cargo"
+}, {
+  "name" : "Airbus A340-600",
+  "length" : 75.4,
+  "wingspan" : 63.5,
+  "firstFlight" : [ 2001, 4, 23 ],
+  "category" : "Airliner"
+}, {
+  "name" : "Airbus A380",
+  "length" : 72.7,
+  "wingspan" : 79.8,
+  "firstFlight" : [ 2005, 4, 27 ],
+  "category" : "Airliner"
+}, {
+  "name" : "Boeing Dreamlifter",
+  "length" : 71.7,
+  "wingspan" : 64.4,
+  "firstFlight" : [ 2006, 9, 9 ],
+  "category" : "Outsize cargo"
+}, {
+  "name" : "Boeing 747-8",
+  "length" : 76.4,
+  "wingspan" : 68.4,
+  "firstFlight" : [ 2010, 2, 8 ],
+  "category" : "Airliner"
+}, {
+  "name" : "Airbus Beluga XL",
+  "length" : 63.1,
+  "wingspan" : 60.3,
+  "firstFlight" : [ 2018, 7, 19 ],
+  "category" : "Outsize cargo"
+}, {
+  "name" : "Boeing 777-9",
+  "length" : 76.7,
+  "wingspan" : 71.8,
+  "firstFlight" : [ 2020, 1, 25 ],
+  "category" : "Airliner"
+} ]
