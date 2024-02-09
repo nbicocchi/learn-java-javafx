@@ -3,7 +3,9 @@ package com.nbicocchi.javafx.planes.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import com.nbicocchi.javafx.planes.App;
 import com.nbicocchi.javafx.planes.persistence.dao.PlaneRepository;
+import com.nbicocchi.javafx.planes.persistence.model.Part;
 import com.nbicocchi.javafx.planes.persistence.model.Plane;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Platform;
@@ -11,7 +13,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -21,39 +26,38 @@ import javafx.util.converter.LocalDateStringConverter;
 
 import java.io.File;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 public class OverviewController {
-    @FXML private ComboBox<String> cbCategory;
-    @FXML private DatePicker dcFirstFlight;
-    @FXML private TextField tfLength;
-    @FXML private TextField tfName;
-    @FXML private TextField tfWingSpan;
-    @FXML private TableView<Plane> txView;
+    @FXML private TableView<Part> tbParts;
+    @FXML private TableView<Plane> tbPlanes;
     @FXML private TextField tfSearch;
+
     private ObservableList<Plane> planes;
-    HikariDataSource hikariDataSource;
+    private HikariDataSource hikariDataSource;
     private PlaneRepository planeRepository;
 
     public void initDataSource(HikariDataSource hikariDataSource) {
         this.hikariDataSource = hikariDataSource;
         this.planeRepository = new PlaneRepository(hikariDataSource);
         Iterable<Plane> savedPlanes = planeRepository.findAll();
-        planes.addAll(StreamSupport.stream(savedPlanes.spliterator(), false).collect(Collectors.toList()));
+        planes.addAll(StreamSupport.stream(savedPlanes.spliterator(), false).toList());
     }
 
-    public void initialize() throws SQLException {
+    public void initialize() {
         planes = FXCollections.observableArrayList();
         FilteredList<Plane> filteredData = new FilteredList<>(planes, plane -> true);
 
-        List<String> planeTypes = List.of("Airliner", "Bomber", "Ekranoplan", "Flying boat", "Outsize cargo", "Transport");
+
+
+        /*
         cbCategory.getItems().removeAll();
         cbCategory.getItems().addAll(planeTypes);
         cbCategory.getSelectionModel().select("Airliner");
+         */
 
         TableColumn<Plane, String> name = new TableColumn<>("Name");
         TableColumn<Plane, Double> length = new TableColumn<>("Length (m)");
@@ -66,7 +70,7 @@ public class OverviewController {
         name.setCellFactory(TextFieldTableCell.forTableColumn());
         name.setOnEditCommit(event -> {
             Plane selectedPlane = event.getRowValue();
-            selectedPlane.setName(event.getNewValue());;
+            selectedPlane.setName(event.getNewValue());
             planeRepository.save(selectedPlane);
         });
 
@@ -76,7 +80,7 @@ public class OverviewController {
         length.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         length.setOnEditCommit(event -> {
             Plane selectedPlane = event.getRowValue();
-            selectedPlane.setLength(event.getNewValue());;
+            selectedPlane.setLength(event.getNewValue());
             planeRepository.save(selectedPlane);
         });
 
@@ -85,7 +89,7 @@ public class OverviewController {
         wingspan.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         wingspan.setOnEditCommit(event -> {
             Plane selectedPlane = event.getRowValue();
-            selectedPlane.setWingspan(event.getNewValue());;
+            selectedPlane.setWingspan(event.getNewValue());
             planeRepository.save(selectedPlane);
         });
 
@@ -100,24 +104,24 @@ public class OverviewController {
 
         category.setPrefWidth(150);
         category.setCellValueFactory(new PropertyValueFactory<>("category"));
-        category.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(planeTypes)));
+        category.setCellFactory(ComboBoxTableCell.forTableColumn(FXCollections.observableArrayList(App.planeTypes)));
         category.setOnEditCommit(event -> {
             Plane selectedPlane = event.getRowValue();
-            selectedPlane.setCategory(event.getNewValue());;
+            selectedPlane.setCategory(event.getNewValue());
             planeRepository.save(selectedPlane);
         });
 
-        txView.getColumns().add(name);
-        txView.getColumns().add(length);
-        txView.getColumns().add(wingspan);
-        txView.getColumns().add(firstFlight);
-        txView.getColumns().add(category);
-        txView.setEditable(true);
-        txView.setTableMenuButtonVisible(true);
-        txView.setItems(filteredData);
+        tbPlanes.getColumns().add(name);
+        tbPlanes.getColumns().add(length);
+        tbPlanes.getColumns().add(wingspan);
+        tbPlanes.getColumns().add(firstFlight);
+        tbPlanes.getColumns().add(category);
+        tbPlanes.setEditable(true);
+        tbPlanes.setTableMenuButtonVisible(true);
+        tbPlanes.setItems(filteredData);
         tfSearch.textProperty().addListener(obs -> {
             String filter = tfSearch.getText();
-            if (filter == null || filter.length() == 0) {
+            if (filter == null || filter.isEmpty()) {
                 filteredData.setPredicate(plane -> true);
             } else {
                 filteredData.setPredicate(plane -> plane.getName().toLowerCase().contains(filter.toLowerCase()));
@@ -169,18 +173,21 @@ public class OverviewController {
     }
 
     @FXML
-    void onAddClicked() {
-        Plane plane = new Plane(tfName.getText(), Double.parseDouble(tfLength.getText()), Double.parseDouble(tfWingSpan.getText()), dcFirstFlight.getValue(), cbCategory.getValue());
-        try {
-            planes.add(planeRepository.save(plane));
-        } catch (RuntimeException e) {
-            new Alert(Alert.AlertType.ERROR).showAndWait();
-        }
+    void onAddPlaneClicked() throws IOException {
+        AddPlaneDialog loginDialog = new AddPlaneDialog();
+        Optional<Plane> result = loginDialog.showAndWait();
+        result.ifPresentOrElse(plane -> {
+            try {
+                planes.add(planeRepository.save(plane));
+            } catch (RuntimeException e) {
+                new Alert(Alert.AlertType.ERROR).showAndWait();
+            }
+        }, () -> {});
     }
 
     @FXML
-    void onRemoveClicked() {
-        Plane plane = txView.getSelectionModel().getSelectedItem();
+    void onRemovePlaneClicked() {
+        Plane plane = tbPlanes.getSelectionModel().getSelectedItem();
         if (plane != null) {
             try {
                 planeRepository.deleteById(plane.getId());
@@ -189,6 +196,16 @@ public class OverviewController {
                 new Alert(Alert.AlertType.ERROR).showAndWait();
             }
         }
+    }
+
+    @FXML
+    void onAddPartClicked() {
+
+    }
+
+    @FXML
+    void onRemovePartClicked() {
+
     }
 
     @FXML

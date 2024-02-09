@@ -10,8 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PlaneRepository implements Repository<Plane, Long> {
+    private static final Logger LOG = LoggerFactory.getLogger(PlaneRepository.class);
     private final HikariDataSource dataSource;
 
     public PlaneRepository(HikariDataSource dataSource) {
@@ -20,6 +23,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
     }
 
     private void checkTable() {
+        LOG.info("Checking table [PLANES]");
         String sql = "SELECT * FROM planes LIMIT 1";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -31,6 +35,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
     }
 
     private void initTable() {
+        LOG.info("Initializing PLANES table");
         String sql = "DROP TABLE IF EXISTS planes;" +
                 "CREATE TABLE planes " +
                 "(id SERIAL, " +
@@ -50,6 +55,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
 
     @Override
     public Optional<Plane> findById(Long Id) {
+        LOG.info("Executing findByID() [PLANES]");
         String sql = "SELECT * FROM planes WHERE id=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -68,6 +74,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
 
     @Override
     public Iterable<Plane> findAll() {
+        LOG.info("Executing findAll() [PLANES]");
         String sql = "SELECT * FROM planes";
         List<Plane> planeList = new ArrayList<>();
         try (Connection connection = dataSource.getConnection();
@@ -84,6 +91,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
 
     @Override
     public Plane save(Plane entity) {
+        LOG.info("Executing save() [PLANES]");
         if (Objects.isNull(entity.getId())) {
             return insert(entity);
         }
@@ -97,6 +105,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
     }
 
     private Plane insert(Plane entity) {
+        LOG.info("Executing insert() [PLANES]");
         String sql = "INSERT INTO planes (name, length, wingspan, firstFlight, category) VALUES (?, ?, ?, ?, ?)";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
@@ -117,6 +126,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
     }
 
     private Plane update(Plane entity) {
+        LOG.info("Executing update() [PLANES]");
         String sql = "UPDATE planes SET name=?, length=?, wingspan=?, firstFlight=?, category=? WHERE id=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -135,11 +145,13 @@ public class PlaneRepository implements Repository<Plane, Long> {
 
     @Override
     public void delete(Plane entity) {
+        LOG.info("Executing delete() [PLANES]");
         deleteById(entity.getId());
     }
 
     @Override
     public void deleteById(Long Id) {
+        LOG.info("Executing deleteById() [PLANES]");
         String sql = "DELETE FROM planes WHERE id=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
@@ -152,6 +164,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
 
     @Override
     public void deleteAll() {
+        LOG.info("Executing deleAll() [PLANES]");
         String sql = "DELETE FROM planes";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {

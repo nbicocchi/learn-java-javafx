@@ -1,6 +1,5 @@
 package com.nbicocchi.javafx.planes.login;
 
-import com.nbicocchi.javafx.planes.login.LoginDialog;
 import com.nbicocchi.javafx.planes.login.Validator;
 import com.nbicocchi.javafx.planes.login.ValidatorDatabase;
 import javafx.application.Application;
@@ -24,9 +23,10 @@ public class Applogin extends Application {
         primaryStage.setTitle("Application");
         primaryStage.setScene(scene);
         primaryStage.show();
-        showLogin(primaryStage);
+        //showLogin(primaryStage);
     }
 
+    /*
     private void showLogin(Stage primaryStage) throws IOException {
         LoginDialog loginDialog = new LoginDialog(primaryStage);
         Optional<Pair<String, String>> result = loginDialog.showAndWait();
@@ -42,4 +42,6 @@ public class Applogin extends Application {
             }
         }, Platform::exit);
     }
+
+     */
 }

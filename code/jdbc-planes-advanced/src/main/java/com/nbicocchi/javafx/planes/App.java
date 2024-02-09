@@ -10,10 +10,12 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.List;
 
 public class App extends Application {
     private static final String JDBC_Driver = "org.postgresql.Driver";
     private static final String JDBC_URL = "jdbc:postgresql://localhost:5432/jdbc_schema?user=user&password=secret&ssl=false";
+    public static final List<String> planeTypes = List.of("Airliner", "Bomber", "Ekranoplan", "Flying boat", "Outsize cargo", "Transport");
 
     public static void main(String[] args) {
         launch(args);

@@ -6,4 +6,5 @@ open module com.nbicocchi.javafx.login {
     requires com.zaxxer.hikari;
     requires com.fasterxml.jackson.databind;
     requires com.fasterxml.jackson.datatype.jsr310;
+    requires org.slf4j;
 }
