@@ -2,8 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ButtonType?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
@@ -11,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<DialogPane prefHeight="200.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane prefHeight="150.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <GridPane hgap="10.0" vgap="30.0">
         <columnConstraints>
@@ -22,20 +20,14 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label text="Name:" />
-            <Label text="Length (m):" GridPane.rowIndex="1" />
-            <Label text="Wing Span (m):" GridPane.rowIndex="2" />
-            <Label text="First Flight:" GridPane.rowIndex="3" />
-            <Label text="Category:" GridPane.rowIndex="4" />
-            <TextField fx:id="tfName" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="1" />
-            <TextField fx:id="tfLength" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <TextField fx:id="tfWingSpan" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker fx:id="dpFirstFlight" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="cbCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <Label text="Part Code:" />
+            <Label text="Description:" GridPane.rowIndex="1" />
+            <Label text="Duration (years):" GridPane.rowIndex="2" />
+            <TextField fx:id="tfPartID" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="1" />
+            <TextField fx:id="tfDescription" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="tfDuration" GridPane.columnIndex="1" GridPane.rowIndex="2" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="100.0" top="10.0" />

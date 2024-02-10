@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nbicocchi.javafx.planes.App;
+import com.nbicocchi.javafx.planes.persistence.dao.PartRepository;
 import com.nbicocchi.javafx.planes.persistence.dao.PlaneRepository;
 import com.nbicocchi.javafx.planes.persistence.model.Part;
 import com.nbicocchi.javafx.planes.persistence.model.Plane;
@@ -13,10 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
@@ -39,10 +37,12 @@ public class OverviewController {
     private ObservableList<Plane> planes;
     private HikariDataSource hikariDataSource;
     private PlaneRepository planeRepository;
+    private PartRepository partRepository;
 
     public void initDataSource(HikariDataSource hikariDataSource) {
         this.hikariDataSource = hikariDataSource;
         this.planeRepository = new PlaneRepository(hikariDataSource);
+        this.partRepository = new PartRepository(hikariDataSource);
         Iterable<Plane> savedPlanes = planeRepository.findAll();
         planes.addAll(StreamSupport.stream(savedPlanes.spliterator(), false).toList());
     }
@@ -50,14 +50,6 @@ public class OverviewController {
     public void initialize() {
         planes = FXCollections.observableArrayList();
         FilteredList<Plane> filteredData = new FilteredList<>(planes, plane -> true);
-
-
-
-        /*
-        cbCategory.getItems().removeAll();
-        cbCategory.getItems().addAll(planeTypes);
-        cbCategory.getSelectionModel().select("Airliner");
-         */
 
         TableColumn<Plane, String> name = new TableColumn<>("Name");
         TableColumn<Plane, Double> length = new TableColumn<>("Length (m)");
@@ -145,7 +137,7 @@ public class OverviewController {
                     planes.add(saved);
                 }
             } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR).showAndWait();
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
         }
     }
@@ -162,7 +154,7 @@ public class OverviewController {
                 mapper.registerModule(new JavaTimeModule());
                 mapper.writerWithDefaultPrettyPrinter().writeValue(file, planes);
             } catch (IOException e) {
-                new Alert(Alert.AlertType.ERROR).showAndWait();
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
         }
     }
@@ -174,13 +166,13 @@ public class OverviewController {
 
     @FXML
     void onAddPlaneClicked() throws IOException {
-        AddPlaneDialog loginDialog = new AddPlaneDialog();
-        Optional<Plane> result = loginDialog.showAndWait();
+        AddPlaneDialog dialog = new AddPlaneDialog();
+        Optional<Plane> result = dialog.showAndWait();
         result.ifPresentOrElse(plane -> {
             try {
                 planes.add(planeRepository.save(plane));
             } catch (RuntimeException e) {
-                new Alert(Alert.AlertType.ERROR).showAndWait();
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
         }, () -> {});
     }
@@ -193,13 +185,22 @@ public class OverviewController {
                 planeRepository.deleteById(plane.getId());
                 planes.remove(plane);
             } catch (RuntimeException e) {
-                new Alert(Alert.AlertType.ERROR).showAndWait();
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
         }
     }
 
     @FXML
-    void onAddPartClicked() {
+    void onAddPartClicked() throws IOException {
+        AddPartDialog dialog = new AddPartDialog();
+        Optional<Part> result = dialog.showAndWait();
+        result.ifPresentOrElse(plane -> {
+            try {
+                //planes.add(planeRepository.save(plane));
+            } catch (RuntimeException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+            }
+        }, () -> {});
 
     }
 
