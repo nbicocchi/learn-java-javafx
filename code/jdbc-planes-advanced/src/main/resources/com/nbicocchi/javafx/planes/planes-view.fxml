@@ -46,7 +46,7 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <TableView fx:id="tbPlanes" prefWidth="800.0" HBox.hgrow="ALWAYS" />
+                        <TableView fx:id="tvPlanes" prefWidth="800.0" HBox.hgrow="ALWAYS" />
                         <AnchorPane prefWidth="100.0">
                            <children>
                               <Button fx:id="btAddPlane" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" onAction="#onAddPlaneClicked" prefWidth="70.0" text="Add" />
@@ -57,7 +57,7 @@
                   </HBox>
                   <HBox>
                      <children>
-                        <TableView fx:id="tbParts" prefHeight="186.0" prefWidth="700.0" HBox.hgrow="ALWAYS" />
+                        <TableView fx:id="tvParts" prefHeight="186.0" prefWidth="700.0" HBox.hgrow="ALWAYS" />
                         <AnchorPane prefWidth="100.0">
                            <children>
                               <Button fx:id="btAddPart" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" onAction="#onAddPartClicked" prefWidth="70.0" text="Add" />

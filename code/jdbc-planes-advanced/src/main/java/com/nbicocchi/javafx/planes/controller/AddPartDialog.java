@@ -26,7 +26,7 @@ public class AddPartDialog extends Dialog<Part> {
         initModality(Modality.APPLICATION_MODAL);
         setResultConverter(buttonType -> {
             if (buttonType == ButtonType.APPLY) {
-                return new Part(1L,
+                return new Part(null,
                         tfPartID.getText(),
                         tfDescription.getText(),
                         Double.parseDouble(tfDuration.getText()));

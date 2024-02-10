@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nbicocchi.javafx.planes.App;
-import com.nbicocchi.javafx.planes.persistence.dao.PartRepository;
 import com.nbicocchi.javafx.planes.persistence.dao.PlaneRepository;
 import com.nbicocchi.javafx.planes.persistence.model.Part;
 import com.nbicocchi.javafx.planes.persistence.model.Plane;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.fxml.FXML;
@@ -30,24 +30,26 @@ import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 public class OverviewController {
-    @FXML private TableView<Part> tbParts;
-    @FXML private TableView<Plane> tbPlanes;
+    @FXML private TableView<Part> tvParts;
+    @FXML private TableView<Plane> tvPlanes;
     @FXML private TextField tfSearch;
 
     private ObservableList<Plane> planes;
-    private HikariDataSource hikariDataSource;
+    private ObservableList<Part> parts;
     private PlaneRepository planeRepository;
-    private PartRepository partRepository;
 
     public void initDataSource(HikariDataSource hikariDataSource) {
-        this.hikariDataSource = hikariDataSource;
         this.planeRepository = new PlaneRepository(hikariDataSource);
-        this.partRepository = new PartRepository(hikariDataSource);
-        Iterable<Plane> savedPlanes = planeRepository.findAll();
-        planes.addAll(StreamSupport.stream(savedPlanes.spliterator(), false).toList());
+        Iterable<Plane> planesFound = planeRepository.findAll();
+        planes.addAll(StreamSupport.stream(planesFound.spliterator(), false).toList());
     }
 
     public void initialize() {
+        initializeTableViewPlanes();
+        initializeTableViewParts();
+    }
+
+    private void initializeTableViewPlanes() {
         planes = FXCollections.observableArrayList();
         FilteredList<Plane> filteredData = new FilteredList<>(planes, plane -> true);
 
@@ -103,14 +105,18 @@ public class OverviewController {
             planeRepository.save(selectedPlane);
         });
 
-        tbPlanes.getColumns().add(name);
-        tbPlanes.getColumns().add(length);
-        tbPlanes.getColumns().add(wingspan);
-        tbPlanes.getColumns().add(firstFlight);
-        tbPlanes.getColumns().add(category);
-        tbPlanes.setEditable(true);
-        tbPlanes.setTableMenuButtonVisible(true);
-        tbPlanes.setItems(filteredData);
+        tvPlanes.getColumns().add(name);
+        tvPlanes.getColumns().add(length);
+        tvPlanes.getColumns().add(wingspan);
+        tvPlanes.getColumns().add(firstFlight);
+        tvPlanes.getColumns().add(category);
+
+        tvPlanes.setEditable(true);
+        tvPlanes.setTableMenuButtonVisible(true);
+        tvPlanes.setItems(filteredData);
+        tvPlanes.getSelectionModel().getSelectedItems().addListener(
+                (ListChangeListener<Plane>) change -> parts.setAll(change.getList().getFirst().getParts()));
+
         tfSearch.textProperty().addListener(obs -> {
             String filter = tfSearch.getText();
             if (filter == null || filter.isEmpty()) {
@@ -119,6 +125,45 @@ public class OverviewController {
                 filteredData.setPredicate(plane -> plane.getName().toLowerCase().contains(filter.toLowerCase()));
             }
         });
+    }
+
+    private void initializeTableViewParts() {
+        TableColumn<Part, String> code = new TableColumn<>("Code");
+        TableColumn<Part, String> description = new TableColumn<>("Description");
+        TableColumn<Part, Double> duration = new TableColumn<>("Duration (years)");
+
+        code.setPrefWidth(150);
+        code.setCellValueFactory(new PropertyValueFactory<>("partCode"));
+        code.setCellFactory(TextFieldTableCell.forTableColumn());
+        code.setOnEditCommit(event -> {
+            Part selectedPart = event.getRowValue();
+            selectedPart.setPartCode(event.getNewValue());
+            planeRepository.save(selectedPart.getPlane());
+        });
+
+        description.setPrefWidth(150);
+        description.setCellValueFactory(new PropertyValueFactory<>("description"));
+        description.setCellFactory(TextFieldTableCell.forTableColumn());
+        description.setOnEditCommit(event -> {
+            Part selectedPart = event.getRowValue();
+            selectedPart.setDescription(event.getNewValue());
+            planeRepository.save(selectedPart.getPlane());
+        });
+
+        duration.setPrefWidth(150);
+        duration.setCellValueFactory(new PropertyValueFactory<>("duration"));
+        duration.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        duration.setOnEditCommit(event -> {
+            Part selectedPart = event.getRowValue();
+            selectedPart.setDuration(event.getNewValue());
+            planeRepository.save(selectedPart.getPlane());
+        });
+
+        tvParts.getColumns().add(code);
+        tvParts.getColumns().add(description);
+        tvParts.getColumns().add(duration);
+        parts = FXCollections.observableArrayList();
+        tvParts.setItems(parts);
     }
 
     @FXML
@@ -179,7 +224,7 @@ public class OverviewController {
 
     @FXML
     void onRemovePlaneClicked() {
-        Plane plane = tbPlanes.getSelectionModel().getSelectedItem();
+        Plane plane = tvPlanes.getSelectionModel().getSelectedItem();
         if (plane != null) {
             try {
                 planeRepository.deleteById(plane.getId());
@@ -192,11 +237,20 @@ public class OverviewController {
 
     @FXML
     void onAddPartClicked() throws IOException {
+        Plane selectedPlane = tvPlanes.getSelectionModel().getSelectedItem();
+        if (selectedPlane == null) {
+            new Alert(Alert.AlertType.ERROR, "A plane must be selected", ButtonType.OK).showAndWait();
+            return;
+        }
+
         AddPartDialog dialog = new AddPartDialog();
-        Optional<Part> result = dialog.showAndWait();
-        result.ifPresentOrElse(plane -> {
+        Optional<Part> optionalPart = dialog.showAndWait();
+        optionalPart.ifPresentOrElse(plane -> {
             try {
-                //planes.add(planeRepository.save(plane));
+                parts.add(optionalPart.get());
+                selectedPlane.addPart(optionalPart.get());
+                planeRepository.save(selectedPlane);
+
             } catch (RuntimeException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }

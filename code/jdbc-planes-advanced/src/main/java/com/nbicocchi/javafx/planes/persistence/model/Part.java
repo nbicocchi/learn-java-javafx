@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class Part {
     Long Id;
-    Long planeID;
+    Plane plane;
     String partCode;
     String description;
     Double duration;
@@ -13,28 +13,20 @@ public class Part {
     public Part() {
     }
 
-    public Part(Long planeID, String partCode, String description, Double duration) {
+    public Part(Plane plane, String partCode, String description, Double duration) {
         this.Id = null;
-        this.planeID = planeID;
+        this.plane = plane;
         this.partCode = partCode;
         this.description = description;
         this.duration = duration;
     }
 
-    public Part(Long id, Long planeID, String partCode, String description, Double duration) {
+    public Part(Long id, Plane plane, String partCode, String description, Double duration) {
         this.Id = id;
-        this.planeID = planeID;
+        this.plane = plane;
         this.partCode = partCode;
         this.description = description;
         this.duration = duration;
-    }
-
-    public Part(Part part) {
-        this.Id = part.Id;
-        this.planeID = part.planeID;
-        this.partCode = part.partCode;
-        this.description = part.description;
-        this.duration = part.duration;
     }
 
     public Long getId() {
@@ -45,12 +37,12 @@ public class Part {
         Id = id;
     }
 
-    public Long getPlaneID() {
-        return planeID;
+    public Plane getPlane() {
+        return plane;
     }
 
-    public void setPlaneID(Long planeID) {
-        this.planeID = planeID;
+    public void setPlane(Plane plane) {
+        this.plane = plane;
     }
 
     public String getPartCode() {
@@ -84,16 +76,16 @@ public class Part {
         if (o == null || getClass() != o.getClass())
             return false;
         Part part = (Part) o;
-        return Objects.equals(Id, part.Id) && Objects.equals(planeID, part.planeID) && Objects.equals(partCode, part.partCode) && Objects.equals(description, part.description) && Objects.equals(duration, part.duration);
+        return Objects.equals(Id, part.Id) && Objects.equals(plane, part.plane) && Objects.equals(partCode, part.partCode) && Objects.equals(description, part.description) && Objects.equals(duration, part.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, planeID, partCode, description, duration);
+        return Objects.hash(Id, plane, partCode, description, duration);
     }
 
     @Override
     public String toString() {
-        return "Part{" + "Id=" + Id + ", planeID=" + planeID + ", partCode='" + partCode + '\'' + ", description='" + description + '\'' + ", duration=" + duration + '}';
+        return "Part{" + "Id=" + Id + ", plane=" + plane + ", partCode='" + partCode + '\'' + ", description='" + description + '\'' + ", duration=" + duration + '}';
     }
 }

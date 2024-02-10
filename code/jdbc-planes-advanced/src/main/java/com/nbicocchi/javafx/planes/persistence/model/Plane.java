@@ -1,7 +1,9 @@
 package com.nbicocchi.javafx.planes.persistence.model;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 public class Plane {
     Long Id;
@@ -10,36 +12,30 @@ public class Plane {
     Double wingspan;
     LocalDate firstFlight;
     String category;
+    Set<Part> parts;
 
     public Plane() {
-
+        this.parts = new HashSet<>();
     }
 
-    public Plane(String name, double length, double wingspan, LocalDate firstFlight, String category) {
-        this.Id = null;
-        this.name = name;
-        this.length = length;
-        this.wingspan = wingspan;
-        this.firstFlight = firstFlight;
-        this.category = category;
-    }
-
-    public Plane(Long Id, String name, double length, double wingspan, LocalDate firstFlight, String category) {
+    public Plane(Long Id, String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
         this.Id = Id;
         this.name = name;
         this.length = length;
         this.wingspan = wingspan;
         this.firstFlight = firstFlight;
         this.category = category;
+        this.parts = new HashSet<>();
     }
 
-    public Plane(Plane plane) {
-        this.Id = plane.getId();
-        this.name = plane.getName();
-        this.length = plane.getLength();
-        this.wingspan = plane.getWingspan();
-        this.firstFlight = plane.getFirstFlight();
-        this.category = getCategory();
+    public Plane(String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
+        this.Id = null;
+        this.name = name;
+        this.length = length;
+        this.wingspan = wingspan;
+        this.firstFlight = firstFlight;
+        this.category = category;
+        this.parts = new HashSet<>();
     }
 
     public Long getId() {
@@ -90,6 +86,15 @@ public class Plane {
         this.category = category;
     }
 
+    public Set<Part> getParts() {
+        return parts;
+    }
+
+    public void addPart(Part part) {
+        this.parts.add(part);
+        part.setPlane(this);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o)
@@ -97,16 +102,16 @@ public class Plane {
         if (o == null || getClass() != o.getClass())
             return false;
         Plane plane = (Plane) o;
-        return Objects.equals(Id, plane.Id) && Objects.equals(name, plane.name) && Objects.equals(length, plane.length) && Objects.equals(wingspan, plane.wingspan) && Objects.equals(firstFlight, plane.firstFlight) && Objects.equals(category, plane.category);
+        return Objects.equals(Id, plane.Id) && Objects.equals(name, plane.name) && Objects.equals(length, plane.length) && Objects.equals(wingspan, plane.wingspan) && Objects.equals(firstFlight, plane.firstFlight) && Objects.equals(category, plane.category) && Objects.equals(parts, plane.parts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, name, length, wingspan, firstFlight, category);
+        return Objects.hash(Id, name, length, wingspan, firstFlight, category, parts);
     }
 
     @Override
     public String toString() {
-        return "Plane{" + "Id=" + Id + ", name='" + name + '\'' + ", length=" + length + ", wingspan=" + wingspan + ", firstFlight=" + firstFlight + ", category='" + category + '\'' + '}';
+        return "Plane{" + "Id=" + Id + ", name='" + name + '\'' + ", length=" + length + ", wingspan=" + wingspan + ", firstFlight=" + firstFlight + ", category='" + category + '\'' + ", parts=" + parts + '}';
     }
 }
