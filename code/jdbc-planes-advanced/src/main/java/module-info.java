@@ -1,4 +1,4 @@
-open module com.nbicocchi.javafx.login {
+open module com.nbicocchi.javafx.planes {
     requires java.desktop;
     requires java.sql;
     requires javafx.controls;

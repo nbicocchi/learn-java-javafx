@@ -114,8 +114,8 @@ public class OverviewController {
 
         tvPlanes.getSelectionModel().getSelectedItems().addListener(
                 (ListChangeListener<Plane>) change -> {
-                    if (Objects.nonNull(change.getList().getFirst())) {
-                        parts.setAll(change.getList().getFirst().getParts());
+                    if (Objects.nonNull(change.getList().get(0).getParts())) {
+                        parts.setAll(change.getList().get(0).getParts());
                     } else {
                         parts.clear();
                     }
