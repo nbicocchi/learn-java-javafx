@@ -247,7 +247,6 @@ public class OverviewController {
                 try {
                     parts.add(optionalPart.get());
                     selectedPlane.addPart(optionalPart.get());
-                    System.out.println(selectedPlane);
                     planeRepository.save(selectedPlane);
                 } catch (RuntimeException e) {
                     new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();

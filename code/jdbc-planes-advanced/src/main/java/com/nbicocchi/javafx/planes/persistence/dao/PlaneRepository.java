@@ -252,18 +252,22 @@ public class PlaneRepository implements Repository<Plane, Long> {
 
     private void insertPartsByPlane(Plane entity) {
         LOG.info("Executing insertPartsByPlane()");
-        for (Part part : entity.getParts()) {
-            String sql = "INSERT INTO parts (planeid, partcode, description, duration) VALUES (?, ?, ?, ?)";
-            try (Connection connection = dataSource.getConnection();
-                 PreparedStatement statement = connection.prepareStatement(sql)) {
+        String sql = "INSERT INTO parts (planeid, partcode, description, duration) VALUES (?, ?, ?, ?)";
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            for (Part part : entity.getParts()) {
                 statement.setLong(1, entity.getId());
                 statement.setString(2, part.getPartCode());
                 statement.setString(3, part.getDescription());
                 statement.setDouble(4, part.getDuration());
                 statement.executeUpdate();
-            } catch (SQLException e) {
-                throw new RuntimeException(e.getMessage());
+                try (ResultSet keys = statement.getGeneratedKeys()) {
+                    keys.next();
+                    part.setId(keys.getLong(1));
+                }
             }
+        } catch(SQLException e) {
+            throw new RuntimeException(e.getMessage());
         }
     }
 

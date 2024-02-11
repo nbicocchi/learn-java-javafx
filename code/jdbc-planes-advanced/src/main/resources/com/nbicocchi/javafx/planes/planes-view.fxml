@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="txView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.planes.controller.OverviewController">
+<BorderPane fx:id="txView" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.planes.controller.OverviewController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
@@ -34,9 +34,9 @@
    <center>
       <BorderPane BorderPane.alignment="CENTER">
          <center>
-            <VBox BorderPane.alignment="CENTER">
+            <VBox BorderPane.alignment="TOP_CENTER">
                <children>
-                  <HBox spacing="20.0">
+                  <HBox spacing="20.0" VBox.vgrow="NEVER">
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
@@ -44,10 +44,10 @@
                         <TextField fx:id="tfSearch" promptText="Search by name" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox VBox.vgrow="ALWAYS">
                      <children>
                         <TableView fx:id="tvPlanes" prefWidth="800.0" HBox.hgrow="ALWAYS" />
-                        <AnchorPane prefWidth="100.0">
+                        <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
                            <children>
                               <Button fx:id="btAddPlane" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" onAction="#onAddPlaneClicked" prefWidth="70.0" text="Add" />
                               <Button fx:id="btRemovePlane" layoutX="15.0" layoutY="36.0" mnemonicParsing="false" onAction="#onRemovePlaneClicked" prefWidth="70.0" text="Remove" />
@@ -55,10 +55,10 @@
                         </AnchorPane>
                      </children>
                   </HBox>
-                  <HBox>
+                  <HBox VBox.vgrow="ALWAYS">
                      <children>
-                        <TableView fx:id="tvParts" prefHeight="186.0" prefWidth="700.0" HBox.hgrow="ALWAYS" />
-                        <AnchorPane prefWidth="100.0">
+                        <TableView fx:id="tvParts" prefHeight="200.0" prefWidth="800.0" HBox.hgrow="ALWAYS" />
+                        <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
                            <children>
                               <Button fx:id="btAddPart" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" onAction="#onAddPartClicked" prefWidth="70.0" text="Add" />
                               <Button fx:id="btRemovePart" layoutX="15.0" layoutY="36.0" mnemonicParsing="false" onAction="#onRemovePartClicked" prefWidth="70.0" text="Remove" />
