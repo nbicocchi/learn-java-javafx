@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -25,7 +26,9 @@ import javafx.util.converter.LocalDateStringConverter;
 import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -34,8 +37,8 @@ public class OverviewController {
     @FXML private TableView<Plane> tvPlanes;
     @FXML private TextField tfSearch;
 
-    private ObservableList<Plane> planes;
-    private ObservableList<Part> parts;
+    private final ObservableList<Plane> planes = FXCollections.observableArrayList();
+    private final ObservableList<Part> parts = FXCollections.observableArrayList();
     private PlaneRepository planeRepository;
 
     public void initDataSource(HikariDataSource hikariDataSource) {
@@ -50,9 +53,6 @@ public class OverviewController {
     }
 
     private void initializeTableViewPlanes() {
-        planes = FXCollections.observableArrayList();
-        FilteredList<Plane> filteredData = new FilteredList<>(planes, plane -> true);
-
         TableColumn<Plane, String> name = new TableColumn<>("Name");
         TableColumn<Plane, Double> length = new TableColumn<>("Length (m)");
         TableColumn<Plane, Double> wingspan = new TableColumn<>("Wing Span (m)");
@@ -105,24 +105,28 @@ public class OverviewController {
             planeRepository.save(selectedPlane);
         });
 
-        tvPlanes.getColumns().add(name);
-        tvPlanes.getColumns().add(length);
-        tvPlanes.getColumns().add(wingspan);
-        tvPlanes.getColumns().add(firstFlight);
-        tvPlanes.getColumns().add(category);
-
+        SortedList<Plane> sortedList = new SortedList<>(planes, Comparator.comparing(Plane::getName));
+        FilteredList<Plane> filteredList = new FilteredList<>(sortedList, plane -> true);
+        tvPlanes.setItems(filteredList);
+        tvPlanes.getColumns().addAll(name, length, wingspan, firstFlight, category);
         tvPlanes.setEditable(true);
         tvPlanes.setTableMenuButtonVisible(true);
-        tvPlanes.setItems(filteredData);
+
         tvPlanes.getSelectionModel().getSelectedItems().addListener(
-                (ListChangeListener<Plane>) change -> parts.setAll(change.getList().getFirst().getParts()));
+                (ListChangeListener<Plane>) change -> {
+                    if (Objects.nonNull(change.getList().getFirst())) {
+                        parts.setAll(change.getList().getFirst().getParts());
+                    } else {
+                        parts.clear();
+                    }
+                });
 
         tfSearch.textProperty().addListener(obs -> {
             String filter = tfSearch.getText();
             if (filter == null || filter.isEmpty()) {
-                filteredData.setPredicate(plane -> true);
+                filteredList.setPredicate(plane -> true);
             } else {
-                filteredData.setPredicate(plane -> plane.getName().toLowerCase().contains(filter.toLowerCase()));
+                filteredList.setPredicate(plane -> plane.getName().toLowerCase().contains(filter.toLowerCase()));
             }
         });
     }
@@ -159,10 +163,7 @@ public class OverviewController {
             planeRepository.save(selectedPart.getPlane());
         });
 
-        tvParts.getColumns().add(code);
-        tvParts.getColumns().add(description);
-        tvParts.getColumns().add(duration);
-        parts = FXCollections.observableArrayList();
+        tvParts.getColumns().addAll(code, description, duration);
         tvParts.setItems(parts);
     }
 
@@ -212,23 +213,24 @@ public class OverviewController {
     @FXML
     void onAddPlaneClicked() throws IOException {
         AddPlaneDialog dialog = new AddPlaneDialog();
-        Optional<Plane> result = dialog.showAndWait();
-        result.ifPresentOrElse(plane -> {
+        Optional<Plane> optionalPlane = dialog.showAndWait();
+        if (optionalPlane.isPresent()) {
             try {
-                planes.add(planeRepository.save(plane));
+                Plane saved = planeRepository.save(optionalPlane.get());
+                planes.add(saved);
             } catch (RuntimeException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
-        }, () -> {});
+        }
     }
 
     @FXML
     void onRemovePlaneClicked() {
-        Plane plane = tvPlanes.getSelectionModel().getSelectedItem();
-        if (plane != null) {
+        Plane selectedItem = tvPlanes.getSelectionModel().getSelectedItem();
+        if (Objects.nonNull(selectedItem)) {
             try {
-                planeRepository.deleteById(plane.getId());
-                planes.remove(plane);
+                planeRepository.deleteById(selectedItem.getId());
+                planes.remove(selectedItem);
             } catch (RuntimeException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
@@ -238,29 +240,35 @@ public class OverviewController {
     @FXML
     void onAddPartClicked() throws IOException {
         Plane selectedPlane = tvPlanes.getSelectionModel().getSelectedItem();
-        if (selectedPlane == null) {
-            new Alert(Alert.AlertType.ERROR, "A plane must be selected", ButtonType.OK).showAndWait();
-            return;
-        }
-
-        AddPartDialog dialog = new AddPartDialog();
-        Optional<Part> optionalPart = dialog.showAndWait();
-        optionalPart.ifPresentOrElse(plane -> {
-            try {
-                parts.add(optionalPart.get());
-                selectedPlane.addPart(optionalPart.get());
-                planeRepository.save(selectedPlane);
-
-            } catch (RuntimeException e) {
-                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+        if (Objects.nonNull(selectedPlane)) {
+            AddPartDialog dialog = new AddPartDialog();
+            Optional<Part> optionalPart = dialog.showAndWait();
+            if (optionalPart.isPresent()) {
+                try {
+                    parts.add(optionalPart.get());
+                    selectedPlane.addPart(optionalPart.get());
+                    System.out.println(selectedPlane);
+                    planeRepository.save(selectedPlane);
+                } catch (RuntimeException e) {
+                    new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+                }
             }
-        }, () -> {});
-
+        }
     }
 
     @FXML
     void onRemovePartClicked() {
-
+        Plane selectedPlane = tvPlanes.getSelectionModel().getSelectedItem();
+        Part selectedPart = tvParts.getSelectionModel().getSelectedItem();
+        if (Objects.nonNull(selectedPlane) && Objects.nonNull(selectedPart)) {
+            try {
+                parts.remove(selectedPart);
+                selectedPlane.removePart(selectedPart);
+                planeRepository.save(selectedPlane);
+            } catch (RuntimeException e) {
+                new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
+            }
+        }
     }
 
     @FXML

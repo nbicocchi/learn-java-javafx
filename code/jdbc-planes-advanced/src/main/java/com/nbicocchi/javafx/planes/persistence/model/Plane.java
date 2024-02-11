@@ -12,20 +12,9 @@ public class Plane {
     Double wingspan;
     LocalDate firstFlight;
     String category;
-    Set<Part> parts;
+    final Set<Part> parts = new HashSet<>();
 
     public Plane() {
-        this.parts = new HashSet<>();
-    }
-
-    public Plane(Long Id, String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
-        this.Id = Id;
-        this.name = name;
-        this.length = length;
-        this.wingspan = wingspan;
-        this.firstFlight = firstFlight;
-        this.category = category;
-        this.parts = new HashSet<>();
     }
 
     public Plane(String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
@@ -35,7 +24,15 @@ public class Plane {
         this.wingspan = wingspan;
         this.firstFlight = firstFlight;
         this.category = category;
-        this.parts = new HashSet<>();
+    }
+
+    public Plane(Long Id, String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
+        this.Id = Id;
+        this.name = name;
+        this.length = length;
+        this.wingspan = wingspan;
+        this.firstFlight = firstFlight;
+        this.category = category;
     }
 
     public Long getId() {
@@ -91,8 +88,13 @@ public class Plane {
     }
 
     public void addPart(Part part) {
-        this.parts.add(part);
+        parts.add(part);
         part.setPlane(this);
+    }
+
+    public void removePart(Part part) {
+        parts.remove(part);
+        part.setPlane(null);
     }
 
     @Override
@@ -102,12 +104,12 @@ public class Plane {
         if (o == null || getClass() != o.getClass())
             return false;
         Plane plane = (Plane) o;
-        return Objects.equals(Id, plane.Id) && Objects.equals(name, plane.name) && Objects.equals(length, plane.length) && Objects.equals(wingspan, plane.wingspan) && Objects.equals(firstFlight, plane.firstFlight) && Objects.equals(category, plane.category) && Objects.equals(parts, plane.parts);
+        return Objects.equals(name, plane.name) && Objects.equals(length, plane.length) && Objects.equals(wingspan, plane.wingspan) && Objects.equals(firstFlight, plane.firstFlight) && Objects.equals(category, plane.category);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, name, length, wingspan, firstFlight, category, parts);
+        return Objects.hash(name, length, wingspan, firstFlight, category);
     }
 
     @Override

@@ -104,28 +104,25 @@ public class PlaneRepository implements Repository<Plane, Long> {
             return saved;
         } else {
             Plane saved = updatePlane(entity);
-            deletePartsByPlaneId(saved.getId());
+            deletePartsByPlane(saved);
             insertPartsByPlane(saved);
             return saved;
         }
     }
 
     @Override
-    public void delete(Plane entity) {
-        deletePlane(entity);
-        deletePartsByPlaneId(entity.getId());
-    }
-
-    @Override
     public void deleteById(Long Id) {
-        deletePlaneById(Id);
-        deletePartsByPlaneId(Id);
+        Optional<Plane> optionalPlane = findPlaneById(Id);
+        if (optionalPlane.isPresent()) {
+            deletePartsByPlane(optionalPlane.get());
+            deletePlaneById(optionalPlane.get().getId());
+        }
     }
 
     @Override
     public void deleteAll() {
-        deletePlaneAll();
         deletePartsAll();
+        deletePlaneAll();
     }
 
     private Plane insertPlane(Plane entity) {
@@ -165,10 +162,6 @@ public class PlaneRepository implements Repository<Plane, Long> {
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    private void deletePlane(Plane entity) {
-        deleteById(entity.getId());
     }
 
     private void deletePlaneById(Long Id) {
@@ -233,12 +226,12 @@ public class PlaneRepository implements Repository<Plane, Long> {
         }
     }
 
-    private Set<Part> findPartsByPlane(Plane plane) {
+    private Set<Part> findPartsByPlane(Plane entity) {
         LOG.info("Executing findPartsByPlane()");
         String sql = "SELECT * FROM parts WHERE planeid=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, plane.getId());
+            statement.setLong(1, entity.getId());
             ResultSet rs = statement.executeQuery();
 
             Set<Part> parts = new HashSet<>();
@@ -274,12 +267,12 @@ public class PlaneRepository implements Repository<Plane, Long> {
         }
     }
 
-    private void deletePartsByPlaneId(Long Id) {
-        LOG.info("Executing deletePartsByPlaneId()");
+    private void deletePartsByPlane(Plane entity) {
+        LOG.info("Executing deletePartsByPlane()");
         String sql = "DELETE FROM parts WHERE planeid=?";
         try (Connection connection = dataSource.getConnection();
              PreparedStatement statement = connection.prepareStatement(sql)) {
-            statement.setLong(1, Id);
+            statement.setLong(1, entity.getId());
             statement.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());

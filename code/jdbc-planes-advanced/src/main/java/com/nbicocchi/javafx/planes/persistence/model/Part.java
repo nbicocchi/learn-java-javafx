@@ -1,6 +1,5 @@
 package com.nbicocchi.javafx.planes.persistence.model;
 
-import java.time.LocalDate;
 import java.util.Objects;
 
 public class Part {
@@ -76,16 +75,16 @@ public class Part {
         if (o == null || getClass() != o.getClass())
             return false;
         Part part = (Part) o;
-        return Objects.equals(Id, part.Id) && Objects.equals(plane, part.plane) && Objects.equals(partCode, part.partCode) && Objects.equals(description, part.description) && Objects.equals(duration, part.duration);
+        return Objects.equals(partCode, part.partCode) && Objects.equals(description, part.description) && Objects.equals(duration, part.duration);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(Id, plane, partCode, description, duration);
+        return Objects.hash(partCode, description, duration);
     }
 
     @Override
     public String toString() {
-        return "Part{" + "Id=" + Id + ", plane=" + plane + ", partCode='" + partCode + '\'' + ", description='" + description + '\'' + ", duration=" + duration + '}';
+        return "Part{" + "Id=" + Id + ", partCode='" + partCode + '\'' + ", description='" + description + '\'' + ", duration=" + duration + '}';
     }
 }
