@@ -105,9 +105,10 @@ public class OverviewController {
             planeRepository.save(selectedPlane);
         });
 
-        SortedList<Plane> sortedList = new SortedList<>(planes, Comparator.comparing(Plane::getName));
-        FilteredList<Plane> filteredList = new FilteredList<>(sortedList, plane -> true);
-        tvPlanes.setItems(filteredList);
+        FilteredList<Plane> filteredList = new FilteredList<>(planes, plane -> true);
+        SortedList<Plane> sortedList = new SortedList<>(filteredList.sorted(Comparator.comparing(Plane::getName)));
+        sortedList.comparatorProperty().bind(tvPlanes.comparatorProperty());
+        tvPlanes.setItems(sortedList);
         tvPlanes.getColumns().addAll(name, length, wingspan, firstFlight, category);
         tvPlanes.setEditable(true);
         tvPlanes.setTableMenuButtonVisible(true);
