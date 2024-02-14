@@ -10,6 +10,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -24,6 +25,7 @@ import java.io.IOException;
 import java.sql.*;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -51,6 +53,8 @@ public class OverviewController {
     public void initialize() throws SQLException {
         planes = FXCollections.observableArrayList();
         FilteredList<Plane> filteredData = new FilteredList<>(planes, plane -> true);
+        SortedList<Plane> sortedList = new SortedList<>(filteredData.sorted(Comparator.comparing(Plane::getName)));
+        sortedList.comparatorProperty().bind(txView.comparatorProperty());
 
         List<String> planeTypes = List.of("Airliner", "Bomber", "Ekranoplan", "Flying boat", "Outsize cargo", "Transport");
         cbCategory.getItems().removeAll();
@@ -116,7 +120,7 @@ public class OverviewController {
         txView.getColumns().add(category);
         txView.setEditable(true);
         txView.setTableMenuButtonVisible(true);
-        txView.setItems(filteredData);
+        txView.setItems(sortedList);
         tfSearch.textProperty().addListener(obs -> {
             String filter = tfSearch.getText();
             if (filter == null || filter.length() == 0) {
