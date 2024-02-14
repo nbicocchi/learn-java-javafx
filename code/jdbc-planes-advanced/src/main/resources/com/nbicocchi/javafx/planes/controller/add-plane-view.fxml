@@ -11,11 +11,11 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<DialogPane prefHeight="200.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+<DialogPane prefHeight="200.0" prefWidth="550.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <content>
       <GridPane hgap="10.0" vgap="30.0">
         <columnConstraints>
-          <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="-Infinity" prefWidth="100.0" />
           <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
         <rowConstraints>
@@ -34,8 +34,8 @@
             <TextField fx:id="tfName" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="1" />
             <TextField fx:id="tfLength" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="tfWingSpan" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <DatePicker fx:id="dpFirstFlight" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-            <ComboBox fx:id="cbCategory" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+            <DatePicker fx:id="dpFirstFlight" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="cbCategory" prefWidth="200.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
          </children>
          <padding>
             <Insets bottom="10.0" left="10.0" right="100.0" top="10.0" />

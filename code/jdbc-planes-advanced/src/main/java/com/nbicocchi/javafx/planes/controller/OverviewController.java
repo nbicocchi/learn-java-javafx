@@ -29,16 +29,17 @@ import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.StreamSupport;
 
 public class OverviewController {
-    @FXML private TableView<Part> tvParts;
-    @FXML private TableView<Plane> tvPlanes;
-    @FXML private TextField tfSearch;
-
     private final ObservableList<Plane> planes = FXCollections.observableArrayList();
     private final ObservableList<Part> parts = FXCollections.observableArrayList();
+    @FXML
+    private TableView<Part> tvParts;
+    @FXML
+    private TableView<Plane> tvPlanes;
+    @FXML
+    private TextField tfSearch;
     private PlaneRepository planeRepository;
 
     public void initDataSource(HikariDataSource hikariDataSource) {
@@ -67,7 +68,6 @@ public class OverviewController {
             selectedPlane.setName(event.getNewValue());
             planeRepository.save(selectedPlane);
         });
-
 
         length.setPrefWidth(150);
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
@@ -113,14 +113,13 @@ public class OverviewController {
         tvPlanes.setEditable(true);
         tvPlanes.setTableMenuButtonVisible(true);
 
-        tvPlanes.getSelectionModel().getSelectedItems().addListener(
-                (ListChangeListener<Plane>) change -> {
-                    if (Objects.nonNull(change.getList().get(0).getParts())) {
-                        parts.setAll(change.getList().get(0).getParts());
-                    } else {
-                        parts.clear();
-                    }
-                });
+        tvPlanes.getSelectionModel().getSelectedItems().addListener((ListChangeListener<Plane>) change -> {
+            if (Objects.nonNull(change.getList().get(0).getParts())) {
+                parts.setAll(change.getList().get(0).getParts());
+            } else {
+                parts.clear();
+            }
+        });
 
         tfSearch.textProperty().addListener(obs -> {
             String filter = tfSearch.getText();
@@ -178,7 +177,8 @@ public class OverviewController {
             ObjectMapper mapper = new ObjectMapper();
             mapper.registerModule(new JavaTimeModule());
             try {
-                List<Plane> tmp = mapper.readValue(file, new TypeReference<>() {});
+                List<Plane> tmp = mapper.readValue(file, new TypeReference<>() {
+                });
                 for (Plane plane : tmp) {
                     Plane saved = planeRepository.save(plane);
                     planes.add(saved);
@@ -213,16 +213,14 @@ public class OverviewController {
 
     @FXML
     void onAddPlaneClicked() throws IOException {
-        AddPlaneDialog dialog = new AddPlaneDialog();
-        Optional<Plane> optionalPlane = dialog.showAndWait();
-        if (optionalPlane.isPresent()) {
+        new AddPlaneDialog().showAndWait().ifPresent(plane -> {
             try {
-                Plane saved = planeRepository.save(optionalPlane.get());
+                Plane saved = planeRepository.save(plane);
                 planes.add(saved);
             } catch (RuntimeException e) {
                 new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
             }
-        }
+        });
     }
 
     @FXML
@@ -242,17 +240,15 @@ public class OverviewController {
     void onAddPartClicked() throws IOException {
         Plane selectedPlane = tvPlanes.getSelectionModel().getSelectedItem();
         if (Objects.nonNull(selectedPlane)) {
-            AddPartDialog dialog = new AddPartDialog();
-            Optional<Part> optionalPart = dialog.showAndWait();
-            if (optionalPart.isPresent()) {
+            new AddPartDialog().showAndWait().ifPresent(part -> {
                 try {
-                    parts.add(optionalPart.get());
-                    selectedPlane.addPart(optionalPart.get());
+                    parts.add(part);
+                    selectedPlane.addPart(part);
                     planeRepository.save(selectedPlane);
                 } catch (RuntimeException e) {
                     new Alert(Alert.AlertType.ERROR, e.getMessage(), ButtonType.OK).showAndWait();
                 }
-            }
+            });
         }
     }
 
@@ -276,13 +272,12 @@ public class OverviewController {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About");
         alert.setHeaderText("YA Plane Manager");
-        alert.setContentText(
-        """
-        Author:
-        Nicola Bicocchi
-        
-        version 0.1
-        """);
+        alert.setContentText("""
+                Author:
+                Nicola Bicocchi
+                        
+                version 0.1
+                """);
         alert.showAndWait();
     }
 }
