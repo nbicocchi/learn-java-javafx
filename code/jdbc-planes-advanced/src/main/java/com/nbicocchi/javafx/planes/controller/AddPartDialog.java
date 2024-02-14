@@ -9,11 +9,16 @@ import javafx.scene.control.*;
 import javafx.stage.Modality;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class AddPartDialog extends Dialog<Part> {
     @FXML private TextField tfPartID;
     @FXML private TextField tfDescription;
     @FXML private TextField tfDuration;
+
+    public void initialize() {
+        tfPartID.setText(UUID.randomUUID().toString());
+    }
 
     public AddPartDialog() throws IOException {
         super();

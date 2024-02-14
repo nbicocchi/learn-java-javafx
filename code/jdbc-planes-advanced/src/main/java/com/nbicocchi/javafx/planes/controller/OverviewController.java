@@ -137,7 +137,7 @@ public class OverviewController {
         TableColumn<Part, String> description = new TableColumn<>("Description");
         TableColumn<Part, Double> duration = new TableColumn<>("Duration (years)");
 
-        code.setPrefWidth(150);
+        code.setPrefWidth(300);
         code.setCellValueFactory(new PropertyValueFactory<>("partCode"));
         code.setCellFactory(TextFieldTableCell.forTableColumn());
         code.setOnEditCommit(event -> {
@@ -146,7 +146,7 @@ public class OverviewController {
             planeRepository.save(selectedPart.getPlane());
         });
 
-        description.setPrefWidth(150);
+        description.setPrefWidth(300);
         description.setCellValueFactory(new PropertyValueFactory<>("description"));
         description.setCellFactory(TextFieldTableCell.forTableColumn());
         description.setOnEditCommit(event -> {
@@ -273,6 +273,16 @@ public class OverviewController {
 
     @FXML
     void onAboutClicked() {
-        new Alert(Alert.AlertType.INFORMATION, "Plane Manager v0.1").showAndWait();
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About");
+        alert.setHeaderText("YA Plane Manager");
+        alert.setContentText(
+        """
+        Author:
+        Nicola Bicocchi
+        
+        version 0.1
+        """);
+        alert.showAndWait();
     }
 }

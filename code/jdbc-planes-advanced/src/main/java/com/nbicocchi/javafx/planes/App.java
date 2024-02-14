@@ -31,7 +31,7 @@ public class App extends Application {
         controller.initDataSource(hikariDataSource);
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("Planes");
+        primaryStage.setTitle("YA Plane Manager");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

@@ -5,21 +5,24 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<BorderPane fx:id="txView" xmlns="http://javafx.com/javafx/21.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.planes.controller.OverviewController">
+<BorderPane fx:id="txView" prefHeight="703.0" prefWidth="927.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.planes.controller.OverviewController">
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>
-              <MenuItem mnemonicParsing="false" onAction="#onImportClicked" text="Import..." />
-                  <MenuItem mnemonicParsing="false" onAction="#onExportClicked" text="Export..." />
+              <MenuItem mnemonicParsing="false" onAction="#onImportClicked" text="Import json.." />
+                  <MenuItem mnemonicParsing="false" onAction="#onExportClicked" text="Export json..." />
                   <MenuItem mnemonicParsing="false" onAction="#onQuitClicked" text="Quit" />
             </items>
           </Menu>
@@ -44,28 +47,72 @@
                         <TextField fx:id="tfSearch" promptText="Search by name" HBox.hgrow="ALWAYS" />
                      </children>
                   </HBox>
-                  <HBox VBox.vgrow="ALWAYS">
-                     <children>
-                        <TableView fx:id="tvPlanes" prefWidth="800.0" HBox.hgrow="ALWAYS" />
-                        <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
+                  <SplitPane dividerPositions="0.7" orientation="VERTICAL" VBox.vgrow="ALWAYS">
+                     <items>
+                        <HBox>
                            <children>
-                              <Button fx:id="btAddPlane" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" onAction="#onAddPlaneClicked" prefWidth="70.0" text="Add" />
-                              <Button fx:id="btRemovePlane" layoutX="15.0" layoutY="36.0" mnemonicParsing="false" onAction="#onRemovePlaneClicked" prefWidth="70.0" text="Remove" />
+                              <TableView fx:id="tvPlanes" HBox.hgrow="ALWAYS">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <ToolBar orientation="VERTICAL" HBox.hgrow="NEVER">
+                                 <items>
+                                    <Button fx:id="btAddPlane" mnemonicParsing="false" onAction="#onAddPlaneClicked">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../icons/plus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="btRemovePlane" mnemonicParsing="false" onAction="#onRemovePlaneClicked">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../icons/minus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </items>
+                              </ToolBar>
                            </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
-                  <HBox VBox.vgrow="ALWAYS">
-                     <children>
-                        <TableView fx:id="tvParts" prefHeight="200.0" prefWidth="800.0" HBox.hgrow="ALWAYS" />
-                        <AnchorPane maxWidth="-Infinity" minWidth="-Infinity" prefWidth="100.0">
+                        </HBox>
+                        <HBox>
                            <children>
-                              <Button fx:id="btAddPart" layoutX="15.0" layoutY="1.0" mnemonicParsing="false" onAction="#onAddPartClicked" prefWidth="70.0" text="Add" />
-                              <Button fx:id="btRemovePart" layoutX="15.0" layoutY="36.0" mnemonicParsing="false" onAction="#onRemovePartClicked" prefWidth="70.0" text="Remove" />
+                              <TableView fx:id="tvParts" HBox.hgrow="ALWAYS">
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
+                              </TableView>
+                              <ToolBar orientation="VERTICAL" HBox.hgrow="NEVER">
+                                 <items>
+                                    <Button fx:id="btAddPart" mnemonicParsing="false" onAction="#onAddPartClicked">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../icons/plus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                    <Button fx:id="btRemovePart" mnemonicParsing="false" onAction="#onRemovePartClicked">
+                                       <graphic>
+                                          <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../icons/minus.png" />
+                                             </image>
+                                          </ImageView>
+                                       </graphic>
+                                    </Button>
+                                 </items>
+                              </ToolBar>
                            </children>
-                        </AnchorPane>
-                     </children>
-                  </HBox>
+                        </HBox>
+                     </items>
+                  </SplitPane>
                </children>
             </VBox>
          </center>
