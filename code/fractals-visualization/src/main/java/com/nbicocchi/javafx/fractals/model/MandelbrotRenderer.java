@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.fractals.render;
+package com.nbicocchi.javafx.fractals.model;
 
 import javafx.geometry.Point2D;
 

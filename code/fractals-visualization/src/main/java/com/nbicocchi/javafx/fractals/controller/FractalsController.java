@@ -1,8 +1,8 @@
 package com.nbicocchi.javafx.fractals.controller;
 
-import com.nbicocchi.javafx.fractals.render.FractalBean;
-import com.nbicocchi.javafx.fractals.render.FractalRenderer;
-import com.nbicocchi.javafx.fractals.render.MandelbrotRenderer;
+import com.nbicocchi.javafx.fractals.model.FractalBean;
+import com.nbicocchi.javafx.fractals.model.FractalRenderer;
+import com.nbicocchi.javafx.fractals.model.MandelbrotRenderer;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -59,7 +59,7 @@ public class FractalsController {
     private void updateGUI() {
         imageView.setImage(renderer.render());
         lbInteractions.setText(String.format("interactions = %d", renderer.getIterations()));
-        String zoom = String.format("%e", renderer.initialComplexArea().divide(complexArea));
+        String zoom = String.format("%e", renderer.initialComplexArea().areaRatio(complexArea));
         String exp = zoom.substring(zoom.indexOf('e'));
         lbZoom.setText(String.format("zoom = %sx", exp));
     }

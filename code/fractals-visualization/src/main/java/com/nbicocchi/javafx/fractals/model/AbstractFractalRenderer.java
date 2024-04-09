@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.fractals.render;
+package com.nbicocchi.javafx.fractals.model;
 
 import javafx.geometry.Point2D;
 import javafx.scene.image.Image;
@@ -80,7 +80,7 @@ public abstract class AbstractFractalRenderer implements FractalRenderer {
         WritableImage image = new WritableImage((int) viewArea.getWidth(), (int) viewArea.getHeight());
         for (int y = 0; y < viewArea.getHeight(); ++y) {
             for (int x = 0; x < viewArea.getWidth(); ++x) {
-                Point2D p = viewArea.maptoBean(complexArea, x, y);
+                Point2D p = viewArea.mapToBean(complexArea, x, y);
                 image.getPixelWriter().setColor(x, y, colorize(iterate(p)));
             }
         }
