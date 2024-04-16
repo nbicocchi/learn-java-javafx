@@ -62,7 +62,7 @@
                                        <graphic>
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../icons/plus.png" />
+                                                <Image url="@../../../../../icons/plus.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -71,7 +71,7 @@
                                        <graphic>
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../icons/minus.png" />
+                                                <Image url="@../../../../../icons/minus.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -93,7 +93,7 @@
                                        <graphic>
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../icons/plus.png" />
+                                                <Image url="@../../../../../icons/plus.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>
@@ -102,7 +102,7 @@
                                        <graphic>
                                           <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
-                                                <Image url="@../../../../icons/minus.png" />
+                                                <Image url="@../../../../../icons/minus.png" />
                                              </image>
                                           </ImageView>
                                        </graphic>

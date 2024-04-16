@@ -17,15 +17,6 @@ public class Plane {
     public Plane() {
     }
 
-    public Plane(String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
-        this.Id = null;
-        this.name = name;
-        this.length = length;
-        this.wingspan = wingspan;
-        this.firstFlight = firstFlight;
-        this.category = category;
-    }
-
     public Plane(Long Id, String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
         this.Id = Id;
         this.name = name;
@@ -33,6 +24,10 @@ public class Plane {
         this.wingspan = wingspan;
         this.firstFlight = firstFlight;
         this.category = category;
+    }
+
+    public Plane(String name, Double length, Double wingspan, LocalDate firstFlight, String category) {
+        this(null, name, length, wingspan, firstFlight, category);
     }
 
     public Long getId() {

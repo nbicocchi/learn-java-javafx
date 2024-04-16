@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.planes;
 
+import com.nbicocchi.javafx.planes.controller.LoginController;
 import com.nbicocchi.javafx.planes.controller.OverviewController;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -25,13 +26,13 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         HikariDataSource hikariDataSource = initDataSource(JDBC_Driver, JDBC_URL);
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("planes-view.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("login-view.fxml"));
         Parent root = loader.load();
-        OverviewController controller = loader.getController();
+        LoginController controller = loader.getController();
         controller.initDataSource(hikariDataSource);
 
         Scene scene = new Scene(root);
-        primaryStage.setTitle("YA Plane Manager");
+        primaryStage.setTitle("Login");
         primaryStage.setScene(scene);
         primaryStage.show();
     }

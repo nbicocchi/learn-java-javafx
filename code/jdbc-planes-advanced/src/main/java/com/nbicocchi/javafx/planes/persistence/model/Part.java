@@ -12,20 +12,16 @@ public class Part {
     public Part() {
     }
 
-    public Part(Plane plane, String partCode, String description, Double duration) {
-        this.Id = null;
-        this.plane = plane;
-        this.partCode = partCode;
-        this.description = description;
-        this.duration = duration;
-    }
-
     public Part(Long id, Plane plane, String partCode, String description, Double duration) {
         this.Id = id;
         this.plane = plane;
         this.partCode = partCode;
         this.description = description;
         this.duration = duration;
+    }
+
+    public Part(Plane plane, String partCode, String description, Double duration) {
+        this(null, plane, partCode, description, duration);
     }
 
     public Long getId() {
