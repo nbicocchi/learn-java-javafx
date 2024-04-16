@@ -23,12 +23,15 @@ public class App {
         testUpdate();
         testSelect();
         testScrollable();
+        testUpdateable();
         testSelect();
-        //testUpdateable();
-        //testSelect();
-        //testSensitive();
+        testUpdateWithTransactions();
+        testSelect();
     }
 
+    /**
+     * Creates a pool of connections to the DB
+     */
     private void dbConnection() {
         LOG.info("** dbConnection() **");
         HikariConfig config = new HikariConfig();
@@ -38,6 +41,10 @@ public class App {
         dataSource = new HikariDataSource(config);
     }
 
+    /**
+     * Creates a table for books filled with some example data.
+     * OK only for debug/dev purposes. Not to use in production!
+     */
     private void resetDB() {
         LOG.info("** resetDB() **");
         try (Connection connection = dataSource.getConnection(); Statement statement = connection.createStatement()) {
@@ -54,7 +61,7 @@ public class App {
     }
 
     /**
-     * Reads the content of the person table Results are limited using "LIMIT 100"
+     * Reads the content of the book table limiting results to 100
      * Useful for large tables
      */
     private void testSelect() {
@@ -69,7 +76,7 @@ public class App {
     }
 
     /**
-     * Update the content of the book table
+     * Update the content of one record of the book table
      */
     private void testUpdate() {
         LOG.info("** testUpdate() **");
@@ -83,11 +90,11 @@ public class App {
     }
 
     /**
-     * Test Scrollable ResultSet
+     * Test Scrollable ResultSet over the book table
      */
     private void testScrollable() {
         LOG.info("** testScrollable() **");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE)) {
             ResultSet rs = ps.executeQuery();
             // Third record
             rs.absolute(2);
@@ -104,22 +111,18 @@ public class App {
     }
 
     /**
-     * Prints the current ResultSet row
+     * Transform the current ResultSet row into a String
      */
     private String rowToString(ResultSet rs) throws SQLException {
         return String.format("--> id=%d, title=%s, author=%s, pages=%d", rs.getInt("id"), rs.getString("title"), rs.getString("author"), rs.getInt("pages"));
     }
 
-    public static void main(String[] args) {
-        new App();
-    }
-
     /**
-     * Test Updateable ResultSet Increment pages of one element
+     * Test Updateable ResultSet over the book table
      */
     private void testUpdateable() {
         LOG.info("** testUpdateable() **");
-        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100 OFFSET 0", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet rs = ps.executeQuery()) {
+        try (Connection connection = dataSource.getConnection(); PreparedStatement ps = connection.prepareStatement("SELECT * FROM book LIMIT 100", ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE); ResultSet rs = ps.executeQuery()) {
             while (rs.next()) {
                 int pages = rs.getInt("pages");
                 rs.updateInt("pages", pages + 10);
@@ -131,7 +134,39 @@ public class App {
     }
 
     /**
-     * Test Sensitive ResultSet
+     * Test a simple transaction involving changes to two different books.
+     */
+    private void testUpdateWithTransactions() {
+        LOG.info("** testUpdateWithTransactions() **");
+        try (
+                Connection connection = dataSource.getConnection();
+                PreparedStatement ps = connection.prepareStatement("UPDATE book SET pages=? WHERE id=?")
+        ) {
+            // disable auto-commit
+            connection.setAutoCommit(false);
+
+            // the first book has 100 pages
+            ps.setInt(1, 100);
+            ps.setInt(2, 1);
+            ps.executeUpdate();
+
+            // the second book has 200 pages
+            ps.setInt(1, 200);
+            ps.setInt(2, 2);
+            ps.executeUpdate();
+
+            // all changes are actually committed together
+            connection.commit();
+
+            // re-enable auto-commit
+            connection.setAutoCommit(true);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /**
+     * Test Sensitive ResultSet over the book table
      */
     private void testSensitive() {
         LOG.info("** testSensitive() **");
@@ -152,5 +187,9 @@ public class App {
         } catch (SQLException e) {
             throw new RuntimeException();
         }
+    }
+
+    public static void main(String[] args) {
+        new App();
     }
 }
