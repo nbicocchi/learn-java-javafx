@@ -10,8 +10,8 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String username, String password) {
-        this.Id = id;
+    public User(Long Id, String username, String password) {
+        this.Id = Id;
         this.username = username;
         this.password = password;
     }
