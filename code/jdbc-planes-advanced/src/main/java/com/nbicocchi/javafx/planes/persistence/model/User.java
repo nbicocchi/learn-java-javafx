@@ -24,8 +24,8 @@ public class User {
         return Id;
     }
 
-    public void setId(Long id) {
-        this.Id = id;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
     public String getUsername() {
@@ -60,7 +60,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + Id +
+                "Id=" + Id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
