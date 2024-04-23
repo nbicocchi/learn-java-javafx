@@ -3,15 +3,15 @@ package com.nbicocchi.javafx.planes.persistence.model;
 import java.util.Objects;
 
 public class User {
-    Long id;
+    Long Id;
     String username;
     String password;
 
     public User() {
     }
 
-    public User(Long id, String username, String password) {
-        this.id = id;
+    public User(Long Id, String username, String password) {
+        this.Id = Id;
         this.username = username;
         this.password = password;
     }
@@ -21,11 +21,11 @@ public class User {
     }
 
     public Long getId() {
-        return id;
+        return Id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setId(Long Id) {
+        this.Id = Id;
     }
 
     public String getUsername() {
@@ -60,7 +60,7 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "Id=" + Id +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 '}';
