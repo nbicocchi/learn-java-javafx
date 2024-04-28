@@ -4,8 +4,6 @@ import com.nbicocchi.javafx.planes.persistence.model.Plane;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.*;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -60,7 +58,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
                 return Optional.empty();
             }
 
-            return Optional.of(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), convertSQLDateToLocalDate(rs.getDate("firstFlight")), rs.getString("category")));
+            return Optional.of(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), rs.getDate("firstFlight").toLocalDate(), rs.getString("category")));
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -74,7 +72,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                planeList.add(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), convertSQLDateToLocalDate(rs.getDate("firstFlight")), rs.getString("category")));
+                planeList.add(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), rs.getDate("firstFlight").toLocalDate(), rs.getString("category")));
             }
             return planeList;
         } catch (SQLException e) {
@@ -159,10 +157,5 @@ public class PlaneRepository implements Repository<Plane, Long> {
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
-    }
-
-    public static LocalDate convertSQLDateToLocalDate(Date SQLDate) {
-        java.util.Date date = new java.util.Date(SQLDate.getTime());
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
     }
 }
