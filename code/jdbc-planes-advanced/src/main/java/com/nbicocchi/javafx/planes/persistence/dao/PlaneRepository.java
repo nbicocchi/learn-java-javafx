@@ -6,8 +6,6 @@ import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.*;
 import java.sql.Date;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 
 import org.slf4j.Logger;
@@ -187,11 +185,6 @@ public class PlaneRepository implements Repository<Plane, Long> {
         }
     }
 
-    private LocalDate convertSQLDateToLocalDate(Date SQLDate) {
-        java.util.Date date = new java.util.Date(SQLDate.getTime());
-        return date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-    }
-
     private Optional<Plane> findPlaneById(Long Id) {
         LOG.info("Executing findPlaneById()");
         String sql = "SELECT * FROM planes WHERE id=?";
@@ -204,7 +197,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
                 return Optional.empty();
             }
 
-            return Optional.of(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), convertSQLDateToLocalDate(rs.getDate("firstflight")), rs.getString("category")));
+            return Optional.of(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), rs.getDate("firstflight").toLocalDate(), rs.getString("category")));
         } catch (SQLException e) {
             throw new RuntimeException(e.getMessage());
         }
@@ -218,7 +211,7 @@ public class PlaneRepository implements Repository<Plane, Long> {
              PreparedStatement statement = connection.prepareStatement(sql)) {
             ResultSet rs = statement.executeQuery();
             while (rs.next()) {
-                planeSet.add(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), convertSQLDateToLocalDate(rs.getDate("firstflight")), rs.getString("category")));
+                planeSet.add(new Plane(rs.getLong("id"), rs.getString("name"), rs.getDouble("length"), rs.getDouble("wingspan"), rs.getDate("firstflight").toLocalDate(), rs.getString("category")));
             }
             return planeSet;
         } catch (SQLException e) {

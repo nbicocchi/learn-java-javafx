@@ -1,7 +1,6 @@
 package com.nbicocchi.javafx.planes;
 
 import com.nbicocchi.javafx.planes.controller.LoginController;
-import com.nbicocchi.javafx.planes.controller.OverviewController;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Application;
