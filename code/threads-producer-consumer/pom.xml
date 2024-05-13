@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nbicocchi.javafx</groupId>
-    <artifactId>simple-counter</artifactId>
+    <artifactId>threads-producer-consumer</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>simple-counter</name>
+    <name>threads-producer-consumer</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -66,7 +66,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>com.nbicocchi.javafx.counter/com.nbicocchi.javafx.counter.App</mainClass>
+                            <mainClass>com.nbicocchi.javafx.producerconsumer/com.nbicocchi.javafx.producerconsumer.App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>

@@ -5,9 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.nbicocchi.javafx</groupId>
-    <artifactId>manager-workers</artifactId>
+    <artifactId>threads-manager-workers</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>manager-workers</name>
+    <name>threads-manager-workers</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

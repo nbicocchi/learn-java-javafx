@@ -49,7 +49,7 @@ public class PrimesController {
         chEngines.getSelectionModel().select(0);
         tfBlockStart.textProperty().set("0");
         tfBlockEnd.textProperty().set("100");
-        tfBlockSize.textProperty().set("250000");
+        tfBlockSize.textProperty().set("25000");
     }
 
     void initSearch() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
