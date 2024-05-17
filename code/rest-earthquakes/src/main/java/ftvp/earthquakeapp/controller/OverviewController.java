@@ -165,7 +165,9 @@ public class OverviewController {
     @FXML
     void onMapClicked() throws URISyntaxException, IOException {
         URI mapuri = new URI("https://earthquake.usgs.gov/earthquakes/map/");
-        if(Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
+        String os = System.getProperty("os.name").toLowerCase();
+
+        if(os.contains("win")){
             Desktop.getDesktop().browse(mapuri);
         }
         else{
