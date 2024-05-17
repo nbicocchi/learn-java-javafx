@@ -23,7 +23,7 @@
                             <children>
                                   <ImageView fitHeight="35.0" fitWidth="33.0" layoutX="4.0" layoutY="3.0" pickOnBounds="true" preserveRatio="true">
                                       <image>
-                                          <Image url="@../images/app-logo.jpg" />
+                                          <Image url="@app-logo.jpg" />
                                       </image>
                                   </ImageView>
                                   <Label layoutX="45.0" layoutY="9.0" text="International Earthquake Institute" textFill="WHITE">
@@ -39,7 +39,7 @@
                             <children>
                                 <ImageView fitHeight="104.0" fitWidth="88.0" layoutX="65.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../images/app-logo.jpg" />
+                                        <Image url="@app-logo.jpg" />
                                     </image>
                                 </ImageView>
                                 <Label layoutX="43.0" layoutY="112.0" text="EARTHQUAKE APP" textFill="#f7f7f7">
@@ -58,7 +58,7 @@
                         <Button fx:id="mapButton" layoutX="21.0" layoutY="187.0" mnemonicParsing="false" onAction="#onMapClicked" prefHeight="26.0" prefWidth="182.0" text="MAP" />
                         <ImageView fitHeight="16.0" fitWidth="15.0" layoutX="70.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../images/map-icon.png" />
+                              <Image url="@map-icon.png" />
                            </image>
                         </ImageView>
                             </children>

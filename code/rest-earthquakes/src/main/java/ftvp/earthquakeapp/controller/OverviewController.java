@@ -164,7 +164,14 @@ public class OverviewController {
 
     @FXML
     void onMapClicked() throws URISyntaxException, IOException {
-        Desktop.getDesktop().browse(new URI("https://earthquake.usgs.gov/earthquakes/map/?extent=-88.3591,-538.59375&extent=88.3591,316.40625"));
+        URI mapuri = new URI("https://earthquake.usgs.gov/earthquakes/map/");
+        if(Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)){
+            Desktop.getDesktop().browse(mapuri);
+        }
+        else{
+            Runtime rt = Runtime.getRuntime();
+            rt.exec("open " + mapuri);
+        }
     }
 
     @FXML

@@ -20,7 +20,7 @@ public class App extends Application {
 
         Scene scene = new Scene(root);
         stage.setTitle("Earthquake App");
-        Image logo = new Image("ftvp/images/app-logo.jpg");
+        Image logo = new Image("ftvp/earthquakeapp/app-logo.jpg");
         stage.getIcons().add(logo);
         stage.setScene(scene);
         stage.show();
