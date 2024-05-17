@@ -107,7 +107,7 @@ Now, in order to make a request to the API we have to create the URL.
 
 Note well, you can also use an URL string, however when you have to make a lot of different requests to the same API with variable query string parameters the `HttpUrl.Builder()` helps you a lot!
 
-```java
+```
 //URL data
 String protocol = "https";
 String host = "jsonplaceholder.typicode.com";
@@ -129,7 +129,7 @@ https://jsonplaceholder.typicode.com/posts
 
 You can also add query string params befor building the url using the `addQueryParameter(String name, String value)` method. Here is an example:
 
-```java
+```
 radius = 500;
 builder.addQueryParameter("maxradiuskm", String.valueOf(radius);
 ```
@@ -140,7 +140,7 @@ As you know a REST request is composed by some different parts like METHOD, HEAD
 
 The okHttpClient helps you to build the request:
 
-```java
+```
 //Setting the request parameters (defaults to GET method)
 Request request = new Request.Builder()
         .url(myurl)
@@ -151,7 +151,7 @@ Request request = new Request.Builder()
 
 When a software tries to execute a call it could have a positive or negative outcome. In order to stop the program when a call produces a negative result we can use a `try-catch` structure:
 
-```java
+```
 //Generating a new call to obtain the response
 Call call = client.newCall(request);
 
@@ -182,14 +182,14 @@ The `JsonNode` class is a class that stores information as ke-value pairs. The J
 
 The Jackson `ObjectMapper` class can parse a JSON string to a `JsonNode` object using the `readTree()` method.
 
-```java
-//Saving body data before OkHttpClient closes the request
+```
+// Saving body data before OkHttpClient closes the request
 ResponseBody responseBody = response.body();
 
-//Creating a new ObjcetMapper from JACKSON library
+// Creating a new ObjcetMapper from JACKSON library
 ObjectMapper mapper = new ObjectMapper();
 
-//Parsing the body string to JsonNode format (from JACKSON)
+// Parsing the body string to JsonNode format (from JACKSON)
 JsonNode bodyNode = mapper.readTree(responseBody.string());
 
 //Printing some information from Json
@@ -207,7 +207,7 @@ Often Json data have to be used as class field values. The `ObjectMapper` `readV
 
 The method takes a String in Json format and a class type. The method returns an object that is an instance of the provided class with fields filled using Json values.
 
-```java
+```
 JsonNode jsonbody = mapper.readTree(responseBody.string());
 Post pst = mapper.readValue(jsonbody.toString(), Post.class);
 pst.getId() //Will print the name contained into jsonbody "id" field.
