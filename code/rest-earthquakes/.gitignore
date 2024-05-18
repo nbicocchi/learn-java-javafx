@@ -10,10 +10,6 @@
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
 
-# Environment files
-EarthQuakeApp/.env
-.env
-
 # Package Files #
 *.jar
 *.war

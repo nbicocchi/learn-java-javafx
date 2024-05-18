@@ -15,7 +15,7 @@ public class GeometryRequestMaker extends RequestMaker {
     String path = "v1/geocode";
 
     Dotenv dotenv = Dotenv.configure()
-            .directory("code/rest-earthquakeapp/.env")
+            .directory("code/rest-earthquakes/.env")
             .load();
     String APIKEY = dotenv.get("API_KEY");
 
