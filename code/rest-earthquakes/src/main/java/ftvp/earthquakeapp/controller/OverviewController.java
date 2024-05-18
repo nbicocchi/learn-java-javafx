@@ -115,7 +115,6 @@ public class OverviewController {
 
     @FXML
     void onSearchClicked() {
-        deleteButton.setDisable(false);
 
         if(startDatePicker.getValue() == null){
             earthquakeRequestMaker.setStartDate(null);
@@ -160,20 +159,6 @@ public class OverviewController {
         }
 
         refresh();
-    }
-
-    @FXML
-    void onMapClicked() throws URISyntaxException, IOException {
-        URI mapuri = new URI("https://earthquake.usgs.gov/earthquakes/map/");
-        String os = System.getProperty("os.name").toLowerCase();
-
-        if(os.contains("win")){
-            Desktop.getDesktop().browse(mapuri);
-        }
-        else{
-            Runtime rt = Runtime.getRuntime();
-            rt.exec("open " + mapuri);
-        }
     }
 
     @FXML
