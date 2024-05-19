@@ -7,7 +7,7 @@
     <groupId>ftvp</groupId>
     <artifactId>rest-earthquakes</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <name>EarthQuakeApp</name>
+    <name>rest-earthquakes</name>
 
     <dependencies>
         <dependency>
