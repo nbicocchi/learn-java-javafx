@@ -53,7 +53,7 @@ A *REST API* is a data elaboration interface between a web server and a web clie
 
 The *HTTP PROTOCOL* is a communication protocol that uses GET, POST, DELETE methods.
 
-![API](./images/API-image.png)
+![API](src/main/resources/API-image.png)
 
 ### Application for HTTP request
 
@@ -69,7 +69,7 @@ An URL (Uniform Resource Locator) is a char sequence that uniquely identifies an
 * **PATH**: the path to reach interested resources
 * **QUERY STRING**: contains input data (for example for the API) using key-value couples. It starts with the `?` char.
 
-![URL](./images/url-parts-big.jpg)
+![URL](src/main/resources/url-parts-big.jpg)
 
 ## Make an HTTP request with JAVA
 
