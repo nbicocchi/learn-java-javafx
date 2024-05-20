@@ -12,7 +12,8 @@ public class RequestMaker {
     String host;
     String path;
 
-    public RequestMaker() {}
+    public RequestMaker() {
+    }
 
     public RequestMaker(String protocol, String host, String path) {
         this.protocol = protocol;

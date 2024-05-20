@@ -19,12 +19,13 @@ public class Earthquake {
     Date datetime;
     Geometry geometry;
 
-    public Earthquake(){}
+    public Earthquake() {
+    }
 
     public Earthquake(String id, String title, double mag, String place, long time, String detail, String alert, int tsunami, Geometry geometry) {
         this.id = id;
         this.title = title;
-        this.mag = Math.round(mag*100.0)/100.0;
+        this.mag = Math.round(mag * 100.0) / 100.0;
         this.place = place;
         this.time = time;
         this.detail = detail;
@@ -83,7 +84,7 @@ public class Earthquake {
     }
 
     public void setMag(double mag) {
-        this.mag = Math.round(mag*100.0)/100.0;
+        this.mag = Math.round(mag * 100.0) / 100.0;
     }
 
     public void setPlace(String place) {
@@ -120,7 +121,7 @@ public class Earthquake {
         if (o == null || getClass() != o.getClass()) return false;
         Earthquake that = (Earthquake) o;
         return Objects.equals(id, that.id);
-        }
+    }
 
     @Override
     public int hashCode() {

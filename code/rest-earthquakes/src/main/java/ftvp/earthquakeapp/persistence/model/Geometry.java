@@ -2,13 +2,15 @@ package ftvp.earthquakeapp.persistence.model;
 
 import java.util.Objects;
 
-public class Geometry {    private String type;
+public class Geometry {
+    private String type;
 
     double latitude;
     double longitude;
     double altitude;
 
-    public Geometry() {}
+    public Geometry() {
+    }
 
     public Geometry(double latitude, double longitude, double altitude) {
         this.latitude = latitude;

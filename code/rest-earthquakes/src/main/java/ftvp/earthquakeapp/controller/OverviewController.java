@@ -1,21 +1,15 @@
 package ftvp.earthquakeapp.controller;
 
-import ftvp.earthquakeapp.persistence.rest.EarthquakeRequestMaker;
 import ftvp.earthquakeapp.persistence.model.Earthquake;
+import ftvp.earthquakeapp.persistence.rest.EarthquakeRequestMaker;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-
 import javafx.scene.control.*;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
@@ -54,13 +48,13 @@ public class OverviewController {
     TableColumn<Earthquake, String> placeCol = new TableColumn<>("Place");
     TableColumn<Earthquake, Date> timeCol = new TableColumn<>("Time");
 
-    public void clear(){
+    public void clear() {
         earthquakesFound.clear();
         earthquakes.clear();
         tvEarthquakes.getItems().clear();
     }
 
-    public void initialize(){
+    public void initialize() {
         earthquakeRequestMaker.setPlace(null);
         earthquakeRequestMaker.setMinmag(0.0);
         earthquakeRequestMaker.setMaxmag(0.0);
@@ -72,18 +66,18 @@ public class OverviewController {
         initializeTableViewProperties();
     }
 
-    public void initDataSource(){
+    public void initDataSource() {
         earthquakesFound = earthquakeRequestMaker.getByParams();
         earthquakes.addAll(StreamSupport.stream(earthquakesFound.spliterator(), false).toList());
     }
 
-    public void setTableView(){
+    public void setTableView() {
         tvEarthquakes.setItems(earthquakes);
         tvEarthquakes.getColumns().setAll(titleCol, magCol, placeCol, timeCol);
     }
 
     @FXML
-    public void initializeTableViewProperties(){
+    public void initializeTableViewProperties() {
 
         titleCol.setPrefWidth(280);
         titleCol.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -100,7 +94,7 @@ public class OverviewController {
         setTableView();
     }
 
-    public void refresh(){
+    public void refresh() {
 
         clear();
         earthquakesFound = earthquakeRequestMaker.getByParams();
@@ -116,44 +110,40 @@ public class OverviewController {
     @FXML
     void onSearchClicked() {
 
-        if(startDatePicker.getValue() == null){
+        if (startDatePicker.getValue() == null) {
             earthquakeRequestMaker.setStartDate(null);
-        }else{
+        } else {
             earthquakeRequestMaker.setStartDate(startDatePicker.getValue().toString());
         }
 
-        if(endDatePicker.getValue() == null){
+        if (endDatePicker.getValue() == null) {
             earthquakeRequestMaker.setEndDate(null);
-        }else{
+        } else {
             earthquakeRequestMaker.setEndDate(endDatePicker.getValue().toString());
         }
 
-        if(searchField.getText().isEmpty()){
+        if (searchField.getText().isEmpty()) {
             earthquakeRequestMaker.setPlace(null);
-        }
-        else{
+        } else {
             earthquakeRequestMaker.setPlace(searchField.getText());
         }
 
-        if(maxMag.getText().isEmpty()){
+        if (maxMag.getText().isEmpty()) {
             earthquakeRequestMaker.setMaxmag(0.0);
-        }
-        else{
-            if(isNumeric(maxMag.getText())){
+        } else {
+            if (isNumeric(maxMag.getText())) {
                 earthquakeRequestMaker.setMaxmag(Double.parseDouble(maxMag.getText()));
-            }
-            else{
+            } else {
                 earthquakeRequestMaker.setMaxmag(0.0);
             }
         }
 
-        if(minMag.getText().isEmpty()){
+        if (minMag.getText().isEmpty()) {
             earthquakeRequestMaker.setMinmag(0.0);
-        }else {
-            if(isNumeric(minMag.getText())){
+        } else {
+            if (isNumeric(minMag.getText())) {
                 earthquakeRequestMaker.setMinmag(Double.parseDouble(minMag.getText()));
-            }
-            else{
+            } else {
                 earthquakeRequestMaker.setMinmag(0.0);
             }
         }
@@ -168,6 +158,6 @@ public class OverviewController {
         maxMag.clear();
         startDatePicker.setValue(null);
         endDatePicker.setValue(null);
-    }   
+    }
 
 }

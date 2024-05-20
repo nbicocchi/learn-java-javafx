@@ -7,26 +7,30 @@ An application that shows earthquakes data taken from a REST API.
 ## Classes
 
 ### Model
+
 * `Metadata`: contains general data about responses from `earthquake.usgs` API
 * `Geometry`: represents geographic coordinates as latitude, longitude and altitude
 * `Earthquake`: represents earthquake data (as magnitude, place, etc...)
 
 ### Rest
-* `RequestMaker`: a father class that create instance of `OKHttpClient` and `ObjectMapper` in order to get data from a
-generic Http request and storing them into a `JsonNode` object and into classes
-* `GeometryRequestMaker`: returns a `Geometry` object with coordinates of a given place using `www.here.com` API
-* `EarthquakeRequestMaker`: makes http requests to `earthquake.usgs.gov` API and returns a `List<Earthquake>` with filtered features by given arguments
 
+* `RequestMaker`: a father class that create instance of `OKHttpClient` and `ObjectMapper` in order to get data from a
+  generic Http request and storing them into a `JsonNode` object and into classes
+* `GeometryRequestMaker`: returns a `Geometry` object with coordinates of a given place using `www.here.com` API
+* `EarthquakeRequestMaker`: makes http requests to `earthquake.usgs.gov` API and returns a `List<Earthquake>` with
+  filtered features by given arguments
 
 ### Controller
+
 * `Overview controller`: manages button's actions, scenes, alerts. It also takes user's input data.
 
 ## How it works
 
 Every action (associated to buttons or fields) on the user interface is managed by an `OverviewController` method.
 
-The `OverviewController` creates an instance of `EarthquakeRequestMaker` and calls the `getByParams` method obtaining data as
-`List<Earthquake>`. 
+The `OverviewController` creates an instance of `EarthquakeRequestMaker` and calls the `getByParams` method obtaining
+data as
+`List<Earthquake>`.
 
 ## Running the application
 
@@ -41,15 +45,18 @@ API_KEY=yourAPIkey
 
 ### Running
 
-Open the project folder into a java IDE, compile and start the project. We recommend to use [IntelliJ IDEA](https://www.jetbrains.com/idea/).
+Open the project folder into a java IDE, compile and start the project. We recommend to
+use [IntelliJ IDEA](https://www.jetbrains.com/idea/).
 
 # Getting data from REST APIs
 
 ### Definitions
 
-An *API* (Application Programming Interface) is a mechanism that allows communication between two software components using definitions and protocols.
+An *API* (Application Programming Interface) is a mechanism that allows communication between two software components
+using definitions and protocols.
 
-A *REST API* is a data elaboration interface between a web server and a web client. The API receives **requests** and provides **responses** with information and data.
+A *REST API* is a data elaboration interface between a web server and a web client. The API receives **requests** and
+provides **responses** with information and data.
 
 The *HTTP PROTOCOL* is a communication protocol that uses GET, POST, DELETE methods.
 
@@ -62,7 +69,8 @@ The *HTTP PROTOCOL* is a communication protocol that uses GET, POST, DELETE meth
 
 ## HTTP URL
 
-An URL (Uniform Resource Locator) is a char sequence that uniquely identifies an online resource address. An URL is composed by the following elements:
+An URL (Uniform Resource Locator) is a char sequence that uniquely identifies an online resource address. An URL is
+composed by the following elements:
 
 * **SCHEME**: that identifies wich protocol use to reach resources;
 * **HOST**: the name of website domain or subdomain
@@ -82,17 +90,20 @@ public class RequestExample {
     }
 }
 ```
+
 ### Dependency
 
 To make an HTTP request we can use the **okHttp client** importing the following dependency into `pom.xml` file.
 
 ```xml
+
 <dependency>
     <groupId>com.squareup.okhttp3</groupId>
     <artifactId>okhttp</artifactId>
     <version>5.0.0-alpha.12</version>
 </dependency>
 ```
+
 The okHttp client is class that allows to build requests and HTTP calls with built-in classes.
 First of all we have to create a new instace of okHttp client:
 
@@ -105,7 +116,8 @@ OkHttpClient client = new OkHttpClient();
 
 Now, in order to make a request to the API we have to create the URL.
 
-Note well, you can also use an URL string, however when you have to make a lot of different requests to the same API with variable query string parameters the `HttpUrl.Builder()` helps you a lot!
+Note well, you can also use an URL string, however when you have to make a lot of different requests to the same API
+with variable query string parameters the `HttpUrl.Builder()` helps you a lot!
 
 ```
 //URL data
@@ -122,12 +134,15 @@ HttpUrl.Builder urlBuilder = new HttpUrl.Builder();
 
 URL myurl = urlBuilder.build().url();
 ```
+
 The result is:
+
 ```url
 https://jsonplaceholder.typicode.com/posts
 ```
 
-You can also add query string params befor building the url using the `addQueryParameter(String name, String value)` method. Here is an example:
+You can also add query string params befor building the url using the `addQueryParameter(String name, String value)`
+method. Here is an example:
 
 ```
 radius = 500;
@@ -149,7 +164,8 @@ Request request = new Request.Builder()
 
 ### Executing the call
 
-When a software tries to execute a call it could have a positive or negative outcome. In order to stop the program when a call produces a negative result we can use a `try-catch` structure:
+When a software tries to execute a call it could have a positive or negative outcome. In order to stop the program when
+a call produces a negative result we can use a `try-catch` structure:
 
 ```
 //Generating a new call to obtain the response
@@ -164,15 +180,19 @@ catch(IOException e){
     throw new RuntimeException(e);
 }
 ```
+
 ## Access to response information
 
 ### Parsing body
 
-A *JSON* (JavaScript Object Notation) is a data format for information exchange. Using simple word JSON is a string with a special format composed by elements of key-value pairs.
+A *JSON* (JavaScript Object Notation) is a data format for information exchange. Using simple word JSON is a string with
+a special format composed by elements of key-value pairs.
 
-The `JsonNode` class is a class that stores information as ke-value pairs. The Jackson dependency provides some helpful tools that parse a JSON string to a `JsonNode` object.
+The `JsonNode` class is a class that stores information as ke-value pairs. The Jackson dependency provides some helpful
+tools that parse a JSON string to a `JsonNode` object.
 
 ```xml
+
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-databind</artifactId>
@@ -203,9 +223,11 @@ As you see now you can access to alla JSON information using key values and `get
 
 ### Parsing Json to class
 
-Often Json data have to be used as class field values. The `ObjectMapper` `readValue()` method helps you to put Json values into corresponding class fields.
+Often Json data have to be used as class field values. The `ObjectMapper` `readValue()` method helps you to put Json
+values into corresponding class fields.
 
-The method takes a String in Json format and a class type. The method returns an object that is an instance of the provided class with fields filled using Json values.
+The method takes a String in Json format and a class type. The method returns an object that is an instance of the
+provided class with fields filled using Json values.
 
 ```
 JsonNode jsonbody = mapper.readTree(responseBody.string());
@@ -214,6 +236,7 @@ pst.getId() //Will print the name contained into jsonbody "id" field.
 ```
 
 ## Developers
+
 **Vincenzo Parente**
 > Model classes, User Interface, UI Controller
 

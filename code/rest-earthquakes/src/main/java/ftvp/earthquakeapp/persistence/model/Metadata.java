@@ -14,7 +14,8 @@ public class Metadata {
     String api;
     long count;
 
-    public Metadata() {}
+    public Metadata() {
+    }
 
     public Metadata(String generated, String url, String title, int status, String api, long count) {
         this.generated = generated;

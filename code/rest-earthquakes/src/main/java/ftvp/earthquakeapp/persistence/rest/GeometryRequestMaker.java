@@ -19,9 +19,10 @@ public class GeometryRequestMaker extends RequestMaker {
             .load();
     String APIKEY = dotenv.get("API_KEY");
 
-    public GeometryRequestMaker() {}
+    public GeometryRequestMaker() {
+    }
 
-    public Geometry geocode(String place){
+    public Geometry geocode(String place) {
 
         URL myurl = new HttpUrl.Builder()
                 .scheme(protocol)
@@ -37,9 +38,9 @@ public class GeometryRequestMaker extends RequestMaker {
 
         Call call = client.newCall(request);
 
-        try (Response response = call.execute()){
+        try (Response response = call.execute()) {
 
-            if(!response.isSuccessful()){
+            if (!response.isSuccessful()) {
                 throw new RuntimeException("Unsuccessful response: code = " + response.code());
             }
 
@@ -48,19 +49,17 @@ public class GeometryRequestMaker extends RequestMaker {
 
             Geometry coordinates = new Geometry();
 
-            if(bodyNode.get("items").isEmpty()){
+            if (bodyNode.get("items").isEmpty()) {
                 coordinates.setLatitude(0.0);
                 coordinates.setLongitude(0.0);
-            }
-            else{
+            } else {
                 coordinates.setLatitude(bodyNode.get("items").get(0).get("position").get("lat").asDouble());
                 coordinates.setLongitude(bodyNode.get("items").get(0).get("position").get("lng").asDouble());
                 coordinates.setAltitude(0.0);
             }
 
             return coordinates;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e.getMessage());
         }
     }

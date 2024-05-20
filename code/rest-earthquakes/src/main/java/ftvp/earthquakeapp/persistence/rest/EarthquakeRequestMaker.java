@@ -33,7 +33,9 @@ public class EarthquakeRequestMaker extends RequestMaker {
         return place;
     }
 
-    public String getStartDate() { return startDate; }
+    public String getStartDate() {
+        return startDate;
+    }
 
     public String getEndDate() {
         return endDate;
@@ -75,7 +77,7 @@ public class EarthquakeRequestMaker extends RequestMaker {
         builder.addPathSegments(path);
         builder.addQueryParameter("format", "geojson");
 
-        if(place != null && !place.isEmpty()){
+        if (place != null && !place.isEmpty()) {
             GeometryRequestMaker geometryRequestMaker = new GeometryRequestMaker();
             Geometry coords = geometryRequestMaker.geocode(place);
 
@@ -84,22 +86,21 @@ public class EarthquakeRequestMaker extends RequestMaker {
             builder.addQueryParameter("maxradiuskm", "500");
         }
 
-        if(startDate != null){
+        if (startDate != null) {
             builder.addQueryParameter("starttime", startDate);
-        }
-        else{
+        } else {
             builder.addQueryParameter("starttime", LocalDate.now().toString());
         }
 
-        if(endDate != null){
+        if (endDate != null) {
             builder.addQueryParameter("endtime", endDate);
         }
 
-        if(minmag != 0.0){
+        if (minmag != 0.0) {
             builder.addQueryParameter("minmagnitude", String.valueOf(minmag));
         }
 
-        if(maxmag != 0.0){
+        if (maxmag != 0.0) {
             builder.addQueryParameter("maxmagnitude", String.valueOf(maxmag));
         }
 
@@ -111,16 +112,16 @@ public class EarthquakeRequestMaker extends RequestMaker {
 
         Call call = client.newCall(request);
 
-        try (Response response = call.execute()){
+        try (Response response = call.execute()) {
 
-            if(!response.isSuccessful()){
+            if (!response.isSuccessful()) {
                 throw new RuntimeException("Unsuccessful response: code = " + response.code());
             }
 
             ResponseBody responseBody = response.body();
             JsonNode bodyNode = mapper.readTree(responseBody.string());
 
-            for(JsonNode feature : bodyNode.get("features")){
+            for (JsonNode feature : bodyNode.get("features")) {
 
                 Geometry geom = new Geometry(
                         feature.get("geometry").get("coordinates").get(0).asDouble(),
@@ -137,8 +138,7 @@ public class EarthquakeRequestMaker extends RequestMaker {
             }
 
             return earthquakes;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             //Catching errors and throwing exceptions
             throw new RuntimeException(e.getMessage());
         }
