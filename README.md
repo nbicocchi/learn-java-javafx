@@ -4,9 +4,9 @@
 
 [P1] JavaFX Framework
 
-> Read: Introduction to Programming Using Java (Chapter 6-13)
+> Read: Introduction to Programming Using Java (Chapter 6-13); Watch: [JavaFX GUI Full Course](https://www.youtube.com/watch?v=9XJicRt_FaI)
 
-> Watch: [JavaFX GUI Full Course](https://www.youtube.com/watch?v=9XJicRt_FaI)
+> Tutorial: [JavaFX (Tutorial)](slides/E1.2%20-%20JavaFX%20(Tutorial).md)
 
 * Structure of a JavaFX application
 * Introduction to Scene Builder
@@ -18,6 +18,8 @@
 
 > Read: Big Java (Chapter 24)
 
+> Tutorial: [JDBC (Tutorial)](slides/E3.2%20-%20JDBC%20(Tutorial).md)
+
 * Database connection architecture
 * Connection and Statement classes
 * Connection Pools
@@ -25,7 +27,7 @@
 
 [P3] Data Access (REST)
 
-> Read: [Connecting JavaFX to a REST API](https://edencoding.com/connect-javafx-to-a-rest-api/)
+> Tutorial: [Java REST (Tutorial)](slides/E4.2%20-%20Java%20REST%20(Tutorial).md)
 
 * Motivations and basic concepts
 * Resources, Operations, Representations (JSON, XML)
