@@ -1,0 +1,66 @@
+.label{
+    -fx-font-weight: bold;
+}
+
+.title{
+    -fx-background-color: #fcc200;
+    -fx-padding: 10px;
+}
+
+.background{
+    -fx-background-color: white;
+}
+
+.predictions-label{
+    -fx-font-size: 1.3em;
+}
+
+.display-pane{
+    -fx-background-color: #BCCAEE;
+    -fx-padding: 25px;
+    -fx-background-radius: 10px;
+}
+
+.list-view{
+    -fx-background-color: #375fcb;
+    -fx-background-radius: 15px;
+    -fx-background-insets: 1 0 0 0;
+}
+
+.list-view .list-cell{
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.list-view .list-cell:hover{
+    -fx-background-color: #fcc200;
+    -fx-background-radius: 10px;
+    -fx-text-fill: black;
+}
+
+.list-view .list-cell:empty{
+    -fx-background-color: transparent;
+    -fx-background-radius: 10px;
+}
+
+.button{
+    -fx-background-color: #81c483;
+    -fx-background-radius: 25px;
+    -fx-padding: 5 15 5 15;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.button:hover{
+    -fx-background-color: #fcc200;
+    -fx-text-fill: black;
+}
+
+.button:pressed{
+    -fx-background-color: #FEEBAA;
+    -fx-text-fill: black;
+}
+
+

@@ -13,15 +13,10 @@ import java.io.IOException;
 public class App extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("overview-view.fxml"));
-        Parent root = loader.load();
-        OverviewController overviewController = loader.getController();
-        overviewController.initialize();
-
+        Parent root = FXMLLoader.load(getClass().getResource("overview-view.fxml"));
         Scene scene = new Scene(root);
         stage.setTitle("Earthquake App");
-        Image logo = new Image("ftvp/earthquakeapp/app-logo.jpg");
-        stage.getIcons().add(logo);
+        stage.getIcons().add(new Image(getClass().getResourceAsStream("app-logo.jpg")));
         stage.setScene(scene);
         stage.show();
     }
