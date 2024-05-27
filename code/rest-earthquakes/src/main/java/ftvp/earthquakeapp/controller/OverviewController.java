@@ -95,11 +95,9 @@ public class OverviewController {
     }
 
     public void refresh() {
-
         clear();
         earthquakesFound = earthquakeRequestMaker.getByParams();
         earthquakes.addAll(StreamSupport.stream(earthquakesFound.spliterator(), false).toList());
-
         setTableView();
     }
 

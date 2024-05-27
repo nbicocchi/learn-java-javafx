@@ -15,7 +15,7 @@ public class App extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("mainView.fxml"));
-        primaryStage.setTitle("REST API Image Analysis");
+        primaryStage.setTitle("REST API Image Downloader");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
