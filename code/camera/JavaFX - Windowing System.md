@@ -11,9 +11,9 @@ In this project the focus is to show how to use multiple windows into JavaFX.
 
 ## What is a Scene
 
-The JavaFX [`Scene`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html) class is the container for all content in a scene graph. It means that to create a window we need to create a `Scene` into our code.
+The JavaFX [`Scene`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html) class is the container for all UI content in a scene graph. Therefore, to create a window, we need to create a `Scene` into our code.
 \
-Here an example of how to load a `Scene` into the `start` method:
+Here's an example of how to load a `Scene` into the `start` method:
 
 ```java
 public class SceneExample extends Application {
@@ -32,15 +32,15 @@ public class SceneExample extends Application {
 }
 ```
 
-The most important thing is to notice that the `Scene` is given to the [`Stage`](https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html). It is a necessary operation so that JavaFX can load the window and its fxml file, which has already been assigned to the `Scene` during its initialization.
+The most important thing is to notice that the `Scene` is assigned to the [`Stage`](https://docs.oracle.com/javase/8/javafx/api/javafx/stage/Stage.html). It is a necessary operation so that JavaFX can load the window and its fxml file, which has already been given to the `Scene` during its initialization.
  
-There are so much actions that could be performed on a `Scene`, so for all other specific needs and information it is warmly recommended to consult the [official documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html).
+There are many actions that could be performed on a `Scene`, so for all other specific needs and information it is warmly recommended to consult the [official documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html).
 
 ## Prompt an alert
 
-In JavaFX there are many classes which allow coders to create some recurring window patterns without to change scene everytime. 
+In JavaFX there are many classes which allow coders to create some recurring window patterns without changing scene everytime. 
 \
-For example, if we want to prompt an alert, we should use the [`Alert`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html) class. After creating an `Alert` object, we can decide when and how much time to show it without perform any scene change.
+For example, if we want to prompt an alert, we should use the [`Alert`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html) class. After creating an `Alert` object, we can decide when and how much time to show it for, without perform any scene change.
 
 We can take as example the project's method `showFailedToTakePictureAlert()`:
 
@@ -62,9 +62,9 @@ public static void showFailedToTakePictureAlert() {
 }
 ```
 
-_Note_: `Alert.AlertType` is an enum that contains 5 constants which are used to configure the alert dialog to appear in different ways depending on our needs. These constants are described on the [official documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.AlertType.html).
+_Note_: `Alert.AlertType` is an enum that contains 5 constants which are used to configure the alert dialog to appear in different ways depending on our needs (`Alert.AlertType.WARNING` in the example above). These constants are described on the [official documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.AlertType.html).
 
-In this case we decided to use the alert to prompt a fatal error message, but there are other `AlertType` (see the [documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html)).
+In this case we decided to use the alert to prompt a warning message, but there are other `AlertType` (see the [documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html)).
 
 ## Show a dialog pane
 
@@ -101,7 +101,7 @@ public void handleDialog() {
 }
 ```
 
-As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
+As `Alert`, `DialogPane` has many features too, so it is recommended to take a look at the [documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
 
 ### Modality
 
@@ -122,7 +122,7 @@ In this case the root of the scene is a stack pane, to which we gave the fx id `
 
 ## Bonus: Multiple Scenes
 
-We may need to open a new window with its own fxml file. For example, after taking a picture, we might want to open an editor with precision effects, resize tool and so on. In this case alerts and dialog panes could no longer be useful, so we have two options:
+We may need to change scene without opening a new window, with its own fxml file. For example, after taking a picture, we might want to open an editor with precision effects, resize tool and so on. In this case alerts and dialog panes could no longer be useful, so we have two options:
 
 1) Change the current `Scene`, simpler, but sometimes heavy.
 2) Create a class to manage windows, lightweight and flexible, but a bit more complicated.
