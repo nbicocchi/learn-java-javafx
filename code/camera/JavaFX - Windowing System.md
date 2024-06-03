@@ -64,7 +64,7 @@ In this case we decided to use the alert to prompt a fatal error message, but th
 
 ## Show a dialog pane
 
-Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his nome, surname, date of birth, ecc.
+Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his name, surname, date of birth, ecc.
 
 Here an example of usage:
 
@@ -116,7 +116,7 @@ In this case the root of the scene is a stack pane, to which we gave the fx id `
 
 ## Bonus: Multiple Scenes
 
-We may need to open a new window with its own fxml file. For example, after taking a picture, we might want to open an editor with precision effects, resize tool and so on. In this case alerts and dialog panes will no longer be useful, but we have two options:
+We may need to open a new window with its own fxml file. For example, after taking a picture, we might want to open an editor with precision effects, resize tool and so on. In this case alerts and dialog panes could no longer be useful, so we have two options:
 
 1) Change the current `Scene`, simpler, but sometimes heavy.
 2) Create a class to manage windows, lightweight and flexible, but a bit more complicated.
@@ -127,7 +127,7 @@ _Note_: this is the most widespread way to change root.
 
 In this case we have to give to the `Stage` a new `Scene`.
 \
-Now we can consider, for example, that we want open the editor window when the capture button is pressed. As we know that all window's events are managed by the controller, so it is a proper place where to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
+Now we can consider, for example, that we want open the editor window when the capture button is pressed. As we know that all window's events are managed by the controller, so it is a proper place to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
 \
 Let's see an example of a basic application that simply open a new window when a button has clicked:
 
@@ -189,7 +189,7 @@ public class SecondarySceneController {
 }
 ```
 
-_Note_: if we need to perform some operations with the controller before to show the window, we need to change the code above like this:
+_Note_: if we need to perform some operations with the controller before showing the window, we need to change the code above like this:
 
 ```java
 @FXML
