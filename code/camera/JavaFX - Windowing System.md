@@ -42,18 +42,22 @@ In JavaFX there are many classes which allow coders to create some recurring win
 \
 For example, if we want to prompt an alert, we should use the [`Alert`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html) class. After creating an `Alert` object, we can decide when and how much time to show it without perform any scene change.
 
-We can take as example the project's method `showFatalError()`:
+We can take as example the project's method `showFailedToTakePictureAlert()`:
 
 ```java
-public static void showFatalError() {
-    Alert alert = new Alert(Alert.AlertType.ERROR);
-    alert.getDialogPane().setMinWidth(400);
-    alert.getDialogPane().setMaxWidth(300);
-    alert.setTitle("Fatal Error");
-    alert.setHeaderText("An error has occurred.");
+public static void showFailedToTakePictureAlert() {
+    Alert alert = new Alert(Alert.AlertType.WARNING);
+    alert.getDialogPane().setMinWidth(675);
+    alert.getDialogPane().setMaxWidth(675);
+    alert.setTitle("Warning!");
+    alert.setHeaderText("Unable to take picture");
     alert.setContentText("""
-            The application ran into a fatal error.
-            Try to restart it or reboot the computer.""");
+            The application is unable to take the picture or to open the editor.
+            Quick fixes:
+             ~ Retry to take the photo;
+             ~ Check if your webcam works properly;
+             ~ Try to restart the application;
+             ~ Try to restart the computer.""");
     alert.showAndWait();
 }
 ```
