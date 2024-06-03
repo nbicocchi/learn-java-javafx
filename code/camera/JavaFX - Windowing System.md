@@ -15,7 +15,7 @@ The JavaFX [`Scene`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Sc
 \
 Here's an example of how to load a `Scene` into the `start` method:
 
-```java
+```
 public class SceneExample extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -44,7 +44,7 @@ For example, if we want to prompt an alert, we should use the [`Alert`](https://
 
 We can take as example the project's method `showFailedToTakePictureAlert()` in `AlertWindows` class (inside the `common` package):
 
-```java
+```
 public static void showFailedToTakePictureAlert() {
     Alert alert = new Alert(Alert.AlertType.WARNING);
     alert.getDialogPane().setMinWidth(675);
@@ -72,7 +72,7 @@ Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/
 
 Here an example of usage based on the project's method `handleSave()` in `HomeController`:
 
-```java
+```
 public void handleDialog() {
     try {
         FXMLLoader loader = new FXMLLoader();
@@ -140,7 +140,7 @@ Let's see an example of a basic application that simply open a new window when a
 
 #### Application
 
-```java
+```
 public class MultiSceneExample extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -159,7 +159,7 @@ public class MultiSceneExample extends Application {
 
 #### Primary Controller
 
-```java
+```
 public class PrimarySceneController {
     @FXML
     private Label welcomeText;
@@ -185,7 +185,7 @@ public class PrimarySceneController {
 
 #### Secondary Controller
 
-```java
+```
 public class SecondarySceneController {
     @FXML
     private Label label;
@@ -198,7 +198,7 @@ public class SecondarySceneController {
 
 _Note_: if we need to perform some operations with the controller before showing the window, we need to change the code above like this:
 
-```java
+```
 @FXML
 private void onOpenWindowClick() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("secondary-scene.fxml"));
@@ -222,7 +222,7 @@ It is not very common, but sometimes happens that to physically change `Scene` d
 \
 Let's consider to open an editor after the capture button is clicked:
 
-```java
+```
 public void openEditor() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("editor.fxml"));
     Parent nextPane = loader.load();
@@ -238,13 +238,13 @@ public void openEditor() throws IOException {
 }
 ```
 
-The problem seems to not be fixed because to return to the home page we have to reload the `home.fxml` file, but this way we will reload the controller. As we said, we can't do this.
+The problem seems to not be fixed because to return to the home page we have to reload the `home.fxml` file, but this way we will initialize again the controller. As we said, we can't do this.
 \
 A solution could be to create an independent class and use it as root controller. Inside this we can keep all fxml files loaded into a collection, for example a `Deque` used as stack, so that it is simpler to return to the previous page (maybe through a back button) taking advantage of the LIFO logic.
 
 Here an example of a possible implementation:
 
-```java
+```
 public class RootController {
     private static Deque<Parent> rootStack;
     private static Scene scene;
