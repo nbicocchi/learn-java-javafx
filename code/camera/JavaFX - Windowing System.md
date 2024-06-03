@@ -5,7 +5,7 @@ In this project the focus is to show how to use multiple windows into JavaFX.
 ## Topics
 
 * Prompt an **alert**
-* Create a **dialog pane**
+* Show a **dialog pane**
 
 **Bonus**: Create **multiple scenes** in the same application
 
@@ -36,9 +36,65 @@ The most important thing is to notice that the `Scene` is given to the [`Stage`]
  
 There are so much actions that could be performed on a `Scene`, so for all other specific needs and information it is warmly recommended to consult the [official documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Scene.html).
 
+## Prompt an alert
+
+In JavaFX there are many classes which allow coders to create some recurring window patterns without to change scene everytime. 
+\
+For example, if we want to prompt an alert, we should use the [`Alert`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html) class. After creating an `Alert` object, we can decide when and how much time to show it without perform any scene change.
+
+Here an example of usage:
+
+```
+Alert alert = new Alert(Alert.AlertType.ERROR);
+alert.getDialogPane().setMinWidth(400);
+alert.getDialogPane().setMaxWidth(300);
+alert.setTitle("Fatal Error");
+alert.setHeaderText("An error has occurred.");
+alert.setContentText("The application ran into a fatal error.\n" +
+    "Try to restart it or reboot the computer.");
+alert.showAndWait();
+```
+
+In this case we decided to use the alert to prompt a fatal error message, but there are other `AlertType` (see the [documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html)).
+
+## Show a dialog pane
+
+Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his nome, surname, date of birth, ecc.
+
+Here an example of usage:
+
+```
+try {
+    FXMLLoader loader = new FXMLLoader();
+    loader.setLocation(getClass().getResource("dialog-controller.fxml"));
+    DialogPane view = loader.load();
+
+    // Optional: if we need to do stuff with its controller, we need to load that
+    DialogController controller = loader.getController();
+
+    // Controller operations ...
+
+    // Create the dialog
+    Dialog<ButtonType> dialog = new Dialog<>();
+    dialog.setTitle("New DialogPane");
+    dialog.initModality(Modality.WINDOW_MODAL);
+    dialog.setDialogPane(view);
+
+    // Show the dialog and wait until the user closes it
+    Optional<ButtonType> clickedButton = dialog.showAndWait();
+    if (clickedButton.orElse(ButtonType.CANCEL) == ButtonType.OK) {
+        // Operation to do if the user click the "OK" button
+    }
+} catch (IOException e) {
+    e.printStackTrace();
+}
+```
+
+As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [corresponding documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
+
 ## Multiple Scenes
 
-If we want our application opens a new window for a specific behaviour, we have to give to the `Stage` a new `Scene`. 
+If we want our application opens a new window for a specific behaviour, we have to give to the `Stage` a new `Scene`.
 \
 Now we can consider, for example, that we want open a window when a button has been clicked. As we know that all window's events are managed by the controller, so it is a proper place where to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
 \
@@ -64,7 +120,6 @@ public class MultiSceneExample extends Application {
 ```
 
 #### Primary Controller
-
 
 ```java
 public class PrimarySceneController {
@@ -122,59 +177,3 @@ private void onOpenWindowClick() throws IOException {
     stage.setScene(scene);
 }
 ```
-
-## Prompt an alert
-
-In JavaFX there are many classes which allow coders to create some recurring window patterns without to change scene everytime. 
-\
-For example, if we want to prompt an alert, we should use the [`Alert`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html) class. After creating an `Alert` object, we can decide when and how much time to show it without perform any scene change.
-
-Here an example of usage:
-
-```
-Alert alert = new Alert(Alert.AlertType.ERROR);
-alert.getDialogPane().setMinWidth(400);
-alert.getDialogPane().setMaxWidth(300);
-alert.setTitle("Fatal Error");
-alert.setHeaderText("An error has occurred.");
-alert.setContentText("The application ran into a fatal error.\n" +
-    "Try to restart it or reboot the computer.");
-alert.showAndWait();
-```
-
-In this case we decided to use the alert to prompt a fatal error message, but there are other `AlertType` (see the [documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html)).
-
-## Show a dialog pane
-
-Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his nome, surname, date of birth, ecc.
-
-Here an example of usage:
-
-```
-try {
-    FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("dialog-controller.fxml"));
-    DialogPane view = loader.load();
-
-    // Optional: if we need to do stuff with its controller, we need to load that
-    DialogController controller = loader.getController();
-
-    // Controller operations ...
-
-    // Create the dialog
-    Dialog<ButtonType> dialog = new Dialog<>();
-    dialog.setTitle("New DialogPane");
-    dialog.initModality(Modality.WINDOW_MODAL);
-    dialog.setDialogPane(view);
-
-    // Show the dialog and wait until the user closes it
-    Optional<ButtonType> clickedButton = dialog.showAndWait();
-    if (clickedButton.orElse(ButtonType.CANCEL) == ButtonType.OK) {
-        // Operation to do if the user click the "OK" button
-    }
-} catch (IOException e) {
-    e.printStackTrace();
-}
-```
-
-As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [corresponding documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
