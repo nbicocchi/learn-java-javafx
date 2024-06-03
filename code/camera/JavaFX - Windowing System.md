@@ -223,7 +223,7 @@ It is not very common, but sometimes happens that to physically change `Scene` d
 Let's consider to open an editor after the capture button is clicked:
 
 ```java
-public void openEditor(Image capture) throws IOException {
+public void openEditor() throws IOException {
     FXMLLoader loader = new FXMLLoader(getClass().getResource("editor.fxml"));
     Parent nextPane = loader.load();
 
