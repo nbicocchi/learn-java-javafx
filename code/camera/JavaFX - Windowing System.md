@@ -133,7 +133,7 @@ _Note_: this is the most widespread way to change root.
 
 In this case we have to give to the `Stage` a new `Scene`.
 \
-Now we can consider, for example, that we want open the editor window when the capture button is pressed. As we know that all window's events are managed by the controller, so it is a proper place to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
+Now we can consider, for example, that we want to switch to an editor window when the capture button is pressed. As we know that all window's events are managed by the controller, so it is a proper place to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
 \
 Let's see an example of a basic application that simply open a new window when a button has clicked:
 
