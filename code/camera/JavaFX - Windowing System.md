@@ -91,6 +91,22 @@ try {
 ```
 
 As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [corresponding documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
+#### Modality
+The modality class defines three behaviour our dialog must look up to. These are:
+
+`NONE`: defines a top-level window that is not modal and does not block any other window.
+\
+\
+`WINDOW_MODAL`: Defines a modal window that block events from being delivered to its entire owner window hierarchy. Note: A Stage with modality set to WINDOW_MODAL, but its owner is null, is treated as if its modality is set to NONE.
+\
+As such to use this particular modality it's important to set the owner of the dialog. It can be done as follows:
+```
+dialog.initOwner(stackPane.getScene().getWindow());
+```
+In this case the root of the scene is a stack pane, to which we gave the fx id "stackPane".
+\
+\
+`APPLICATION_MODAL`: defines a modal window that blocks events from being delivered to any other application window.
 
 ## Bonus: Multiple Scenes
 
