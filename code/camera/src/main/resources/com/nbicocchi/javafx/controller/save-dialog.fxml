@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonType?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<DialogPane maxHeight="-Infinity" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.nbicocchi.javafx.controller.DialogController">
+   <expandableContent>
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0"/>
+   </expandableContent>
+   <graphic>
+      <StackPane fx:id="root">
+         <VBox>
+            <padding>
+               <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </padding>
+            <StackPane VBox.vgrow="ALWAYS">
+               <Label text="Select Format" StackPane.alignment="CENTER_LEFT">
+                  <StackPane.margin>
+                     <Insets bottom="2.0"/>
+                  </StackPane.margin>
+               </Label>
+            </StackPane>
+            <StackPane VBox.vgrow="ALWAYS">
+               <ChoiceBox fx:id="typeChoiceBox" StackPane.alignment="CENTER_LEFT">
+                  <StackPane.margin>
+                     <Insets bottom="10.0"/>
+                  </StackPane.margin>
+                  <cursor>
+                     <Cursor fx:constant="HAND"/>
+                  </cursor>
+               </ChoiceBox>
+            </StackPane>
+            <StackPane VBox.vgrow="ALWAYS">
+               <Label text="File name" StackPane.alignment="CENTER_LEFT">
+                  <StackPane.margin>
+                     <Insets bottom="2.0"/>
+                  </StackPane.margin>
+               </Label>
+            </StackPane>
+            <StackPane VBox.vgrow="ALWAYS">
+               <TextField fx:id="fileNameTxtField" text="capture">
+                  <StackPane.margin>
+                     <Insets bottom="20.0"/>
+                  </StackPane.margin>
+                  <cursor>
+                     <Cursor fx:constant="TEXT"/>
+                  </cursor>
+               </TextField>
+            </StackPane>
+            <StackPane VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets bottom="5.0"/>
+               </VBox.margin>
+               <Button fx:id="selectDirButton" mnemonicParsing="false" onAction="#onSelectDir" text="Browse..."
+                       StackPane.alignment="CENTER_LEFT">
+                  <cursor>
+                     <Cursor fx:constant="HAND"/>
+                  </cursor>
+               </Button>
+            </StackPane>
+            <StackPane VBox.vgrow="ALWAYS">
+               <Label text="Selected Directory:" StackPane.alignment="CENTER_LEFT">
+                  <StackPane.margin>
+                     <Insets bottom="2.0"/>
+                  </StackPane.margin>
+               </Label>
+            </StackPane>
+            <StackPane VBox.vgrow="ALWAYS">
+               <TextField fx:id="selectDirTxtField" mouseTransparent="true"/>
+            </StackPane>
+         </VBox>
+      </StackPane>
+   </graphic>
+   <content>
+      <VBox>
+         <StackPane VBox.vgrow="ALWAYS">
+            <ImageView fx:id="preview" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true"
+                       StackPane.alignment="CENTER"/>
+         </StackPane>
+      </VBox>
+   </content>
+   <ButtonType fx:constant="CANCEL"/>
+   <ButtonType fx:constant="OK"/>
+</DialogPane>
