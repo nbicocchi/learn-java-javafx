@@ -183,20 +183,7 @@ public class PrimarySceneController {
 }
 ```
 
-#### Secondary Controller
-
-```
-public class SecondarySceneController {
-    @FXML
-    private Label label;
-
-    public void initialize() {
-        label.setText("This is the secondary scene");
-    }
-}
-```
-
-_Note_: if we need to perform some operations with the controller before showing the window, we need to change the code above like this:
+_Note_: if we need to perform some operations with the controller before showing the window, we need to change the above `onOpenWindowClick()` method like this:
 
 ```
 @FXML
@@ -213,6 +200,19 @@ private void onOpenWindowClick() throws IOException {
     Scene scene = new Scene(root);
     stage.setTitle("Secondary Scene");
     stage.setScene(scene);
+}
+```
+
+#### Secondary Controller
+
+```
+public class SecondarySceneController {
+    @FXML
+    private Label label;
+
+    public void initialize() {
+        label.setText("This is the secondary scene");
+    }
 }
 ```
 
