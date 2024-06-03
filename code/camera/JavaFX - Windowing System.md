@@ -1,10 +1,13 @@
-# JavaFX's Windowing System
+# JavaFX - Windowing System
+
+In this project the focus is to show how to use multiple windows into JavaFX.
 
 ## Topics
 
-* Create **multiple scenes** in the same application
 * Prompt an **alert**
 * Create a **dialog pane**
+
+**Bonus**: Create **multiple scenes** in the same application
 
 ## What is a Scene
 
@@ -13,12 +16,6 @@ The JavaFX [`Scene`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/Sc
 Here an example of how to load a `Scene` into the `start` method:
 
 ```java
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-
 public class SceneExample extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -50,12 +47,6 @@ Let's see an example of a basic application that simply open a new window when a
 #### Application
 
 ```java
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-import java.io.IOException;
-
 public class MultiSceneExample extends Application {
     @Override
     public void start(Stage stage) throws IOException {
@@ -76,15 +67,6 @@ public class MultiSceneExample extends Application {
 
 
 ```java
-import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import java.io.IOException;
-
 public class PrimarySceneController {
     @FXML
     private Label welcomeText;
@@ -111,9 +93,6 @@ public class PrimarySceneController {
 #### Secondary Controller
 
 ```java
-import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-
 public class SecondarySceneController {
     @FXML
     private Label label;
