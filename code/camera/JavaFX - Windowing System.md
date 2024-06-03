@@ -92,11 +92,20 @@ try {
 
 As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [corresponding documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
 
-## Multiple Scenes
+## Bonus: Multiple Scenes
 
-If we want our application opens a new window for a specific behaviour, we have to give to the `Stage` a new `Scene`.
+We may need to open a new window with its own fxml file. For example, after taking a picture, we might want to open an editor with precision effects, resize tool and so on. In this case alerts and dialog panes will no longer be useful, but we have two options:
+
+1) Change the current `Scene`, simpler, but sometimes heavy.
+2) Create a class to manage windows, lightweight and flexible, but a bit more complicated.
+
+### Changing scene
+
+_Note_: this is the most widespread way to change root.
+
+In this case we have to give to the `Stage` a new `Scene`.
 \
-Now we can consider, for example, that we want open a window when a button has been clicked. As we know that all window's events are managed by the controller, so it is a proper place where to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
+Now we can consider, for example, that we want open the editor window when the capture button is pressed. As we know that all window's events are managed by the controller, so it is a proper place where to create the new `Scene`. To give that to the `Stage`, we have to obtain it from the main frame that wraps all elements which compose the window (in most cases it is an `AnchorPane`).
 \
 Let's see an example of a basic application that simply open a new window when a button has clicked:
 
@@ -177,3 +186,5 @@ private void onOpenWindowClick() throws IOException {
     stage.setScene(scene);
 }
 ```
+
+### Using a dedicated class
