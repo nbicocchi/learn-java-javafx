@@ -7,7 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: LinkedList
+ * ACTION: Check if the collection contains a certain integer
+ * METHOD: Collections.sort -> binarySearch
+ */
 public class RETRLLSORTED extends ExperimentTask {
 
     @Override

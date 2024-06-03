@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: ArrayList
+ * ACTION: Insert an integer as last element
+ */
 public class FILLALT extends ExperimentTask {
 
     @Override

@@ -2,11 +2,15 @@ package com.nbicocchi.javafx.collections.experiment;
 
 import javafx.util.Pair;
 
+import java.util.Collections;
 import java.util.Set;
 import java.util.TreeSet;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: TreeSet
+ * ACTION: Insert an integer in the collection
+ */
 public class FILLTS extends ExperimentTask {
 
     @Override

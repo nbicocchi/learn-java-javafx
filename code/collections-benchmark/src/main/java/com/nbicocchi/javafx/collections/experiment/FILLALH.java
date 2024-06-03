@@ -7,6 +7,10 @@ import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
 
+/**
+ * COLLECTION: ArrayList
+ * ACTION: Insert an integer as first element
+ */
 public class FILLALH extends ExperimentTask {
 
     @Override

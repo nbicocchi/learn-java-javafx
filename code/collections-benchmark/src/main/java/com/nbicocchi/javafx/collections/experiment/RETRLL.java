@@ -6,7 +6,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: LinkedList
+ * ACTION: Check if the collection contains a certain integer
+ * METHOD: contains
+ */
 public class RETRLL extends ExperimentTask {
 
     @Override

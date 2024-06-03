@@ -6,7 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: LinkedList
+ * ACTION: Insert an integer as last element
+ */
 public class FILLLLT extends ExperimentTask {
 
     @Override

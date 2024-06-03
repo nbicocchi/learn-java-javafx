@@ -6,7 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: HashSet
+ * ACTION: Insert an integer in the collection
+ */
 public class FILLHS extends ExperimentTask {
 
     @Override
