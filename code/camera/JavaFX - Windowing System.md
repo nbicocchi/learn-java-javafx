@@ -42,18 +42,23 @@ In JavaFX there are many classes which allow coders to create some recurring win
 \
 For example, if we want to prompt an alert, we should use the [`Alert`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html) class. After creating an `Alert` object, we can decide when and how much time to show it without perform any scene change.
 
-Here an example of usage:
+We can take as example the project's method `showFatalError()`:
 
+```java
+public static void showFatalError() {
+    Alert alert = new Alert(Alert.AlertType.ERROR);
+    alert.getDialogPane().setMinWidth(400);
+    alert.getDialogPane().setMaxWidth(300);
+    alert.setTitle("Fatal Error");
+    alert.setHeaderText("An error has occurred.");
+    alert.setContentText("""
+            The application ran into a fatal error.
+            Try to restart it or reboot the computer.""");
+    alert.showAndWait();
+}
 ```
-Alert alert = new Alert(Alert.AlertType.ERROR);
-alert.getDialogPane().setMinWidth(400);
-alert.getDialogPane().setMaxWidth(300);
-alert.setTitle("Fatal Error");
-alert.setHeaderText("An error has occurred.");
-alert.setContentText("The application ran into a fatal error.\n" +
-    "Try to restart it or reboot the computer.");
-alert.showAndWait();
-```
+
+_Note_: `Alert.AlertType` is an enum that contains 5 constants which are used to configure the alert dialog to appear in different ways depending on our needs. These constants are described on the [official documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.AlertType.html).
 
 In this case we decided to use the alert to prompt a fatal error message, but there are other `AlertType` (see the [documentation](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Alert.html)).
 
@@ -90,23 +95,24 @@ try {
 }
 ```
 
-As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [corresponding documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
-#### Modality
+As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
+
+### Modality
+
 The modality class defines three behaviour our dialog must look up to. These are:
 
-`NONE`: defines a top-level window that is not modal and does not block any other window.
+* `NONE`: defines a top-level window that is not modal and does not block any other window.
+* `WINDOW_MODAL`: defines a modal window that block events from being delivered to its entire owner window hierarchy. 
 \
-\
-`WINDOW_MODAL`: Defines a modal window that block events from being delivered to its entire owner window hierarchy. Note: A Stage with modality set to WINDOW_MODAL, but its owner is null, is treated as if its modality is set to NONE.
-\
-As such to use this particular modality it's important to set the owner of the dialog. It can be done as follows:
+_Note_: A `Stage` with modality set to `WINDOW_MODAL`, but its owner is null, is treated as if its modality is set to `NONE`.
+
+* `APPLICATION_MODAL`: defines a modal window that blocks events from being delivered to any other application window.
+
+As such to use `WINDOW_MODAL` it's important to set the owner of the dialog. It can be done as follows:
 ```
 dialog.initOwner(stackPane.getScene().getWindow());
 ```
-In this case the root of the scene is a stack pane, to which we gave the fx id "stackPane".
-\
-\
-`APPLICATION_MODAL`: defines a modal window that blocks events from being delivered to any other application window.
+In this case the root of the scene is a stack pane, to which we gave the fx id `stackPane`.
 
 ## Bonus: Multiple Scenes
 
