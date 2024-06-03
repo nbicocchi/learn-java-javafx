@@ -111,20 +111,21 @@ The modality class defines three behaviour our dialog must look up to. These are
 * `WINDOW_MODAL`: defines a modal window that block events from being delivered to its entire owner window hierarchy. 
 \
 _Note_: A `Stage` with modality set to `WINDOW_MODAL`, but its owner is null, is treated as if its modality is set to `NONE`.
-
 * `APPLICATION_MODAL`: defines a modal window that blocks events from being delivered to any other application window.
 
 As such to use `WINDOW_MODAL` it's important to set the owner of the dialog. It can be done as follows:
+
 ```
 dialog.initOwner(stackPane.getScene().getWindow());
 ```
+
 In this case the root of the scene is a stack pane, to which we gave the fx id `stackPane`.
 
 ## Bonus: Multiple Scenes
 
 We may need to open a new window with its own fxml file. For example, after taking a picture, we might want to open an editor with precision effects, resize tool and so on. In this case alerts and dialog panes could no longer be useful, so we have two options:
 
-1) Change the current `Scene`, simpler, but sometimes heavy.
+1) Change the current `Scene`, simple, but sometimes heavy.
 2) Create a class to manage windows, lightweight and flexible, but a bit more complicated.
 
 ### Changing scene
@@ -216,3 +217,53 @@ private void onOpenWindowClick() throws IOException {
 ```
 
 ### Using a dedicated class
+
+It is not very common, but sometimes happens that to physically change `Scene` doesn't give us possibility to return to the previous page safely. For example, remembering that to load a fxml file means that we will load also its controller, we may suppose that this one cannot be loaded more than one time. So, we have to use a trick to change what is shown on the screen keeping the same `Scene`. To do that we have to load the fxml file of the new root which we want to set.
+\
+Let's consider to open an editor after the capture button is clicked:
+
+```java
+public void openEditor(Image capture) throws IOException {
+    FXMLLoader loader = new FXMLLoader(getClass().getResource("editor.fxml"));
+    Parent nextPane = loader.load();
+
+    // As well as the previous paragraph, we can load the controller to do some operation with it
+    EditorController controller = loader.getController();
+    
+    // Controller operations...
+    
+    // We need to take the scene and set as root the fxml just loaded
+    Scene scene = (Scene) stackPane.getScene();
+    scene.setRoot(nextPane);
+}
+```
+
+The problem seems to not be fixed because to return to the home page we have to reload the `home.fxml` file, but this way we will reload the controller. As we said, we can't do this.
+\
+A solution could be to create an independent class and use it as root controller. Inside this we can keep all fxml files loaded into a collection, for example a `Deque` used as stack, so that it is simpler to return to the previous page (maybe through a back button) taking advantage of the LIFO logic.
+
+Here an example of a possible implementation:
+
+```java
+public class RootController {
+    private static Deque<Parent> rootStack;
+    private static Scene scene;
+
+    public static void initRootController(Scene main) {
+        rootStack = new ArrayDeque<>();
+        RootController.scene = main;
+    }
+
+    public static void goBack() {
+        Parent backRoot = rootStack.pop();
+        scene.setRoot(backRoot);
+    }
+
+    public static void goForward(Parent nextRoot) {
+        Parent oldRoot = scene.getRoot();
+        rootStack.push(oldRoot);
+        scene.setRoot(nextRoot);
+    }
+}
+```
+
