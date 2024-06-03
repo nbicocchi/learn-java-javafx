@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.common;
+package com.nbicocchi.javafx.camera.common;
 
 import java.awt.*;
 import java.util.Objects;

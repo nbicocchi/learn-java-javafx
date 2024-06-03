@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.controller;
+package com.nbicocchi.javafx.camera.controller;
 
 import javafx.embed.swing.SwingFXUtils;
 import javafx.fxml.FXML;
@@ -9,8 +9,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
-import com.nbicocchi.javafx.common.AlertWindows;
-import com.nbicocchi.javafx.effects.Flip;
+import com.nbicocchi.javafx.camera.common.AlertWindows;
+import com.nbicocchi.javafx.camera.effects.Flip;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;

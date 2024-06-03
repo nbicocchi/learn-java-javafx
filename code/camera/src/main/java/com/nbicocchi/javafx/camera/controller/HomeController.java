@@ -1,12 +1,12 @@
-package com.nbicocchi.javafx.controller;
+package com.nbicocchi.javafx.camera.controller;
 
-import com.nbicocchi.javafx.effects.Flip;
-import com.nbicocchi.javafx.effects.LiveEffect;
+import com.nbicocchi.javafx.camera.effects.Flip;
+import com.nbicocchi.javafx.camera.effects.LiveEffect;
 import javafx.collections.ObservableMap;
-import com.nbicocchi.javafx.common.WebcamListener;
-import com.nbicocchi.javafx.common.WebcamUtils;
-import com.nbicocchi.javafx.common.AlertWindows;
-import com.nbicocchi.javafx.common.FrameShowThread;
+import com.nbicocchi.javafx.camera.common.WebcamListener;
+import com.nbicocchi.javafx.camera.common.WebcamUtils;
+import com.nbicocchi.javafx.camera.common.AlertWindows;
+import com.nbicocchi.javafx.camera.common.FrameShowThread;
 
 import java.io.IOException;
 import java.util.Collections;

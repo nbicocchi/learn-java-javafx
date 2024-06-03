@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.effects;
+package com.nbicocchi.javafx.camera.effects;
 
 import javafx.scene.control.MenuItem;
 

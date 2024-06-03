@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx;
+package com.nbicocchi.javafx.camera;
 
 import java.io.IOException;
 import java.util.Objects;
