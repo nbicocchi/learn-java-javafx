@@ -68,30 +68,32 @@ Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/
 
 Here an example of usage:
 
-```
-try {
-    FXMLLoader loader = new FXMLLoader();
-    loader.setLocation(getClass().getResource("dialog-controller.fxml"));
-    DialogPane view = loader.load();
+```java
+public void handleDialog() {
+    try {
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource("dialog-controller.fxml"));
+        DialogPane view = loader.load();
 
-    // Optional: if we need to do stuff with its controller, we need to load that
-    DialogController controller = loader.getController();
+        // Optional: if we need to do stuff with its controller, we need to load that
+        DialogController controller = loader.getController();
 
-    // Controller operations ...
+        // Controller operations ...
 
-    // Create the dialog
-    Dialog<ButtonType> dialog = new Dialog<>();
-    dialog.setTitle("New DialogPane");
-    dialog.initModality(Modality.WINDOW_MODAL);
-    dialog.setDialogPane(view);
+        // Create the dialog
+        Dialog<ButtonType> dialog = new Dialog<>();
+        dialog.setTitle("New DialogPane");
+        dialog.initModality(Modality.WINDOW_MODAL);
+        dialog.setDialogPane(view);
 
-    // Show the dialog and wait until the user closes it
-    Optional<ButtonType> clickedButton = dialog.showAndWait();
-    if (clickedButton.orElse(ButtonType.CANCEL) == ButtonType.OK) {
-        // Operation to do if the user click the "OK" button
+        // Show the dialog and wait until the user closes it
+        Optional<ButtonType> clickedButton = dialog.showAndWait();
+        if (clickedButton.orElse(ButtonType.CANCEL) == ButtonType.OK) {
+            // Operation to do if the user click the "OK" button
+        }
+    } catch (IOException e) {
+        e.printStackTrace();
     }
-} catch (IOException e) {
-    e.printStackTrace();
 }
 ```
 
