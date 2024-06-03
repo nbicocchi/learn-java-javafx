@@ -66,7 +66,7 @@ In this case we decided to use the alert to prompt a fatal error message, but th
 
 Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his name, surname, date of birth, ecc.
 
-Here an example of usage:
+Here an example of usage based on the project's method `handleSave()`:
 
 ```java
 public void handleDialog() {
