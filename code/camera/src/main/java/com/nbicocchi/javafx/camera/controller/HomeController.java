@@ -165,8 +165,7 @@ public class HomeController {
         DialogController dialogController = loader.getController();
         dialogController.initPreview(picture);
         dialogController.initTypeChoiceBox();
-        // snapshot method renders the current node into a WritableImage object
-        // (Writable Image extends Image).
+
 
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Save Image");
