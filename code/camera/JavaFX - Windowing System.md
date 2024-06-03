@@ -146,7 +146,7 @@ In this case we decided to use the alert to prompt a fatal error message, but th
 
 ## Show a dialog pane
 
-Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his nome, surname, date of birth, ecc.
+Another popular window pattern is [`DialogPane`](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html). It is commonly used to require user to enter some data, for example his name, surname, date of birth, ecc.
 
 Here an example of usage:
 
@@ -164,7 +164,9 @@ try {
     // Create the dialog
     Dialog<ButtonType> dialog = new Dialog<>();
     dialog.setTitle("New DialogPane");
+    // Modality
     dialog.initModality(Modality.WINDOW_MODAL);
+    
     dialog.setDialogPane(view);
 
     // Show the dialog and wait until the user closes it
@@ -178,3 +180,19 @@ try {
 ```
 
 As `Alert`, `DialogPane` has so much features too, so it is recommended to take a look at the [corresponding documentation page](https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/DialogPane.html).
+#### Modality
+The modality class defines three behaviour our dialog must look up to. These are:
+
+`NONE`: defines a top-level window that is not modal and does not block any other window.
+\
+\
+`WINDOW_MODAL`: Defines a modal window that block events from being delivered to its entire owner window hierarchy. Note: A Stage with modality set to WINDOW_MODAL, but its owner is null, is treated as if its modality is set to NONE.
+\
+As such to use this particular modality it's important to set the owner of the dialog. It can be done as follows:
+```
+dialog.initOwner(stackPane.getScene().getWindow());
+```
+In this case the root of the scene is a stack pane, to which we gave the fx id "stackPane". 
+\
+\
+`APPLICATION_MODAL`: defines a modal window that blocks events from being delivered to any other application window.
