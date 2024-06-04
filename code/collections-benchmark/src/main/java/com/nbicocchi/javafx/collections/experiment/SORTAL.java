@@ -7,7 +7,10 @@ import java.util.Collections;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: ArrayList
+ * ACTION: Sort the collection
+ */
 public class SORTAL extends ExperimentTask {
 
     @Override

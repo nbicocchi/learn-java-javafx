@@ -6,7 +6,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: ArrayList
+ * ACTION: Check if the collection contains a certain integer
+ * METHOD: contains
+ */
 public class RETRAL extends ExperimentTask {
 
     @Override

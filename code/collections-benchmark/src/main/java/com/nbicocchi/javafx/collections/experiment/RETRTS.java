@@ -6,7 +6,10 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: TreeSet
+ * ACTION: Check if the collection contains a certain integer
+ */
 public class RETRTS extends ExperimentTask {
 
     @Override

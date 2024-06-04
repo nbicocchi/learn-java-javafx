@@ -6,7 +6,10 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: HashSet
+ * ACTION: Check if the collection contains a certain integer
+ */
 public class RETRHS extends ExperimentTask {
 
     @Override

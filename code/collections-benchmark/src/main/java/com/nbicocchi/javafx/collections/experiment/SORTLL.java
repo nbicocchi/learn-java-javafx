@@ -7,7 +7,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: LinkedList
+ * ACTION: Sort the collection
+ */
 public class SORTLL extends ExperimentTask {
 
     @Override

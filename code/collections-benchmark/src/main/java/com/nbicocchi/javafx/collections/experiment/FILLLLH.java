@@ -6,7 +6,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static java.util.concurrent.TimeUnit.NANOSECONDS;
-
+/**
+ * COLLECTION: Linked List
+ * ACTION: Insert an integer as first element
+ */
 public class FILLLLH extends ExperimentTask {
 
     @Override
