@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.canvas.Canvas?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="975.0" prefWidth="1600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.javafx.treefractals.FractalsController">
+    <center>
+        <Canvas fx:id="myCanvas" height="800.0" width="1600.0">
+            <BorderPane.margin>
+                <Insets />
+            </BorderPane.margin>
+        </Canvas>
+    </center>
+    <top>
+        <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+            <VBox prefHeight="100.0" prefWidth="45.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#onInfoClicked" text="?">
+                     <VBox.margin>
+                        <Insets left="10.0" top="20.0" />
+                     </VBox.margin>
+                  </Button>
+               </children>
+            </VBox>
+                <VBox prefHeight="100.0" prefWidth="93.0">
+                    <children>
+                        <Button fx:id="btDraw" mnemonicParsing="false" onAction="#onDrawClicked" text="Draw">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </Button>
+                        <Button fx:id="btClear" mnemonicParsing="false" onAction="#onClearClicked" text="Clear">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </Button>
+                    </children>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="164.0">
+                    <children>
+                  <Label text="Choose A Tree Fractal">
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </Label>
+                        <ComboBox fx:id="cmbChoice" onAction="#onComboItemPicked" prefWidth="150.0">
+                            <VBox.margin>
+                                <Insets top="27.0" />
+                            </VBox.margin>
+                        </ComboBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="195.0">
+                    <children>
+                        <CheckBox fx:id="chkRndColor" mnemonicParsing="false" onAction="#onRandomColorPicked" prefHeight="17.0" prefWidth="152.0" text="Random Fractal Color">
+                            <VBox.margin>
+                                <Insets left="25.0" top="20.0" />
+                            </VBox.margin>
+                        </CheckBox>
+                        <CheckBox fx:id="chkPickColor" mnemonicParsing="false" onAction="#onPickColorPicked" prefHeight="17.0" prefWidth="137.0" text="Choose Fractal Color">
+                            <VBox.margin>
+                                <Insets left="25.0" top="27.0" />
+                            </VBox.margin>
+                        </CheckBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="179.0">
+                    <children>
+                        <Label prefHeight="17.0" prefWidth="97.0" text="Fractal Color">
+                            <VBox.margin>
+                                <Insets left="10.0" top="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <ColorPicker fx:id="colorPicker">
+                            <VBox.margin>
+                                <Insets left="10.0" top="27.0" />
+                            </VBox.margin>
+                        </ColorPicker>
+                    </children>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="318.0">
+                    <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                            <children>
+                                <Label prefHeight="18.0" prefWidth="115.0" text="Left Branch Angle">
+                                    <HBox.margin>
+                                        <Insets left="10.0" top="20.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <Spinner fx:id="spLeftBranch" prefHeight="25.0" prefWidth="100.0">
+                                    <HBox.margin>
+                                        <Insets left="60.0" top="15.0" />
+                                    </HBox.margin>
+                                </Spinner>
+                            </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="267.0">
+                            <children>
+                                <Label prefHeight="18.0" prefWidth="115.0" text="Right Branch Angle">
+                                    <HBox.margin>
+                                        <Insets left="10.0" top="20.0" />
+                                    </HBox.margin>
+                                </Label>
+                                <Spinner fx:id="spRightBranch" prefHeight="25.0" prefWidth="100.0">
+                                    <HBox.margin>
+                                        <Insets left="60.0" top="17.0" />
+                                    </HBox.margin>
+                                </Spinner>
+                            </children>
+                        </HBox>
+                    </children>
+                </VBox>
+                <VBox prefHeight="100.0" prefWidth="202.0">
+                    <children>
+                        <Label prefHeight="18.0" prefWidth="112.0" text="Duration (Seconds)">
+                            <VBox.margin>
+                                <Insets left="20.0" top="20.0" />
+                            </VBox.margin>
+                        </Label>
+                        <Spinner fx:id="spDuration" prefHeight="26.0" prefWidth="105.0">
+                            <VBox.margin>
+                                <Insets left="20.0" top="28.0" />
+                            </VBox.margin>
+                        </Spinner>
+                    </children>
+                </VBox>
+            <VBox prefHeight="100.0" prefWidth="317.0">
+               <children>
+                  <HBox prefHeight="51.0" prefWidth="308.0">
+                     <children>
+                        <Label prefHeight="17.0" prefWidth="141.0" text="Create Your Own Fractal">
+                           <HBox.margin>
+                              <Insets top="20.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Button fx:id="btLoad" mnemonicParsing="false" onAction="#onLoadClicked" prefHeight="25.0" prefWidth="45.0" text="Load">
+                           <HBox.margin>
+                              <Insets left="130.0" top="15.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <TextField fx:id="txtUserFractal" prefHeight="26.0" prefWidth="349.0">
+                     <VBox.margin>
+                        <Insets top="15.0" />
+                     </VBox.margin>
+                  </TextField>
+               </children>
+            </VBox>
+            </children>
+        </HBox>
+    </top>
+</BorderPane>
