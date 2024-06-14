@@ -299,6 +299,7 @@ public class FractalsController {
         spRightBranch.setDisable(true);
         spDuration.setDisable(true);
         btLoad.setDisable(true);
+        btDraw.setDisable(true);
         cmbChoice.setDisable(true);
 
         if(chkPickColor.isSelected()) {
