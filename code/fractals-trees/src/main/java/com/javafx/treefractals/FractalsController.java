@@ -178,6 +178,10 @@ public class FractalsController {
                 }
             }
 
+            if(chkRndColor.isSelected()) {
+                chkRndColor.setSelected(false);
+            }
+
             chkPickColor.setSelected(true);
             colorPicker.setDisable(false);
             btDraw.setDisable(false);
