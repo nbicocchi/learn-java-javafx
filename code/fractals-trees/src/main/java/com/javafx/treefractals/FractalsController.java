@@ -80,7 +80,7 @@ public class FractalsController {
         alert = new Alert(Alert.AlertType.INFORMATION);
 
         cmbChoice.setItems(FXCollections.observableArrayList("15-15 GREEN", "30-30 SIENNA", "90-90 OLIVE",
-                                                             "30-130 PURPLE", "120-60 YELLOW", "105-75 BLUE",
+                                                             "30-130 PURPLE", "60-120 YELLOW", "105-75 BLUE",
                                                              "19-89 PINK", "82-8 FUCHSIA", "12-26 SALMON",
                                                              "69-45 TURQUOISE"));
 
@@ -178,6 +178,10 @@ public class FractalsController {
                 }
             }
 
+            if(chkRndColor.isSelected()) {
+                chkRndColor.setSelected(false);
+            }
+
             chkPickColor.setSelected(true);
             colorPicker.setDisable(false);
             btDraw.setDisable(false);
@@ -248,6 +252,9 @@ public class FractalsController {
         } else {
             try {
                 Color c = Color.valueOf(userParams[0].toUpperCase());
+                if(chkRndColor.isSelected()){
+                    chkRndColor.setSelected(false);
+                }
                 chkPickColor.setSelected(true);
                 colorPicker.setValue(c);
                 colorPicker.setDisable(false);
@@ -299,6 +306,7 @@ public class FractalsController {
         spRightBranch.setDisable(true);
         spDuration.setDisable(true);
         btLoad.setDisable(true);
+        btDraw.setDisable(true);
         cmbChoice.setDisable(true);
 
         if(chkPickColor.isSelected()) {
