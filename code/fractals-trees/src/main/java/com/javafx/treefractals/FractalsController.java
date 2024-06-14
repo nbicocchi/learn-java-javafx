@@ -248,6 +248,9 @@ public class FractalsController {
         } else {
             try {
                 Color c = Color.valueOf(userParams[0].toUpperCase());
+                if(chkRndColor.isSelected()){
+                    chkRndColor.setSelected(false);
+                }
                 chkPickColor.setSelected(true);
                 colorPicker.setValue(c);
                 colorPicker.setDisable(false);
