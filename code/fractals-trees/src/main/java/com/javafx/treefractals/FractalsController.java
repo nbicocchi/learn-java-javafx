@@ -80,7 +80,7 @@ public class FractalsController {
         alert = new Alert(Alert.AlertType.INFORMATION);
 
         cmbChoice.setItems(FXCollections.observableArrayList("15-15 GREEN", "30-30 SIENNA", "90-90 OLIVE",
-                                                             "30-130 PURPLE", "120-60 YELLOW", "105-75 BLUE",
+                                                             "30-130 PURPLE", "60-120 YELLOW", "105-75 BLUE",
                                                              "19-89 PINK", "82-8 FUCHSIA", "12-26 SALMON",
                                                              "69-45 TURQUOISE"));
 
