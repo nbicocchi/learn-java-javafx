@@ -117,7 +117,7 @@ public class HomeController {
             liveEffects.get(key).enable();
         }
         String selectedKey = liveEffectChoiceBox.getSelectionModel().getSelectedItem();
-        liveEffects.get(selectedKey).toggle(webcamImageView);
+        liveEffects.get(selectedKey).apply(webcamImageView);
     }
 
     public void disableInterface() {
@@ -143,7 +143,7 @@ public class HomeController {
         if (effect.isDisabled()) {
             throw new RuntimeException("Flip is currently disabled.");
         }
-        effect.toggle(webcamImageView);
+        effect.apply(webcamImageView);
         applyEffectButton.setText(effect.getStatus());
     }
 

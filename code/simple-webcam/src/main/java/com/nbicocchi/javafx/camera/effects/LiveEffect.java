@@ -1,8 +1,11 @@
 package com.nbicocchi.javafx.camera.effects;
 
+import com.nbicocchi.javafx.camera.lib.Applicable;
+import com.nbicocchi.javafx.camera.lib.Enableable;
+import com.nbicocchi.javafx.camera.lib.Resettable;
 import javafx.scene.control.MenuItem;
 
-public abstract class LiveEffect extends MenuItem implements LiveEffectsInterface {
+public abstract class LiveEffect extends MenuItem implements Enableable, Applicable, Resettable {
     private boolean enabled;
     private boolean applied;
     String status;
@@ -56,7 +59,7 @@ public abstract class LiveEffect extends MenuItem implements LiveEffectsInterfac
     }
 
     @Override
-    public void resetStatus(){
+    public void reset(){
         applied = false;
         enabled = true;
     }
