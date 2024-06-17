@@ -7,8 +7,8 @@ import com.github.sarxos.webcam.Webcam;
 import com.github.sarxos.webcam.WebcamResolution;
 import javafx.collections.ObservableList;
 
-public class WebcamUtils {
-    private static final Dimension[] nonStandardResolutions = new Dimension[] {
+public interface WebcamUtils {
+     Dimension[] NON_STANDARD_RESOLUTIONS = new Dimension[] {
             WebcamResolution.QQVGA.getSize(),
             WebcamResolution.HQVGA.getSize(),
             WebcamResolution.QVGA.getSize(),
@@ -36,11 +36,11 @@ public class WebcamUtils {
             WebcamResolution.QHD.getSize(),
             WebcamResolution.UHD4K.getSize()
     };
-    private static final Dimension defaultResolution = nonStandardResolutions[0];
+    Dimension DEFAULT_RESOLUTION = NON_STANDARD_RESOLUTIONS[0];
 
     private static boolean isValidResolution(Dimension resolution) {
         Objects.requireNonNull(resolution);
-        for (Dimension dimension : nonStandardResolutions) {
+        for (Dimension dimension : NON_STANDARD_RESOLUTIONS) {
             if (resolution.equals(dimension)) {
                 return true;
             }
@@ -48,18 +48,18 @@ public class WebcamUtils {
         return false;
     }
 
-    public static void startUpWebcam(Webcam webcam, Dimension resolution) {
+    static void startUpWebcam(Webcam webcam, Dimension resolution) {
         Objects.requireNonNull(webcam);
         if (webcam.isOpen()) {
             throw new RuntimeException("Webcam has been already initialized.");
         }
         webcam.open();
-        webcam.setCustomViewSizes(nonStandardResolutions);
+        webcam.setCustomViewSizes(NON_STANDARD_RESOLUTIONS);
         Dimension[] dimensionsSupported = webcam.getDevice().getResolutions();
         Dimension maxDimension = dimensionsSupported[dimensionsSupported.length - 1];
         if (Objects.isNull(resolution)) {
             if (Objects.isNull(maxDimension)) {
-                resolution = defaultResolution;
+                resolution = DEFAULT_RESOLUTION;
             } else {
                 resolution = maxDimension;
             }
@@ -70,7 +70,7 @@ public class WebcamUtils {
         }
     }
 
-    public static void changeResolution(Webcam webcam, Dimension resolution) {
+    static void changeResolution(Webcam webcam, Dimension resolution) {
         Objects.requireNonNull(webcam);
         Objects.requireNonNull(resolution);
         if (!isValidResolution(resolution)) {
@@ -82,7 +82,7 @@ public class WebcamUtils {
         webcam.open();
     }
 
-    public static void shutDownWebcams(ObservableList<Webcam> webcams) {
+    static void shutDownWebcams(ObservableList<Webcam> webcams) {
         for (Webcam webcam: webcams) {
             if (webcam.isOpen()) {
                 webcam.close();
