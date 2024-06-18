@@ -16,6 +16,7 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.FileSystems;
 
 public class DialogController {
     @FXML
@@ -60,7 +61,7 @@ public class DialogController {
             AlertWindows.showDialogAlert("No file selected", "A filename is required");
             throw new RuntimeException();
         }
-        File target = getFile(os);
+        File target = createFile();
         try {
             if (!target.createNewFile()) {
                 AlertWindows.showDialogAlert("Could not create new file", "File already exists");
@@ -91,15 +92,11 @@ public class DialogController {
         }
     }
 
-    private File getFile(String os) {
-        File target;
-        if (os.contains("Windows")) {
-            target = new File(selectDirTxtField.getText()+ "\\" + fileNameTxtField.getText() + typeChoiceBox.getSelectionModel().getSelectedItem());
-        }
-        else {
-            target = new File(selectDirTxtField.getText()+ "/" + fileNameTxtField.getText() + typeChoiceBox.getSelectionModel().getSelectedItem());
-        }
-        
-        return target;
+    private File createFile() {
+        String dir = selectDirTxtField.getText();
+        String separator = FileSystems.getDefault().getSeparator();
+        String filename = fileNameTxtField.getText();
+        String extension = typeChoiceBox.getSelectionModel().getSelectedItem();
+        return new File(dir + separator + filename + extension);
     }
 }
