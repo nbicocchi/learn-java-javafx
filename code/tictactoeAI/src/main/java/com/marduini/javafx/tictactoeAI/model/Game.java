@@ -1,7 +1,6 @@
 package com.marduini.javafx.tictactoeAI.model;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Game {
     // ATTENTION: NOTE THAT THIS ALGORITHM WORKS IN A WAY THAT ASSUME THAT BOTH PLAYERS ARE PLAYING THE PERFECT MOVE EVERY TIME

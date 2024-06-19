@@ -27,7 +27,7 @@ public class State {
     /**
      * returns the state of the i-pane of the current state (String[] state)
      * @param i the i-pane which we want to take the fill of the board
-     * @return
+     * @return returns the state of the i-pane of the current state
      */
     public String getStateIndex(int i){
         return state[i];

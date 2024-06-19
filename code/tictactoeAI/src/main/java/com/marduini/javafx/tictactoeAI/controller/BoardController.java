@@ -118,9 +118,7 @@ public class BoardController implements Initializable {
 
                     // Defining a pause time in order to let the AI computing her best move
                     PauseTransition pause = new PauseTransition(Duration.seconds(2));
-                    pause.setOnFinished(e->{
-                        insertAImove(game.minMaxDecision(getBoardCurrentState()));
-                    });
+                    pause.setOnFinished(e-> insertAImove(game.minMaxDecision(getBoardCurrentState())));
                     pause.play();
                 }
             }
