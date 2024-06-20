@@ -1,0 +1,50 @@
+/* Load the font from the resource folder */
+@font-face {
+    font-family: 'DavidaOpti';
+    font-style: bold;
+    src: url('../fonts/DavidaOpti-Bold.otf');
+}
+
+/* Background */
+.wood-background {
+    -fx-background-image: url('../images/table_bg.jpg'); /* Percorso dell'immagine di sfondo */
+    -fx-background-size: cover; /* Dimensioni dell'immagine di sfondo */
+}
+.ranking-background{
+    -fx-background-image: url('../images/ranking_bg.png');
+    -fx-background-size: 100% 100%;
+}
+/* Titolo */
+.Label {
+    -fx-background-color: transparent;
+    -fx-font-family: DavidaOpti;
+}
+
+/* Bottone "PLAY" */
+.play-button {
+    -fx-background-color: #fbeee0;
+    -fx-border-color: #422800;
+    -fx-border-width: 2px;
+    -fx-border-radius: 30px;
+    -fx-background-radius: 30px;
+    -fx-text-fill: #422800;
+    -fx-font-family: DavidaOpti;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px;
+    -fx-padding: 0 18px;
+    -fx-min-width: 120px; /* Larghezza minima per il pulsante */
+    -fx-min-height: 50px; /* Altezza minima per il pulsante */
+    -fx-alignment: center;
+    -fx-cursor: hand; /* Cambia il cursore quando passi sopra il pulsante */
+    -fx-effect: dropshadow(gaussian, rgba(66, 40, 0, 0.5), 4, 4, 0, 0); /* Effetto ombra */
+}
+
+.play-button:hover {
+    -fx-background-color: #fff; /* Cambia colore al passaggio del mouse */
+}
+
+.play-button:pressed {
+    -fx-effect: dropshadow(gaussian, rgba(66, 40, 0, 0.5), 2, 2, 0, 0); /* Effetto ombra più leggero al click */
+    -fx-translate-x: 2px; /* Traslazione del pulsante al click */
+    -fx-translate-y: 2px;
+}

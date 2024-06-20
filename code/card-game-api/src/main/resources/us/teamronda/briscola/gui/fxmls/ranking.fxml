@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#onKeyPressed" prefHeight="399.0" prefWidth="299.0" styleClass="wood-background" stylesheets="@../../../../../assets/css/unified.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="us.teamronda.briscola.gui.controllers.RankingController">
+   <children>
+      <VBox alignment="CENTER" prefHeight="399.0" prefWidth="299.0" styleClass="ranking-background">
+         <children>
+            <Label styleClass="Label" stylesheets="@../../../../../assets/css/unified.css" text="RANKInG">
+               <font>
+                  <Font size="39.0" />
+               </font>
+            </Label>
+            <VBox fx:id="leadersBox" alignment="CENTER" prefHeight="186.0" prefWidth="261.0" />
+            <Button fx:id="nextGameBtt" mnemonicParsing="false" onAction="#onButtonClicked" styleClass="play-button" text="next game" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
