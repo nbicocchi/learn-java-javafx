@@ -4,8 +4,8 @@ import com.nbicocchi.javafx.camera.effects.Flip;
 import com.nbicocchi.javafx.camera.effects.LiveEffect;
 import javafx.collections.ObservableMap;
 import com.nbicocchi.javafx.camera.common.WebcamListener;
-import com.nbicocchi.javafx.camera.common.WebcamUtils;
-import com.nbicocchi.javafx.camera.common.AlertWindows;
+import com.nbicocchi.javafx.camera.lib.WebcamUtils;
+import com.nbicocchi.javafx.camera.lib.AlertWindows;
 import com.nbicocchi.javafx.camera.common.FrameShowThread;
 
 import java.io.IOException;
