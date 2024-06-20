@@ -1,0 +1,99 @@
+[ {
+  "id" : 183,
+  "amount" : 80.0,
+  "date" : [ 2024, 5, 27 ],
+  "description" : "Ghiaccio",
+  "expenseType" : "Groceries",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 184,
+  "amount" : 1.8,
+  "date" : [ 2024, 5, 25 ],
+  "description" : "Acqua",
+  "expenseType" : "Groceries",
+  "payingMethod" : "Card"
+}, {
+  "id" : 188,
+  "amount" : 305.0,
+  "date" : [ 2024, 5, 27 ],
+  "description" : "Servizio Impianto Luci + Musica",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Card"
+}, {
+  "id" : 189,
+  "amount" : 70.0,
+  "date" : [ 2024, 5, 27 ],
+  "description" : "Fotografo",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Card"
+}, {
+  "id" : 190,
+  "amount" : 100.0,
+  "date" : [ 2024, 5, 28 ],
+  "description" : "DJ",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 191,
+  "amount" : 800.0,
+  "date" : [ 2024, 5, 27 ],
+  "description" : "Affitto",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 193,
+  "amount" : 18.5,
+  "date" : [ 2024, 5, 19 ],
+  "description" : "Rubinetto + tubo per macchina del ghiaccio",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Card"
+}, {
+  "id" : 194,
+  "amount" : 30.0,
+  "date" : [ 2024, 5, 28 ],
+  "description" : "Servizio PR Isabella",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Card"
+}, {
+  "id" : 195,
+  "amount" : 30.0,
+  "date" : [ 2024, 5, 28 ],
+  "description" : "Servizio PR Bea",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Card"
+}, {
+  "id" : 185,
+  "amount" : 20.0,
+  "date" : [ 2024, 4, 20 ],
+  "description" : "Baraccialetti StarLight",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Card"
+}, {
+  "id" : 186,
+  "amount" : 130.0,
+  "date" : [ 2024, 4, 19 ],
+  "description" : "Macchina del ghiaccio",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 192,
+  "amount" : 58.7,
+  "date" : [ 2024, 4, 19 ],
+  "description" : "Benzina + Autostrada",
+  "expenseType" : "Car",
+  "payingMethod" : "Card"
+}, {
+  "id" : 187,
+  "amount" : 150.0,
+  "date" : [ 2024, 6, 1 ],
+  "description" : "Impresa Pulizia",
+  "expenseType" : "Miscellaneous",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 196,
+  "amount" : 20.0,
+  "date" : [ 2024, 5, 27 ],
+  "description" : "piadine per tutti gli organizzatori",
+  "expenseType" : "EatingOut",
+  "payingMethod" : "Cash"
+} ]

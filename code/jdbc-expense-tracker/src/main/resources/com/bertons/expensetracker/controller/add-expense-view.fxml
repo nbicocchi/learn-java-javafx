@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<DialogPane prefHeight="306.0" prefWidth="442.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+   <content>
+      <GridPane hgap="15.0" prefHeight="258.0" prefWidth="493.0" vgap="30.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="122.0" minWidth="105.0" prefWidth="111.0" />
+          <ColumnConstraints hgrow="ALWAYS" maxWidth="325.0" minWidth="10.0" prefWidth="319.0" />
+            <ColumnConstraints hgrow="ALWAYS" maxWidth="325.0" minWidth="10.0" prefWidth="319.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="60.0" minHeight="10.0" prefHeight="60.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label text="Amount" GridPane.rowIndex="1" />
+            <Label text="Description" GridPane.rowIndex="2" />
+            <Label text="Date" GridPane.rowIndex="3" />
+            <Label text="Expense Type" GridPane.rowIndex="4" />
+            <Label layoutX="20.0" layoutY="135.0" text="Paying Method" GridPane.rowIndex="5" />
+            <TextField fx:id="textFieldAmount" prefHeight="26.0" prefWidth="167.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="textFieldDescription" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <DatePicker fx:id="datePickerExpenseDate" prefHeight="31.0" prefWidth="217.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <ComboBox fx:id="comboBoxExpenseType" prefHeight="31.0" prefWidth="220.0" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="4" />
+            <ComboBox fx:id="comboBoxPayingMethod" layoutX="130.0" layoutY="130.0" prefHeight="31.0" prefWidth="236.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <ImageView fitHeight="54.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <image>
+                  <Image url="@../images/icons/AddExpenseView/icons8-euro-96.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="68.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <image>
+                  <Image url="@../images/icons/AddExpenseView/icons8-calendario-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="59.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <image>
+                  <Image url="@../images/icons/AddExpenseView/icons8-registratore-di-cassa-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="33.0" fitWidth="45.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <image>
+                  <Image url="@../images/icons/AddExpenseView/icons8-expense-64.png" />
+               </image>
+            </ImageView>
+            <ImageView fitHeight="85.0" fitWidth="35.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <image>
+                  <Image url="@../images/icons/AddExpenseView/icons8-menu-del-registratore-video-personale-96.png" />
+               </image>
+            </ImageView>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="-130.0" top="10.0" />
+         </padding>
+      </GridPane>
+   </content>
+   <buttonTypes>
+      <ButtonType fx:constant="APPLY" />
+      <ButtonType fx:constant="CANCEL" />
+   </buttonTypes>
+</DialogPane>

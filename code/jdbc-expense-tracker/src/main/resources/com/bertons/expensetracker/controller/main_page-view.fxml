@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane minHeight="166.0" minWidth="653.0" prefHeight="700.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bertons.expensetracker.controller.MainPageViewController">
+   <children>
+      <BorderPane prefHeight="800.0" prefWidth="1000.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <MenuBar prefHeight="16.0" prefWidth="1198.0" BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#OnMenuFileCloseButton_Click" text="Close" />
+                        <MenuItem mnemonicParsing="false" onAction="#OnMenuFileImportButton_Click" text="Import" />
+                        <MenuItem mnemonicParsing="false" onAction="#OnMenuFileExportButton_Click" text="Export" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                        <MenuItem mnemonicParsing="false" onAction="#OnInsertExpenseButton_Click" text="Insert Expense" />
+                    <MenuItem mnemonicParsing="false" onAction="#OnDeleteExpenseButton_Click" text="Delete Expense" />
+                  </items>
+                </Menu>
+                  <Menu mnemonicParsing="false" text="View">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#OnMenuViewPieChartButton_Click" text="Expense Pie Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#OnMenuViewAreaChartButton_Click" text="Expense Area Chart" />
+                        <MenuItem mnemonicParsing="false" onAction="#OnButtonRefreshData_Click" text="Refresh Data" />
+                    </items>
+                  </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" onAction="#OnMenuHelpAboutButton_Click" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+         <center>
+            <BorderPane prefHeight="800.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+               <center>
+                  <TableView fx:id="tableViewExpenses" editable="true" tableMenuButtonVisible="true" BorderPane.alignment="CENTER">
+                    <columns>
+                      <TableColumn fx:id="tableColumnExpenseId" editable="false" prefWidth="100.0" text="Expense id" />
+                      <TableColumn fx:id="tableColumnAmount" prefWidth="140.0" text="Amount [€]" />
+                        <TableColumn fx:id="tableColumnDate" prefWidth="170.0" text="Date" />
+                        <TableColumn fx:id="tableColumnExpenseType" prefWidth="202.0" text="Expense Type" />
+                        <TableColumn fx:id="tableColumnPayingMethod" minWidth="0.0" prefWidth="135.0" text="Paying Method" />
+                        <TableColumn fx:id="tableColumnDescription" prefWidth="250.39993896484373" text="Description" />
+                    </columns>
+                     <BorderPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </BorderPane.margin>
+                  </TableView>
+               </center>
+               <top>
+                  <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <items>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnInsertExpenseButton_Click" prefHeight="47.0" prefWidth="41.0">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="377.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/icons-add-expense-64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#OnDeleteExpenseButton_Click">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/icon-delete-expense-64.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#OnMenuViewPieChartButton_Click" prefWidth="22.0">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/IconaPieChart.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#OnMenuViewAreaChartButton_Click" prefWidth="22.0">
+                           <graphic>
+                              <ImageView fitHeight="44.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/IconAreaChart.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic></Button>
+                        <Button mnemonicParsing="false" onAction="#OnMenuFileImportButton_Click" prefHeight="21.0" prefWidth="48.0">
+                           <graphic>
+                              <ImageView fitHeight="45.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/icons8-database-daily-import-80.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" onAction="#OnMenuFileExportButton_Click">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/icons8-database-daily-export-80.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button layoutX="345.0" layoutY="10.0" mnemonicParsing="false" onAction="#OnButtonRefreshData_Click">
+                           <graphic>
+                              <ImageView fitHeight="42.0" fitWidth="47.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../images/icons/MainView/icons8-refresh-80.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                    </items>
+                  </ToolBar>
+               </top>
+            </BorderPane>
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>

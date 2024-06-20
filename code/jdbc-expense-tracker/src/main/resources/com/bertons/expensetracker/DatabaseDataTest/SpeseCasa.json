@@ -1,0 +1,71 @@
+[ {
+  "id" : 198,
+  "amount" : 125.55,
+  "date" : [ 2024, 6, 14 ],
+  "description" : "Spesa",
+  "expenseType" : "Groceries",
+  "payingMethod" : "Card"
+}, {
+  "id" : 199,
+  "amount" : 55.22,
+  "date" : [ 2024, 6, 14 ],
+  "description" : "benzina",
+  "expenseType" : "Car",
+  "payingMethod" : "Card"
+}, {
+  "id" : 200,
+  "amount" : 20.0,
+  "date" : [ 2024, 5, 10 ],
+  "description" : "benzina",
+  "expenseType" : "Car",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 201,
+  "amount" : 500.0,
+  "date" : [ 2022, 10, 9 ],
+  "description" : "Set di pneumatici nuovi per macchina",
+  "expenseType" : "Car",
+  "payingMethod" : "Card"
+}, {
+  "id" : 202,
+  "amount" : 14.99,
+  "date" : [ 2024, 3, 6 ],
+  "description" : "netflix",
+  "expenseType" : "Subscription",
+  "payingMethod" : "Card"
+}, {
+  "id" : 203,
+  "amount" : 14.99,
+  "date" : [ 2024, 4, 6 ],
+  "description" : "netflix",
+  "expenseType" : "Subscription",
+  "payingMethod" : "Card"
+}, {
+  "id" : 204,
+  "amount" : 14.99,
+  "date" : [ 2024, 6, 6 ],
+  "description" : "netflix",
+  "expenseType" : "Subscription",
+  "payingMethod" : "Card"
+}, {
+  "id" : 205,
+  "amount" : 120.0,
+  "date" : [ 2024, 8, 15 ],
+  "description" : "ristorante in 4",
+  "expenseType" : "EatingOut",
+  "payingMethod" : "Cash"
+}, {
+  "id" : 206,
+  "amount" : 449.3,
+  "date" : [ 2024, 6, 1 ],
+  "description" : "muto casa",
+  "expenseType" : "Debt",
+  "payingMethod" : "Card"
+}, {
+  "id" : 207,
+  "amount" : 449.0,
+  "date" : [ 2024, 5, 1 ],
+  "description" : "mutuo casa",
+  "expenseType" : "Debt",
+  "payingMethod" : "Card"
+} ]
