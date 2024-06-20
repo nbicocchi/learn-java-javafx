@@ -3,7 +3,6 @@ package com.marduini.javafx.tictactoeAI.model;
 import java.util.Arrays;
 
 public class State {
-    // This is the class used to represent the states of the board, with a string array
     private int position;
     private String[] state;
 

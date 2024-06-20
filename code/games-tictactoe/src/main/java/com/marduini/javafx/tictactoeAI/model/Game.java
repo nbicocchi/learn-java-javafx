@@ -3,9 +3,6 @@ package com.marduini.javafx.tictactoeAI.model;
 import java.util.ArrayList;
 
 public class Game {
-    // ATTENTION: NOTE THAT THIS ALGORITHM WORKS IN A WAY THAT ASSUME THAT BOTH PLAYERS ARE PLAYING THE PERFECT MOVE EVERY TIME
-    // IF IT IS CORRECT, THEN EVERY MATCH WOULD END UP IN A DRAW!
-
     /***
      * This method picks the best move for the O-player in our game
      * @param state the current state of the board, at turn of the AI

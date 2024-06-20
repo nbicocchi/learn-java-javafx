@@ -5,8 +5,9 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>us.teamronda</groupId>
-    <artifactId>card-game-api</artifactId>
-    <version>1.0.0</version>
+    <artifactId>games-cards</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <name>games-cards</name>
 
     <properties>
         <maven.compiler.source>21</maven.compiler.source>
@@ -64,7 +65,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>us.teamronda.briscola.Main</mainClass>
+                            <mainClass>us.teamronda.briscola.App</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
