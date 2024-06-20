@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.camera.common;
+package com.nbicocchi.javafx.camera.lib;
 
 import javafx.scene.control.Alert;
 

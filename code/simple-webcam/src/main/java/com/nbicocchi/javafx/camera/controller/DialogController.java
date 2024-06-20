@@ -9,7 +9,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 import javafx.stage.DirectoryChooser;
-import com.nbicocchi.javafx.camera.common.AlertWindows;
+import com.nbicocchi.javafx.camera.lib.AlertWindows;
 import com.nbicocchi.javafx.camera.effects.Flip;
 
 import javax.imageio.ImageIO;

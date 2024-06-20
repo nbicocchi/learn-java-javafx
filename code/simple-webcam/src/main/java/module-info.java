@@ -15,4 +15,6 @@ module org.example.camera {
     opens com.nbicocchi.javafx.camera.effects to javafx.fxml;
     exports com.nbicocchi.javafx.camera.controller;
     opens com.nbicocchi.javafx.camera.controller to javafx.fxml;
+    exports com.nbicocchi.javafx.camera.lib;
+    opens com.nbicocchi.javafx.camera.lib to javafx.fxml;
 }

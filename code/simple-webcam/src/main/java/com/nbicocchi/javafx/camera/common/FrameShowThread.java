@@ -3,6 +3,7 @@ package com.nbicocchi.javafx.camera.common;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.nbicocchi.javafx.camera.lib.WebcamUtils;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.embed.swing.SwingFXUtils;
