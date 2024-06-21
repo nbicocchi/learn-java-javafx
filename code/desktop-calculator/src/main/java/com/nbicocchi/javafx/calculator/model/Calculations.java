@@ -1,13 +1,10 @@
 package com.nbicocchi.javafx.calculator.model;
 
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 
 import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 import net.objecthunter.exp4j.tokenizer.UnknownFunctionOrVariableException;
-
-import java.util.Optional;
 
 public class Calculations {
     public boolean abs = false;
@@ -15,7 +12,7 @@ public class Calculations {
 
     /**
      * Controls that the String given contains only numbers
-     * @param string the calculator input to analize
+     * @param string the calculator input to analyze
      * @return "true" if it's ok, "false" if it's bad
      */
     public boolean controlToBin(String string){
@@ -37,7 +34,7 @@ public class Calculations {
 
     /**
      * Calculates the factorial of a given number
-     * @param number number for wich the factorial is calculated
+     * @param number number for which the factorial is calculated
      * @return the factorial
      */
     public static long factorial(int number) {
@@ -55,7 +52,7 @@ public class Calculations {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setContentText(string);
-            Optional<ButtonType> result = alert.showAndWait();
+            alert.showAndWait();
     }
 
     /**

@@ -8,10 +8,9 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-
 import net.objecthunter.exp4j.tokenizer.UnknownFunctionOrVariableException;
 
 import java.io.IOException;
@@ -77,12 +76,10 @@ public class NormalController {
 
     @FXML
     public TextField txtShow;
-
-    Calculations calc = new Calculations();
-
     public Stage stage;
     public Scene scene;
     public Parent root;
+    Calculations calc = new Calculations();
 
     /**
      * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
@@ -98,7 +95,7 @@ public class NormalController {
      */
     public void switchToScientific(ActionEvent event) throws IOException {
         root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scientific-view.fxml")));
-        stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+        stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
         scene = new Scene(root);
         stage.setTitle("Scientific Calculator");
         stage.setResizable(false);
@@ -109,91 +106,59 @@ public class NormalController {
     /**
      * All the buttons setOnAction functions.
      */
-    private void buttonsFunctions(){
+    private void buttonsFunctions() {
         btnC.setOnAction(event -> {
-            int lngt = txtShow.getText().length();
-            if(lngt != 0){
-                txtShow.setText(txtShow.getText().substring(0, lngt-1));
+            int length = txtShow.getText().length();
+            if (length != 0) {
+                txtShow.setText(txtShow.getText().substring(0, length - 1));
             }
         });
 
-        btnCA.setOnAction(event -> {
-            txtShow.clear();
-        });
+        btnCA.setOnAction(event -> txtShow.clear());
 
-        btnPoint.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"." : "0.");
-        });
+        btnPoint.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "." : "0."));
 
         btnEq.setOnAction(event -> {
             try {
                 lblAnswer.setText(calc.evaluate(txtShow.getText()));
-            } catch(UnknownFunctionOrVariableException u){
+            } catch (UnknownFunctionOrVariableException u) {
                 lblAnswer.setText(null);
                 calc.handleError(u.toString().substring(69));
-            } catch(IllegalArgumentException i){
+            } catch (IllegalArgumentException i) {
                 lblAnswer.setText(null);
                 calc.handleError(i.toString().substring(35));
-            } catch(ArithmeticException e) {
+            } catch (ArithmeticException e) {
                 lblAnswer.setText(null);
                 calc.handleError(e.toString().substring(31));
             }
         });
 
-        btnSum.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"+" : "+");
-        });
+        btnSum.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "+" : "+"));
 
-        btnSub.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"-" : "-");
-        });
+        btnSub.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "-" : "-"));
 
-        btnMulti.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"*" : "*");
-        });
+        btnMulti.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "*" : "*"));
 
-        btnDiv.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"/" : "/");
-        });
+        btnDiv.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "/" : "/"));
 
-        btn0.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"0" : "0");
-        });
+        btn0.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "0" : "0"));
 
-        btn1.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"1" : "1");
-        });
+        btn1.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "1" : "1"));
 
-        btn2.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"2" : "2");
-        });
+        btn2.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "2" : "2"));
 
-        btn3.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"3" : "3");
-        });
+        btn3.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "3" : "3"));
 
-        btn4.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"4" : "4");
-        });
+        btn4.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "4" : "4"));
 
-        btn5.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"5" : "5");
-        });
+        btn5.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "5" : "5"));
 
-        btn6.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"6" : "6");
-        });
+        btn6.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "6" : "6"));
 
-        btn7.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"7" : "7");
-        });
+        btn7.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "7" : "7"));
 
-        btn8.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"8" : "8");
-        });
+        btn8.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "8" : "8"));
 
-        btn9.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"9" : "9");
-        });
+        btn9.setOnAction(event -> txtShow.setText(txtShow.getText() != null ? txtShow.getText() + "9" : "9"));
     }
 }
