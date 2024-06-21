@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="654.0" prefWidth="513.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.calculator.ScientificController">
+    <children>
+        <Label fx:id="lblAnswer" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="14.0" prefHeight="73.0" prefWidth="482.0" textAlignment="RIGHT" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font></Label>
+        <TextField fx:id="txtShow" alignment="TOP_RIGHT" layoutX="13.0" layoutY="96.0" prefHeight="84.0" prefWidth="482.0" style="-fx-background-color: GoldenRod;">
+         <font>
+            <Font name="System Bold" size="40.0" />
+         </font></TextField>
+        <Button fx:id="btnAbs" layoutX="111.0" layoutY="191.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="|x|">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnCA" layoutX="209.0" layoutY="191.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: OrangeRed;" text="CA" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnC" layoutX="306.0" layoutY="191.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="187.0" style="-fx-background-color: OrangeRed;" text="⌫" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnDiv" layoutX="403.0" layoutY="266.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: OrangeRed;" text="÷" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn7" layoutX="111.0" layoutY="342.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="7">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn0" layoutX="111.0" layoutY="569.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="0">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn1" layoutX="111.0" layoutY="493.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="1">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn4" layoutX="111.0" layoutY="418.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="4">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn8" layoutX="209.0" layoutY="342.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="8">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn9" layoutX="307.0" layoutY="342.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="9">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnMulti" layoutX="403.0" layoutY="342.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: OrangeRed;" text="x" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn5" layoutX="209.0" layoutY="418.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="5">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn6" layoutX="307.0" layoutY="418.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="6">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnSub" layoutX="403.0" layoutY="418.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: OrangeRed;" text="-" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn2" layoutX="209.0" layoutY="493.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="2">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btn3" layoutX="307.0" layoutY="493.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Orange;" text="3">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnSum" layoutX="403.0" layoutY="493.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: OrangeRed;" text="+" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnPoint" layoutX="209.0" layoutY="569.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text=".">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+        <Button fx:id="btnEq" layoutX="306.0" layoutY="569.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="187.0" style="-fx-background-color: OrangeRed;" text="=" textFill="WHITE">
+            <font>
+                <Font name="System Bold" size="32.0" />
+            </font>
+        </Button>
+      <Button fx:id="btnBasic" layoutX="13.0" layoutY="191.0" mnemonicParsing="false" onAction="#switchToNormal" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: Chocolate;" text="basic">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnSqrt" layoutX="13.0" layoutY="266.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="√">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnFact" layoutX="13.0" layoutY="342.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="!">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnLog" layoutX="13.0" layoutY="418.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="ln">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnBin" layoutX="13.0" layoutY="493.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="bin">
+         <font>
+            <Font name="System Bold" size="29.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnMod" layoutX="13.0" layoutY="569.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="\%">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnExp" layoutX="111.0" layoutY="266.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="eˣ">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnPi" layoutX="209.0" layoutY="266.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="π">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnPow" layoutX="307.0" layoutY="266.0" mnemonicParsing="false" prefHeight="70.0" prefWidth="90.0" style="-fx-background-color: DarkOrange;" text="xʸ">
+         <font>
+            <Font name="System Bold" size="32.0" />
+         </font>
+      </Button>
+    </children>
+</AnchorPane>
