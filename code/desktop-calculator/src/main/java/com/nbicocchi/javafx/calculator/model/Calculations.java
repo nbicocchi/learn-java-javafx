@@ -1,4 +1,4 @@
-package com.calculator;
+package com.nbicocchi.javafx.calculator.model;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

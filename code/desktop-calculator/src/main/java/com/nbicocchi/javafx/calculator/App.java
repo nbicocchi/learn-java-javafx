@@ -1,4 +1,4 @@
-package com.calculator;
+package com.nbicocchi.javafx.calculator;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
-        Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view.fxml")));
+        Parent view = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("controllers/normal-view.fxml")));
         Scene scene = new Scene(view);
         stage.setTitle("Calculator");
         stage.centerOnScreen();

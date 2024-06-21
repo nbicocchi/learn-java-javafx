@@ -1,11 +1,15 @@
-package com.calculator;
+package com.nbicocchi.javafx.calculator.controllers;
 
+import com.nbicocchi.javafx.calculator.model.Calculations;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
 
 import net.objecthunter.exp4j.tokenizer.UnknownFunctionOrVariableException;
@@ -13,40 +17,76 @@ import net.objecthunter.exp4j.tokenizer.UnknownFunctionOrVariableException;
 import java.io.IOException;
 import java.util.Objects;
 
-public class ScientificController extends Controller{
+public class NormalController {
     @FXML
-    private Button btnAbs;
+    public Button btn0;
 
     @FXML
-    private Button btnExp;
+    public Button btn1;
 
     @FXML
-    private Button btnFact;
+    public Button btn2;
 
     @FXML
-    private Button btnBin;
+    public Button btn3;
 
     @FXML
-    private Button btnLog;
+    public Button btn4;
 
     @FXML
-    private Button btnMod;
+    public Button btn5;
 
     @FXML
-    private Button btnPi;
+    public Button btn6;
 
     @FXML
-    private Button btnPow;
+    public Button btn7;
 
     @FXML
-    private Button btnSqrt;
+    public Button btn8;
+
+    @FXML
+    public Button btn9;
+
+    @FXML
+    public Button btnC;
+
+    @FXML
+    public Button btnCA;
+
+    @FXML
+    public Button btnDiv;
+
+    @FXML
+    public Button btnEq;
+
+    @FXML
+    public Button btnMulti;
+
+    @FXML
+    public Button btnPoint;
+
+    @FXML
+    public Button btnSub;
+
+    @FXML
+    public Button btnSum;
+
+    @FXML
+    public Label lblAnswer;
+
+    @FXML
+    public TextField txtShow;
 
     Calculations calc = new Calculations();
+
+    public Stage stage;
+    public Scene scene;
+    public Parent root;
 
     /**
      * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
      */
-    @Override
     public void initialize() {
         double answer = 0;
         lblAnswer.setText(String.format("%.02f", answer));
@@ -54,13 +94,13 @@ public class ScientificController extends Controller{
     }
 
     /**
-     * Switches the scientific calculator to the basic one
+     * Switches the basic calculator to the scientific one
      */
-    public void switchToNormal(ActionEvent event) throws IOException {
-        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("view.fxml")));
+    public void switchToScientific(ActionEvent event) throws IOException {
+        root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("scientific-view.fxml")));
         stage = (Stage)((Node)event.getSource()).getScene().getWindow();
         scene = new Scene(root);
-        stage.setTitle("Calculator");
+        stage.setTitle("Scientific Calculator");
         stage.setResizable(false);
         stage.setScene(scene);
         stage.show();
@@ -69,7 +109,7 @@ public class ScientificController extends Controller{
     /**
      * All the buttons setOnAction functions.
      */
-    public void buttonsFunctions() {
+    private void buttonsFunctions(){
         btnC.setOnAction(event -> {
             int lngt = txtShow.getText().length();
             if(lngt != 0){
@@ -154,46 +194,6 @@ public class ScientificController extends Controller{
 
         btn9.setOnAction(event -> {
             txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"9" : "9");
-        });
-        btnExp.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"e^(" : "e^(");
-        });
-
-        btnAbs.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"||" : "||");
-        });
-
-        btnFact.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"!" : "!");
-        });
-
-        btnBin.setOnAction(event -> {
-            if(calc.controlToBin(txtShow.getText())){
-                lblAnswer.setText(Integer.toBinaryString(Integer.parseInt(txtShow.getText())));
-            }else{
-                lblAnswer.setText(null);
-                calc.handleError("Convert only numbers");
-            }
-        });
-
-        btnLog.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"log(" : "log(");
-        });
-
-        btnPow.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"^" : "^");
-        });
-
-        btnMod.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"%" : "%");
-        });
-
-        btnSqrt.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"sqrt(" : "sqrt(");
-        });
-
-        btnPi.setOnAction(event -> {
-            txtShow.setText(txtShow.getText() != null ? txtShow.getText()+"π" : "π");
         });
     }
 }

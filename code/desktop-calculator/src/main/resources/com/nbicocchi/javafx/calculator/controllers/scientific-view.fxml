@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="654.0" prefWidth="513.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.calculator.ScientificController">
+<AnchorPane prefHeight="654.0" prefWidth="513.0" style="-fx-background-color: Black;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.nbicocchi.javafx.calculator.controllers.ScientificController">
     <children>
         <Label fx:id="lblAnswer" alignment="CENTER_RIGHT" layoutX="14.0" layoutY="14.0" prefHeight="73.0" prefWidth="482.0" textAlignment="RIGHT" textFill="WHITE">
          <font>
