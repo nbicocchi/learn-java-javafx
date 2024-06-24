@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.BoxBlur?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="520.0" prefWidth="820.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.twentyone.GameController">
+   <children>
+      <ImageView fitHeight="597.0" fitWidth="938.0" layoutX="-23.0" layoutY="-1.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@background.jpg" />
+         </image>
+         <effect>
+            <BoxBlur iterations="2" />
+         </effect>
+      </ImageView>
+      <Line fx:id="trajectory" strokeLineCap="ROUND" strokeWidth="22.0" visible="false">
+         <stroke>
+            <LinearGradient cycleMethod="REFLECT" endX="0.9659090909090909" endY="1.0">
+               <stops>
+                  <Stop>
+                     <color>
+                        <Color red="0.9599999785423279" green="0.407039999961853" blue="0.03840000182390213" opacity="0.6572948098182678" />
+                     </color>
+                  </Stop>
+                  <Stop offset="1.0">
+                     <color>
+                        <Color red="1.0" green="1.0" blue="1.0" />
+                     </color>
+                  </Stop>
+               </stops>
+            </LinearGradient>
+         </stroke>
+      </Line>
+      <ImageView fx:id="ball" fitHeight="50.0" fitWidth="50.0" layoutX="537.0" layoutY="307.0" onMouseDragged="#ballDrag" onMouseReleased="#ballDragReleased" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@ball.png" />
+         </image>
+      </ImageView>
+      <Circle fx:id="basketCollider" fill="DODGERBLUE" layoutX="110.0" layoutY="197.0" radius="6.0" stroke="BLACK" strokeType="INSIDE" />
+      <ImageView fitHeight="191.0" fitWidth="145.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@basket.png" />
+         </image>
+      </ImageView>
+      <Pane prefHeight="57.0" prefWidth="820.0">
+         <children>
+            <Pane layoutX="50.0" layoutY="9.0" opacity="0.73" prefHeight="38.0" prefWidth="159.0" style="-fx-border-color: white; -fx-border-radius: 10px; -fx-background-color: white; -fx-background-radius: 10px;" />
+            <Pane layoutX="572.0" layoutY="9.0" opacity="0.73" prefHeight="38.0" prefWidth="159.0" style="-fx-border-color: white; -fx-border-radius: 10px; -fx-background-color: white; -fx-background-radius: 10px;" />
+            <Pane fx:id="player1Selection" layoutX="50.0" layoutY="9.0" prefHeight="38.0" prefWidth="159.0" style="-fx-border-color: #FA821A; -fx-border-radius: 10px; -fx-background-color: #e6730066; -fx-background-radius: 10px;" visible="false" />
+            <Pane fx:id="player2Selection" layoutX="572.0" layoutY="9.0" prefHeight="38.0" prefWidth="159.0" style="-fx-border-color: #FA821A; -fx-border-radius: 10px; -fx-background-color: #e6730066; -fx-background-radius: 10px;" visible="false" />
+            <Label layoutX="74.0" layoutY="14.0" text="Player 1: " textFill="#200101">
+               <font>
+                  <Font name="Eras Medium ITC" size="23.0" />
+               </font>
+            </Label>
+            <Label layoutX="597.0" layoutY="14.0" text="Player 2: ">
+               <font>
+                  <Font name="Eras Medium ITC" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="player1Score" layoutX="165.0" layoutY="14.0" text="0">
+               <font>
+                  <Font name="Eras Medium ITC" size="23.0" />
+               </font>
+            </Label>
+            <Label fx:id="player2Score" layoutX="688.0" layoutY="14.0" text="0">
+               <font>
+                  <Font name="Eras Medium ITC" size="23.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="38.0" fitWidth="38.0" layoutX="768.0" layoutY="9.0" onMouseClicked="#openOptions" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@menu.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <AnchorPane fx:id="optionsMenu" layoutX="258.0" layoutY="118.0" prefHeight="328.0" prefWidth="304.0" style="-fx-background-color: FF8F66; -fx-background-radius: 20px; -fx-border-color: black; -fx-border-radius: 20px;" visible="false">
+         <children>
+            <BorderPane layoutX="68.0" layoutY="37.0" onMouseClicked="#playAgain" prefHeight="60.0" prefWidth="168.0" style="-fx-background-color: FFFFFFDD; -fx-background-radius: 20px;">
+               <center>
+                  <Label text="RESTART" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Franklin Gothic Heavy" size="27.0" />
+                     </font>
+                  </Label>
+               </center>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </BorderPane>
+            <BorderPane layoutX="68.0" layoutY="138.0" onMouseClicked="#goToMenu" prefHeight="60.0" prefWidth="168.0" style="-fx-background-color: FFFFFFDD; -fx-background-radius: 20px;">
+               <center>
+                  <Label text="MENU" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Franklin Gothic Heavy" size="27.0" />
+                     </font>
+                  </Label>
+               </center>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </BorderPane>
+            <BorderPane layoutX="68.0" layoutY="240.0" onMouseClicked="#openRules" prefHeight="60.0" prefWidth="168.0" style="-fx-background-color: FFFFFFDD; -fx-background-radius: 20px;">
+               <center>
+                  <Label text="RULES" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Franklin Gothic Heavy" size="27.0" />
+                     </font>
+                  </Label>
+               </center>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </BorderPane>
+            <Label layoutX="269.0" layoutY="7.0" onMouseClicked="#closeOptions" text="X" textFill="RED">
+               <font>
+                  <Font name="Franklin Gothic Heavy" size="31.0" />
+               </font>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="rulesMenu" layoutX="166.0" layoutY="105.0" prefHeight="377.0" prefWidth="544.0" style="-fx-background-color: FF8F66; -fx-background-radius: 20px; -fx-border-color: black; -fx-border-radius: 20px;" visible="false">
+         <children>
+            <Label layoutX="30.0" layoutY="68.0" prefHeight="22.0" prefWidth="499.0" text="1) The first player starts shooting from the free throw" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="172.0" layoutY="14.0" text="RULES" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Bold ITC" size="51.0" />
+               </font>
+            </Label>
+            <BorderPane layoutX="340.0" layoutY="289.0" onMouseClicked="#closeRules" prefHeight="60.0" prefWidth="168.0" style="-fx-background-color: FFFFFFDD; -fx-background-radius: 20px;">
+               <center>
+                  <Label text="CLOSE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Franklin Gothic Heavy" size="27.0" />
+                     </font>
+                  </Label>
+               </center>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </BorderPane>
+            <Label layoutX="30.0" layoutY="91.0" prefHeight="22.0" prefWidth="499.0" text="2) Every shot made from the free throw gets you 2 points" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="114.0" prefHeight="22.0" prefWidth="499.0" text="3) If the other player misses his shot, you will have to shoot" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="137.0" prefHeight="22.0" prefWidth="499.0" text="    from the place where the ball stopped" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="189.0" prefHeight="22.0" prefWidth="499.0" text="5) After you made a shot you will be shooting from" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="212.0" prefHeight="22.0" prefWidth="499.0" text="    the free throw until you fail" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="165.0" prefHeight="22.0" prefWidth="499.0" text="4) Every shot from rebound gets you 1 point" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="235.0" prefHeight="22.0" prefWidth="499.0" text="6) The first player to reach 21 (or 7) points wins " textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="winMenu" layoutX="138.0" layoutY="118.0" prefHeight="377.0" prefWidth="544.0" style="-fx-background-color: FF8F66; -fx-background-radius: 20px; -fx-border-color: black; -fx-border-radius: 20px;" visible="false">
+         <children>
+            <Label layoutX="172.0" layoutY="167.0" prefHeight="31.0" prefWidth="350.0" text=", I see that you like participation" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="107.0" layoutY="198.0" text="trophies, good luck next time!" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="playerLose" layoutX="81.0" layoutY="167.0" text="Player 2" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="25.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="167.0" text="Hey" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="25.0" />
+               </font>
+            </Label>
+            <Label fx:id="playerWin" layoutX="81.0" layoutY="27.0" text="Player 1" textFill="#f4f4f4" underline="true">
+               <font>
+                  <Font name="Eras Medium ITC" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="231.0" layoutY="27.0" text="congratulations" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Medium ITC" size="36.0" />
+               </font>
+            </Label>
+            <Label layoutX="89.0" layoutY="69.0" text="YOU WON ! ! !" textFill="#f4f4f4">
+               <font>
+                  <Font name="Eras Bold ITC" size="51.0" />
+               </font>
+            </Label>
+            <BorderPane layoutX="39.0" layoutY="289.0" onMouseClicked="#playAgain" prefHeight="60.0" prefWidth="168.0" style="-fx-background-color: FFFFFFDD; -fx-background-radius: 20px;">
+               <center>
+                  <Label text="PLAY AGAIN" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Franklin Gothic Heavy" size="27.0" />
+                     </font>
+                  </Label>
+               </center>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </BorderPane>
+            <BorderPane layoutX="340.0" layoutY="289.0" onMouseClicked="#goToMenu" prefHeight="60.0" prefWidth="168.0" style="-fx-background-color: FFFFFFDD; -fx-background-radius: 20px;">
+               <center>
+                  <Label text="MENU" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="Franklin Gothic Heavy" size="27.0" />
+                     </font>
+                  </Label>
+               </center>
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor>
+            </BorderPane>
+         </children>
+      </AnchorPane>
+   </children>
+</Pane>

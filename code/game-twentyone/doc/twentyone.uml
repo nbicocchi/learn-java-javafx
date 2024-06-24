@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>C:/Users/sofia/Desktop/twentyone</OriginalElement>
+  <nodes>
+    <node x="753.5553367690146" y="706.2707006300881">com.twentyone.Collision.SurfaceName</node>
+    <node x="754.9812422358003" y="897.2427721777167">com.twentyone.Collision</node>
+    <node x="408.2191457590218" y="755.2499131473137">com.twentyone.GameManager</node>
+    <node x="691.4471148237719" y="51.252790645382134">com.twentyone.MenuController</node>
+    <node x="260.7620034260206" y="309.7714750311021">com.twentyone.Ball</node>
+    <node x="413.6498574388605" y="86.22321627022268">com.twentyone.Player.ThrowType</node>
+    <node x="984.7604735256639" y="76.20818001333043">com.twentyone.Game</node>
+    <node x="-85.98787880499569" y="312.00729083288866">com.twentyone.GameController</node>
+    <node x="627.1300364463808" y="325.85422793664407">com.twentyone.Player</node>
+    <node x="159.41076448228534" y="-13.584732942600851">com.twentyone.Coord</node>
+    <node x="552.8350432748338" y="1025.3547896565444">com.twentyone.App</node>
+  </nodes>
+  <notes />
+  <edges>
+    <edge source="com.twentyone.Collision" target="com.twentyone.Collision.SurfaceName" relationship="TO_ONE">
+      <point x="13.574094533214293" y="-31.5" />
+      <point x="0.0" y="56.0" />
+    </edge>
+    <edge source="com.twentyone.GameController" target="com.twentyone.Coord" relationship="TO_ONE">
+      <point x="-1.2119500431140295E-4" y="-285.00029083288865" />
+      <point x="50.512" y="277.0" />
+      <point x="256.411" y="277.0" />
+      <point x="2.3551771465690763E-4" y="128.49973294260084" />
+    </edge>
+    <edge source="com.twentyone.App" target="com.twentyone.GameManager" relationship="TO_ONE">
+      <point x="0.0" y="-141.0" />
+      <point x="116.61589751581198" y="105.0" />
+    </edge>
+    <edge source="com.twentyone.Game" target="com.twentyone.Ball" relationship="TO_ONE">
+      <point x="-128.0" y="216.14604792331363" />
+      <point x="131.99999999999994" y="114.58275290554195" />
+    </edge>
+    <edge source="com.twentyone.Ball" target="com.twentyone.Coord" relationship="TO_ONE">
+      <point x="-3.426020612096181E-6" y="-153.00047503110213" />
+      <point x="392.762" y="277.0" />
+      <point x="256.411" y="277.0" />
+      <point x="2.3551771465690763E-4" y="128.49973294260084" />
+    </edge>
+    <edge source="com.twentyone.Collision.SurfaceName" target="com.twentyone.Collision" relationship="INNER_CLASS">
+      <point x="-15.0" y="56.0" />
+      <point x="-1.4259054667857072" y="-31.5" />
+    </edge>
+    <edge source="com.twentyone.Game" target="com.twentyone.Coord" relationship="TO_ONE">
+      <point x="-128.0004735256639" y="-125.29318001333044" />
+      <point x="426.5" y="235.915" />
+      <point x="426.5" y="277.0" />
+      <point x="256.411" y="277.0" />
+      <point x="2.3551771465690763E-4" y="128.49973294260084" />
+    </edge>
+    <edge source="com.twentyone.GameManager" target="com.twentyone.GameController" relationship="TO_ONE">
+      <point x="-142.5" y="0.0" />
+      <point x="136.5" y="263.24262231442503" />
+    </edge>
+    <edge source="com.twentyone.Game" target="com.twentyone.Player" relationship="TO_ONE">
+      <point x="-128.0" y="81.64604792331363" />
+      <point x="118.0" y="0.0" />
+    </edge>
+    <edge source="com.twentyone.GameManager" target="com.twentyone.Game" relationship="TO_ONE">
+      <point x="0.0" y="-105.0" />
+      <point x="550.7191457590218" y="592.3542279366441" />
+      <point x="-128.0" y="231.14604792331363" />
+    </edge>
+    <edge source="com.twentyone.Player.ThrowType" target="com.twentyone.Player" relationship="INNER_CLASS">
+      <point x="108.5" y="15.0" />
+      <point x="658.9471148237719" y="157.22321627022268" />
+      <point x="-86.18292162260889" y="-117.0" />
+    </edge>
+    <edge source="com.twentyone.Player" target="com.twentyone.Player.ThrowType" relationship="TO_ONE">
+      <point x="-71.18292162260889" y="-117.0" />
+      <point x="673.9471148237719" y="142.22321627022268" />
+      <point x="108.5" y="0.0" />
+    </edge>
+  </edges>
+  <settings layout="Hierarchic Compact" zoom="0.5044709388971684" showDependencies="true" x="587.5" y="657.0000000000001" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Inner Classes</Category>
+    <Category>Methods</Category>
+    <Category>Properties</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+
