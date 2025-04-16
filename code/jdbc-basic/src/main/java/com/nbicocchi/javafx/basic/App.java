@@ -23,8 +23,8 @@ public class App {
         testUpdate();
         testSelect();
         testScrollable();
-        testUpdateable();
-        testSelect();
+        //testUpdateable();
+        //testSelect();
         testUpdateWithTransactions();
         testSelect();
     }
