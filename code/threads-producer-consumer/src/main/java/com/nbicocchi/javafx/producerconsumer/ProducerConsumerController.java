@@ -11,7 +11,7 @@ import java.util.Queue;
 public class ProducerConsumerController {
     public static final int MAX_ITEMS = 25000;
     public static final int MIN_QUEUE = 1;
-    public static final int MAX_QUEUE = 128;
+    public static final int MAX_QUEUE = 2048;
     public static final String[] producers = {
             "com.nbicocchi.javafx.producerconsumer.ProducerSynchronized",
             "com.nbicocchi.javafx.producerconsumer.ProducerSynchronizedWaitNotify",
@@ -52,7 +52,7 @@ public class ProducerConsumerController {
 
     @FXML
     void onStart() throws InterruptedException, ClassNotFoundException, InvocationTargetException, InstantiationException, IllegalAccessException, NoSuchMethodException {
-        for (int i = MIN_QUEUE; i < MAX_QUEUE; i++) {
+        for (int i = MIN_QUEUE; i < MAX_QUEUE; i += (MAX_QUEUE - MIN_QUEUE) / 100) {
             final int items = i;
             Queue<Integer> queue =
                     (Queue) Class.forName(chSharedObject.getValue()).
