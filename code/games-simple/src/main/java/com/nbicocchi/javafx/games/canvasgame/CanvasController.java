@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.canvasgame;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import javafx.animation.AnimationTimer;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
@@ -13,24 +14,18 @@ import java.util.random.RandomGenerator;
 
 public class CanvasController {
     @FXML private Canvas canvas;
-    AnimationTimer timer;
+    FixedFpsAnimationTimer timer;
     List<Ball> balls;
 
     public void initialize() {
         balls = new ArrayList<>();
     }
 
-    private void initializeTimer() {
+    void initializeTimer() {
         if (timer != null) {
             timer.stop();
         }
-        timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                mainLoop();
-            }
-        };
+        timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 

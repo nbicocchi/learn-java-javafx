@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.spaceinvaders;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import javafx.animation.AnimationTimer;
@@ -20,7 +21,7 @@ import java.util.stream.Collectors;
 
 public class SpaceInvadersController {
     @FXML AnchorPane root;
-    AnimationTimer timer;
+    FixedFpsAnimationTimer timer;
     HashMap<String, Image> availableImages;
     SpriteDeadAlive ship;
 
@@ -65,13 +66,7 @@ public class SpaceInvadersController {
         if (timer != null) {
             timer.stop();
         }
-        timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                mainLoop();
-            }
-        };
+        timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 

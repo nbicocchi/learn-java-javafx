@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.debugsprite;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import javafx.animation.AnimationTimer;
@@ -15,23 +16,17 @@ import java.util.stream.Collectors;
 public class DebugController {
     @FXML private AnchorPane root;
     @FXML private TextArea textArea;
-    AnimationTimer timer;
+    FixedFpsAnimationTimer timer;
 
     public void initialize() {
         Sprite.DEBUG_ENABLED = true;
     }
 
-    private void initializeTimer() {
+    void initializeTimer() {
         if (timer != null) {
             timer.stop();
         }
-        timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                mainLoop();
-            }
-        };
+        timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 

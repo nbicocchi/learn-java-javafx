@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.spacelander;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import com.nbicocchi.javafx.games.common.UtilsColor;
@@ -23,7 +24,7 @@ public class SpaceLanderController {
     @FXML Text textWin;
     @FXML Text textSpeed;
     Sprite ship, pad;
-    AnimationTimer timer;
+    FixedFpsAnimationTimer timer;
     HashMap<String, Node> availableNodes;
     HashMap<String, PVector> forces;
     HashMap<String, Boolean> activeForces;
@@ -109,13 +110,7 @@ public class SpaceLanderController {
         if (timer != null) {
             timer.stop();
         }
-        timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                mainLoop();
-            }
-        };
+        timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 

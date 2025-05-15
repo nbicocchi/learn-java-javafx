@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.gameoflife;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -16,7 +17,7 @@ public class LifeController {
     @FXML private CheckBox cbAnimation;
     @FXML private TilePane tilePane;
     GameOfLifeBean gameOfLifeBean;
-    AnimationTimer animationTimer;
+    FixedFpsAnimationTimer animationTimer;
 
     public void initialize() {
         gameOfLifeBean = new GameOfLifeBean(ROWS, COLS);
@@ -62,16 +63,15 @@ public class LifeController {
     @FXML
     void onAnimation() {
         if (cbAnimation.isSelected()) {
-            animationTimer = new AnimationTimer() {
-                @Override
-                public void handle(long now) {
-                    gameOfLifeBean.evolve();
-                    updatePanel();
-                }
-            };
+            animationTimer = new FixedFpsAnimationTimer(() -> mainLoop());
             animationTimer.start();
         } else {
             animationTimer.stop();
         }
+    }
+
+    private void mainLoop() {
+        gameOfLifeBean.evolve();
+        updatePanel();
     }
 }

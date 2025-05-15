@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.sierpinski;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import javafx.animation.AnimationTimer;
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
@@ -22,31 +23,19 @@ public class SierpinskiController {
 
     }
 
+    private void mainLoop() {
+        calcTriangles();
+        clearBackground();
+        drawTriangles();
+    }
+
     public void initialize() {
         width = canvas.getWidth();
         height = canvas.getHeight();
         rootHeight = canvas.getHeight();
         renderList = new ArrayList<>();
 
-        AnimationTimer timer = new AnimationTimer() {
-            private long nextSecond = 0;
-            private int framesPerSecond = 0;
-
-            @Override
-            public void handle(long startNanos) {
-                calcTriangles();
-                clearBackground();
-                drawTriangles();
-
-                framesPerSecond++;
-
-                if (startNanos > nextSecond) {
-                    System.out.println("fps: " + framesPerSecond);
-                    framesPerSecond = 0;
-                    nextSecond = startNanos + 1_000_000_000L;
-                }
-            }
-        };
+        FixedFpsAnimationTimer timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 

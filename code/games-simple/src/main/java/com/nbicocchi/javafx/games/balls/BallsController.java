@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.balls;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import com.nbicocchi.javafx.games.common.UtilsColor;
@@ -40,7 +41,7 @@ public class BallsController {
     @FXML private TextField tfWindY;
 
     List<SpriteRebound> bouncingSprites = new ArrayList<>();
-    AnimationTimer timer;
+    FixedFpsAnimationTimer timer;
     Line force;
     Text text;
 
@@ -86,17 +87,11 @@ public class BallsController {
         return new SpriteRebound("ball", view, location, velocity);
     }
 
-    private void initializeTimer() {
+    void initializeTimer() {
         if (timer != null) {
             timer.stop();
         }
-        timer = new AnimationTimer() {
-
-            @Override
-            public void handle(long now) {
-                mainLoop();
-            }
-        };
+        timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 
