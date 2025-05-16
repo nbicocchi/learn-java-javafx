@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<DialogPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="300.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/19"
+            fx:controller="com.nbicocchi.javafx.addressbook.controller.PersonEditDialogController">
+    <expandableContent>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0"/>
+    </expandableContent>
+    <content>
+        <GridPane>
+            <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="274.0" minWidth="10.0" prefWidth="114.0"/>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="431.0" minWidth="10.0" prefWidth="364.0"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+            </rowConstraints>
+            <TextField fx:id="firstNameField" GridPane.columnIndex="1"/>
+            <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+            <TextField fx:id="streetField" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
+            <TextField fx:id="cityField" GridPane.columnIndex="1" GridPane.rowIndex="3"/>
+            <TextField fx:id="postalCodeField" GridPane.columnIndex="1" GridPane.rowIndex="4"/>
+            <Label text="First Name"/>
+            <Label text="Last Name" GridPane.rowIndex="1"/>
+            <Label text="Street" GridPane.rowIndex="2"/>
+            <Label text="City" GridPane.rowIndex="3"/>
+            <Label text="Postal Code" GridPane.rowIndex="4"/>
+            <Label text="Birthday" GridPane.rowIndex="5"/>
+            <DatePicker fx:id="birthdayDatePicker" prefHeight="26.0" prefWidth="400.0" GridPane.columnIndex="1"
+                        GridPane.rowIndex="5"/>
+        </GridPane>
+    </content>
+    <ButtonType fx:constant="CANCEL"/>
+    <ButtonType fx:constant="OK"/>
+</DialogPane>

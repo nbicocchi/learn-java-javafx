@@ -12,9 +12,11 @@ import java.text.DateFormatSymbols;
 import java.util.List;
 
 public class BirthdayStatisticsController {
-    @FXML private BarChart<String, Integer> barChart;
-    @FXML private CategoryAxis xAxis;
     ObservableList<String> monthNames;
+    @FXML
+    private BarChart<String, Integer> barChart;
+    @FXML
+    private CategoryAxis xAxis;
 
     /**
      * Initializes the controller class. This method is automatically called

@@ -76,7 +76,6 @@ public class OverviewController {
             planeRepository.save(selectedPlane);
         });
 
-
         length.setPrefWidth(150);
         length.setCellValueFactory(new PropertyValueFactory<>("length"));
         length.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));

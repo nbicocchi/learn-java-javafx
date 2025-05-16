@@ -1,37 +1,57 @@
 package com.nbicocchi.javafx.addressbook.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.nbicocchi.javafx.addressbook.persistence.model.Person;
+import com.nbicocchi.javafx.addressbook.persistence.repository.PersonRepository;
+import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 
-import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class PersonOverviewController {
-    @FXML private TableView<Person> personTable;
-    @FXML private TableColumn<Person, String> firstNameColumn;
-    @FXML private TableColumn<Person, String> lastNameColumn;
+    HikariDataSource hikariDataSource;
+    PersonRepository personRepository;
 
-    @FXML private Label firstNameLabel;
-    @FXML private Label lastNameLabel;
-    @FXML private Label streetLabel;
-    @FXML private Label cityLabel;
-    @FXML private Label postalCodeLabel;
-    @FXML private Label birthdayLabel;
+    @FXML
+    private TableView<Person> personTable;
+    @FXML
+    private TableColumn<Person, String> firstNameColumn;
+    @FXML
+    private TableColumn<Person, String> lastNameColumn;
+
+    @FXML
+    private Label firstNameLabel;
+    @FXML
+    private Label lastNameLabel;
+    @FXML
+    private Label streetLabel;
+    @FXML
+    private Label cityLabel;
+    @FXML
+    private Label postalCodeLabel;
+    @FXML
+    private Label birthdayLabel;
+
+    public void initDataSource(HikariDataSource hikariDataSource) {
+        this.hikariDataSource = hikariDataSource;
+        this.personRepository = new PersonRepository(hikariDataSource);
+
+        ObservableList<Person> persons = FXCollections.observableArrayList();
+        Iterable<Person> savedPersons = personRepository.findAll();
+        persons.addAll(StreamSupport.stream(savedPersons.spliterator(), false).collect(Collectors.toList()));
+        personTable.setItems(persons);
+    }
 
     /**
      * Initializes the controller class. This method is automatically called after the fxml file has been loaded.
@@ -41,31 +61,12 @@ public class PersonOverviewController {
         // Initialize the person table with the two columns.
         firstNameColumn.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         lastNameColumn.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-        personTable.setItems(getPersonData());
 
         // Clear person details.
         showPersonDetails(null);
 
         // Listen for selection changes and show the person details when changed.
         personTable.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> showPersonDetails(newValue));
-    }
-
-    /**
-     * Returns an observable list of Person objects
-     * @return the observable list
-     */
-    ObservableList<Person> getPersonData() {
-        ObservableList<Person> persons = FXCollections.observableArrayList();
-        persons.add(new Person("Hans", "Muster", "Schillerstraße", 1123, "Munich", LocalDate.of(1955, 1, 3)));
-        persons.add(new Person("Ruth", "Mueller", "Goethestraße", 5437, "Berlin", LocalDate.of(1934, 2, 23)));
-        persons.add(new Person("Heinz", "Kurz", "Jahnstraße", 6778, "Leipzig", LocalDate.of(1929, 2, 13)));
-        persons.add(new Person("Cornelia", "Meier", "Mozartstraße", 2234, "Nuremberg", LocalDate.of(1977, 6, 5)));
-        persons.add(new Person("Werner", "Meyer", "Hauptstraße", 8879, "Frankfurt", LocalDate.of(1976, 6, 6)));
-        persons.add(new Person("Lydia", "Kunz", "Hauptstraße", 9823, "Frankfurt", LocalDate.of(1999, 6, 16)));
-        persons.add(new Person("Anna", "Best", "Schulstraße", 5872, "Erfurt", LocalDate.of(1984, 8, 2)));
-        persons.add(new Person("Stefan", "Meier", "Gartenstraße", 3386, "Bremen", LocalDate.of(1987, 10, 21)));
-        persons.add(new Person("Martin", "Mueller", "Bahnhofstraße", 3345, "Hamburg", LocalDate.of(1992, 10, 7)));
-        return persons;
     }
 
     /**
@@ -94,6 +95,7 @@ public class PersonOverviewController {
 
     /**
      * Returns the index of the selected person in the TableView component
+     *
      * @return the index of the selected person
      */
     int selectedIndex() {
@@ -119,6 +121,7 @@ public class PersonOverviewController {
     private void handleDeletePerson() {
         try {
             int selectedIndex = selectedIndex();
+            personRepository.delete(personTable.getSelectionModel().getSelectedItem());
             personTable.getItems().remove(selectedIndex);
         } catch (NoSuchElementException e) {
             showNoPersonSelectedAlert();
@@ -145,6 +148,7 @@ public class PersonOverviewController {
             // Show the dialog and wait until the user closes it
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                personRepository.save(controller.getPerson());
                 personTable.getItems().add(controller.getPerson());
             }
         } catch (IOException e) {
@@ -173,6 +177,7 @@ public class PersonOverviewController {
             // Show the dialog and wait until the user closes it
             Optional<ButtonType> clickedButton = dialog.showAndWait();
             if (clickedButton.orElse(ButtonType.CANCEL) == ButtonType.OK) {
+                personRepository.save(controller.getPerson());
                 personTable.getItems().set(selectedIndex, controller.getPerson());
             }
         } catch (NoSuchElementException e) {
@@ -203,48 +208,6 @@ public class PersonOverviewController {
             dialog.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
-        }
-    }
-
-    @FXML
-    private void handleNew() {
-        personTable.getItems().clear();
-    }
-
-    @FXML
-    private void handleOpen() {
-        try {
-            FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
-            fileChooser.getExtensionFilters().add(extFilter);
-
-            File file = fileChooser.showOpenDialog(null);
-            if (file != null) {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.registerModule(new JavaTimeModule());
-                List<Person> persons = mapper.readValue(file, new TypeReference<>() {});
-                personTable.getItems().addAll(persons);
-            }
-        } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR, "Could not load data").showAndWait();
-        }
-    }
-
-    @FXML
-    private void handleSaveAs() {
-        try {
-            FileChooser fileChooser = new FileChooser();
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("JSON files (*.json)", "*.json");
-            fileChooser.getExtensionFilters().add(extFilter);
-
-            File file = fileChooser.showSaveDialog(null);
-            if (file != null) {
-                ObjectMapper mapper = new ObjectMapper();
-                mapper.registerModule(new JavaTimeModule());
-                mapper.writerWithDefaultPrettyPrinter().writeValue(file, personTable.getItems());
-            }
-        } catch (IOException e) {
-            new Alert(Alert.AlertType.ERROR, "Could not save data").showAndWait();
         }
     }
 

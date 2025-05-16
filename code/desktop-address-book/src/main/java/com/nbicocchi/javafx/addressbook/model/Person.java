@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.addressbook.model;
+package com.nbicocchi.javafx.addressbook.persistence.model;
 
 import java.time.LocalDate;
 

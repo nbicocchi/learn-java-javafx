@@ -6,13 +6,19 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 
 public class PersonEditDialogController {
-    @FXML private TextField firstNameField;
-    @FXML private TextField lastNameField;
-    @FXML private TextField streetField;
-    @FXML private TextField cityField;
-    @FXML private TextField postalCodeField;
-    @FXML private DatePicker birthdayDatePicker;
     Person person;
+    @FXML
+    private TextField firstNameField;
+    @FXML
+    private TextField lastNameField;
+    @FXML
+    private TextField streetField;
+    @FXML
+    private TextField cityField;
+    @FXML
+    private TextField postalCodeField;
+    @FXML
+    private DatePicker birthdayDatePicker;
 
     @FXML
     public void initialize() {
