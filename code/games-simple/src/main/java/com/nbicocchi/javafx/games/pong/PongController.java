@@ -1,5 +1,6 @@
 package com.nbicocchi.javafx.games.pong;
 
+import com.nbicocchi.javafx.games.common.FixedFpsAnimationTimer;
 import com.nbicocchi.javafx.games.common.PVector;
 import com.nbicocchi.javafx.games.common.Sprite;
 import javafx.animation.AnimationTimer;
@@ -13,7 +14,7 @@ import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 
 public class PongController {
-    AnimationTimer timer;
+    FixedFpsAnimationTimer timer;
     Sprite leftPlayer;
     Sprite rightPlayer;
     Sprite ball;
@@ -68,19 +69,7 @@ public class PongController {
         if (timer != null) {
             timer.stop();
         }
-        timer = new AnimationTimer() {
-            private long lastUpdate = 0;
-            private long TARGET_FPS = 120;
-            private long INTERVAL_NS = (1_000_000_000 / TARGET_FPS);
-
-            @Override
-            public void handle(long now) {
-                if (now - lastUpdate >= INTERVAL_NS) {
-                    mainLoop();
-                    lastUpdate = now;
-                }
-            }
-        };
+        timer = new FixedFpsAnimationTimer(() -> mainLoop());
         timer.start();
     }
 
