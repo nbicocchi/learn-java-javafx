@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.addressbook.persistence.model;
+package com.nbicocchi.javafx.addressbookdb.persistence.model;
 
 import lombok.*;
 

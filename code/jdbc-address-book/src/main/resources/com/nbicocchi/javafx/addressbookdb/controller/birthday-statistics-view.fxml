@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <DialogPane xmlns:fx="http://javafx.com/fxml/1" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="400.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19"
-            fx:controller="com.nbicocchi.javafx.addressbook.controller.BirthdayStatisticsController">
+            fx:controller="com.nbicocchi.javafx.addressbookdb.controller.BirthdayStatisticsController">
     <expandableContent>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="320.0"/>
     </expandableContent>

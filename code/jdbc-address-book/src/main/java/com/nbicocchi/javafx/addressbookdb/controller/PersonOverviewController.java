@@ -1,8 +1,8 @@
-package com.nbicocchi.javafx.addressbook.controller;
+package com.nbicocchi.javafx.addressbookdb.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.nbicocchi.javafx.addressbook.persistence.model.Person;
-import com.nbicocchi.javafx.addressbook.persistence.repository.PersonRepository;
+import com.nbicocchi.javafx.addressbookdb.persistence.model.Person;
+import com.nbicocchi.javafx.addressbookdb.persistence.repository.PersonRepository;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

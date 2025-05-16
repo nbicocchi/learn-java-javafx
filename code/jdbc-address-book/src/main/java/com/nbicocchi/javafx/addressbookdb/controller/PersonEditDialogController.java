@@ -1,6 +1,6 @@
-package com.nbicocchi.javafx.addressbook.controller;
+package com.nbicocchi.javafx.addressbookdb.controller;
 
-import com.nbicocchi.javafx.addressbook.persistence.model.Person;
+import com.nbicocchi.javafx.addressbookdb.persistence.model.Person;
 import javafx.fxml.FXML;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;

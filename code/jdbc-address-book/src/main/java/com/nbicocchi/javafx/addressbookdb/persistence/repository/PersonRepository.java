@@ -1,6 +1,6 @@
-package com.nbicocchi.javafx.addressbook.persistence.repository;
+package com.nbicocchi.javafx.addressbookdb.persistence.repository;
 
-import com.nbicocchi.javafx.addressbook.persistence.model.Person;
+import com.nbicocchi.javafx.addressbookdb.persistence.model.Person;
 import com.zaxxer.hikari.HikariDataSource;
 
 import java.sql.*;

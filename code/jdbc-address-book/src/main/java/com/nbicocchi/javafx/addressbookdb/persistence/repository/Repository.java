@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.addressbook.persistence.repository;
+package com.nbicocchi.javafx.addressbookdb.persistence.repository;
 
 import java.util.Optional;
 

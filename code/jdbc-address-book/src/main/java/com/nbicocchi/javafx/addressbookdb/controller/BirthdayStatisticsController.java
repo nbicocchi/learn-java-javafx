@@ -1,6 +1,6 @@
-package com.nbicocchi.javafx.addressbook.controller;
+package com.nbicocchi.javafx.addressbookdb.controller;
 
-import com.nbicocchi.javafx.addressbook.persistence.model.Person;
+import com.nbicocchi.javafx.addressbookdb.persistence.model.Person;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

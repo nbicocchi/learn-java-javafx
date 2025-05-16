@@ -1,6 +1,6 @@
-package com.nbicocchi.javafx.addressbook;
+package com.nbicocchi.javafx.addressbookdb;
 
-import com.nbicocchi.javafx.addressbook.controller.PersonOverviewController;
+import com.nbicocchi.javafx.addressbookdb.controller.PersonOverviewController;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Application;
