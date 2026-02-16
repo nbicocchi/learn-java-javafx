@@ -3,7 +3,7 @@ package com.nbicocchi.javafx.planes.controller;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.nbicocchi.javafx.planes.persistence.dao.PlaneRepository;
+import com.nbicocchi.javafx.planes.persistence.repository.PlaneRepository;
 import com.nbicocchi.javafx.planes.persistence.model.Plane;
 import com.zaxxer.hikari.HikariDataSource;
 import javafx.application.Platform;

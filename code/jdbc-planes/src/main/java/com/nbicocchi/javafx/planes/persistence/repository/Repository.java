@@ -1,4 +1,4 @@
-package com.nbicocchi.javafx.planes.persistence.dao;
+package com.nbicocchi.javafx.planes.persistence.repository;
 
 import com.nbicocchi.javafx.planes.persistence.model.Plane;
 
